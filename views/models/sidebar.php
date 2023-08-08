@@ -18,9 +18,9 @@
         </div>
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a style="cursor:pointer;" class="nav-link menu-link" onclick="loadContents('views/contents/processos.php', 'content-wrapper')">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
                             Processos
@@ -30,7 +30,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link active">
+                    <a href="#" style="cursor:pointer;" class="nav-link menu-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboards
@@ -39,25 +39,25 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a style="cursor:pointer;" href="#" class="nav-link " onclick="loadContents('views/contents/novos_processos.php', 'content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Novos processos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a style="cursor:pointer;" href="#" class="nav-link" onclick="loadContents('views/contents/novos_aditivos.php', 'content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Novos aditivos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a style="cursor:pointer;" href="#" class="nav-link" onclick="loadContents('views/contents/novos_apostilamentos.php', 'content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Novos apostilamentos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a style="cursor:pointer;" href="#" class="nav-link" onclick="loadContents('views/contents/execucao_pca.php', 'content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Execução PCA</p>
                             </a>
@@ -70,3 +70,10 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+
+<script>
+    $(".menu-link").on('click', function() {
+        $(".menu-link").not(this).removeClass('active');
+        $(this).addClass('active');
+    });
+</script>
