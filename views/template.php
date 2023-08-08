@@ -35,13 +35,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- Navbar -->
         <?php
-        include 'models/navbar.php';
+        include 'modules/navbar.php';
         ?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
         <?php
-        include 'models/sidebar.php';
+        include 'modules/sidebar.php';
         ?>
         <!-- /Main Sidebar Container -->
 
@@ -57,7 +57,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- Main Footer -->
         <?php
-        include 'models/footer.php';
+        include 'modules/footer.php';
         ?>
         <!-- /Main Footer -->
     </div>

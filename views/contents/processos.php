@@ -21,3 +21,18 @@
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
+<script>
+    $(document).ready(function() {
+
+        $.ajax({
+            url: "ajax/processos.ajax.php",
+            method:'POST',
+            dataType: 'json',
+            success: function(response) {
+                console.log("reponse", response);
+            }
+
+        });
+
+    });
+</script>
