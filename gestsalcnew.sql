@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09-Ago-2023 às 02:03
+-- Tempo de geração: 09-Ago-2023 às 23:05
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `gestsalcnew`
 --
+
+DELIMITER $$
+--
+-- Procedimentos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_listarProcessosFaseInterna` ()   BEGIN
+
+select '' as detalhes,
+	p.dfd,
+    p.NUP,
+    p.tipo_processo_origem,
+    p.numero_processo_origem,
+    p.assunto_objeto,
+    p.requisitante,
+    p.analista,
+    p.situacao     
+ 
+from processos p;
+
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -58,6 +80,7 @@ CREATE TABLE `processos` (
   `data_saída` date NOT NULL,
   `motivo_data_saida` varchar(100) NOT NULL,
   `dfd` varchar(100) NOT NULL,
+  `NUP` int(30) NOT NULL,
   `tipo_processo_origem` varchar(100) NOT NULL,
   `numero_processo_origem` varchar(100) NOT NULL,
   `assunto_objeto` varchar(100) NOT NULL,
@@ -75,11 +98,11 @@ CREATE TABLE `processos` (
 -- Extraindo dados da tabela `processos`
 --
 
-INSERT INTO `processos` (`id_processos`, `data_entrada`, `motivo_data_entrada`, `data_saída`, `motivo_data_saida`, `dfd`, `tipo_processo_origem`, `numero_processo_origem`, `assunto_objeto`, `requisitante`, `analista`, `previsao_conclusao`, `situacao`, `operador_fase_externa`, `resultado_fase_externa`, `protocolista`, `status`) VALUES
-(1, '2023-08-02', 'teste motivo da primeira entrada', '2023-08-08', 'teste motivo da primeira entrada', '01/2023', 'Pregão SRP', '01/2023', 'Teste do objeto', 'citex', 'roque', '2023-08-31', 'fase 2', 'velez', 'sessão pública', 'emanoel', 'conformidade'),
-(2, '2023-08-02', 'teste motivo da primeira entrada', '2023-08-08', 'teste motivo da primeira saida', '01/2023', 'pregao srp', '01/2023', 'teste objeto', 'tete requisitante', 'teste analista', '2023-08-31', 'teste situação', 'teste operador', 'teste resultado da fase externa', 'teste protocolista', 'teste status do protocolo'),
-(3, '2014-04-03', 'tEste 3 updat entrada', '2023-08-01', 'tEste 3 update saida', 'tEste 3', 'tEste 3', 'tEste 3', '', 'tEste 3', 'tEste 3', '2023-08-05', 'tEste 3', 'tEste 3', 'tEste 3', 'tEste 3', 'tEste 3'),
-(4, '2023-08-08', 'motivo da entrata teste 4', '2023-08-08', 'motivo da entrata teste 4', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '');
+INSERT INTO `processos` (`id_processos`, `data_entrada`, `motivo_data_entrada`, `data_saída`, `motivo_data_saida`, `dfd`, `NUP`, `tipo_processo_origem`, `numero_processo_origem`, `assunto_objeto`, `requisitante`, `analista`, `previsao_conclusao`, `situacao`, `operador_fase_externa`, `resultado_fase_externa`, `protocolista`, `status`) VALUES
+(1, '2023-08-02', 'teste motivo da primeira entrada', '2023-08-08', 'teste motivo da primeira entrada', '01/2023', 0, 'Pregão SRP', '01/2023', 'Teste do objeto', 'citex', 'roque', '2023-08-31', 'fase 2', 'velez', 'sessão pública', 'emanoel', 'conformidade'),
+(2, '2023-08-02', 'teste motivo da primeira entrada', '2023-08-08', 'teste motivo da primeira saida', '01/2023', 0, 'pregao srp', '01/2023', 'teste objeto', 'tete requisitante', 'teste analista', '2023-08-31', 'teste situação', 'teste operador', 'teste resultado da fase externa', 'teste protocolista', 'teste status do protocolo'),
+(3, '2014-04-03', 'tEste 3 updat entrada', '2023-08-01', 'tEste 3 update saida', 'tEste 3', 0, 'tEste 3', 'tEste 3', '', 'tEste 3', 'tEste 3', '2023-08-05', 'tEste 3', 'tEste 3', 'tEste 3', 'tEste 3', 'tEste 3'),
+(4, '2023-08-08', 'motivo da entrata teste 4', '2023-08-08', 'motivo da entrata teste 4', '', 0, '', '', '', '', '', '0000-00-00', '', '', '', '', '');
 
 --
 -- Acionadores `processos`
