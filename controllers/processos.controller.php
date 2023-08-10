@@ -1,7 +1,6 @@
 <?php
 
 require_once "../controllers/processos.controller.php";
-require_once "../models/processos.model.php";
 
 class ProcessosController{
 
@@ -11,5 +10,12 @@ class ProcessosController{
         
         return $data;
 
+    }
+
+    static public function ctrListarProcessos(){
+
+        $processos = ProcessosModel::mdlListarProcessos();
+
+        return $processos;
     }
 }

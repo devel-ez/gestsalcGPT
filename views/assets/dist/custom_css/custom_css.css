@@ -1,3 +1,10 @@
-.shadow-bottom {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+table.dataTable tbody td{
+
+    white-space: nowrap !important;
+    text-align: center;
+    font-size: 15px;
+}
+
+#example1 thead th{
+    white-space: nowrap !important;
 }

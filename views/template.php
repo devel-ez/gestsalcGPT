@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html lang="en">
+<html lang="pt_br">
 
 <head>
     <meta charset="utf-8">
@@ -18,10 +14,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="views/assets/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="views/assets/dist/css/adminlte.min.css">
-    <!--ESTILOS PARA USO DE DATATABLES JS-->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css">
+    <!-- My custom Css -->
+    <link rel="stylesheet" href="views/assets/dist/custom_css/custom_css.css">
+
+    <!-- Estilos dataTable avançado -->
+    <link rel="stylesheet" href="views/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="views/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="views/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+    <!--ESTILOS PARA USO DE DATATABLES JS "antiga"-->
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css"> -->
 
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
@@ -30,17 +34,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="views/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="views/assets/dist/js/adminlte.min.js"></script>
+    <!-- Scripts dataTable avançado -->
+    <script src="views/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="views/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="views/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="views/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="views/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="views/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="views/assets/plugins/jszip/jszip.min.js"></script>
+    <script src="views/assets/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="views/assets/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="views/assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="views/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="views/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!--BIBLIOTECAS PARA USO DE DATATABLES JS "antiga"-->
+    <!-- <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script> -->
 
-    <!--BIBLIOTECAS PARA USO DE DATATABLES JS-->
-    <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 
-
-    <!--BIBLIOTECAS PARA EXPORTAR OS ARCHIVOS DATATABLES JS-->
-    <script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
+    <!--BIBLIOTECAS PARA EXPORTAR OS ARCHIVOS DATATABLES JS "antiga"-->
+    <!-- <script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js"></script> -->
 
 </head>
 
