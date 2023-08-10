@@ -36,76 +36,42 @@
                 </div>
             </div>
         </div>
-        <!-- /Protocolo de entrada e saída -->
+
+        <!--  tabela "antiga" -->
         <div class="row">
             <div class="col-lg-12">
-                <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped dataTable dtr-inline shadow" aria-describedby="example1_info">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Progresso</th>
-                                <th>DFD</th>
-                                <th>NUP</th>
-                                <th>Processo Origem</th>
-                                <th>Número do processo</th>
-                                <th>Objeto</th>
-                                <th>Requisitante</th>
-                                <th>Analista</th>
-                                <th>Situação</th>
-                                <th>Fase Externa</th>
-                                <th>Protocolo</th>
-                                <th class="text-center">Opções</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DataTable with default features</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- <table id="example1" class="table table-striped w-100 shadow "> -->
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>%</th>
+                                    <th>DFD</th>
+                                    <th>NUP</th>
+                                    <th>Processo Origem</th>
+                                    <th>Número do processo</th>
+                                    <th>Objeto</th>
+                                    <th>Requisitante</th>
+                                    <th>Analista</th>
+                                    <th>Situação</th>
+                                    <th>Opções</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        <!--  tabela "antiga" -->
-        <!-- <div class="row">
-            <div class="col-lg-12">
-                <table id="tbl_processos" class="table table-striped w-100 shadow">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Progresso</th>
-                            <th>DFD</th>
-                            <th>NUP</th>
-                            <th>Processo Origem</th>
-                            <th>Número do processo</th>
-                            <th>Objeto</th>
-                            <th>Requisitante</th>
-                            <th>Analista</th>
-                            <th>Situação</th>
-                            <th>Fase Externa</th>
-                            <th>Protocolo</th>
-                            <th class="text-center">Opções</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div> -->
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
-
-<!-- DataTable scripts específicos -->
-<script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    });
-</script>
-
 
 <!-- Ajax scripts -->
 <script>
@@ -124,8 +90,8 @@
 
         });
 
-        var table;
-        table = $('#example1').DataTable({
+        $('#example1').DataTable({
+
 
             ajax: {
                 url: "ajax/processos.ajax.php",
@@ -136,8 +102,17 @@
                 }, //1: 
             },
 
+            //dom: 'Bfrtip',
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+
+            pageLength: [10, 25, 50, 100],
+            pageLength: 10,
+
             responsive: {
-                datails: {
+                details: {
                     type: 'column'
                 }
             },
@@ -145,10 +120,10 @@
             columnDefs: [{
                     targets: 1,
                     orderable: false,
-                    calssName: 'control'
+                    className: 'control'
                 },
                 {
-                    targets: 12,
+                    targets: 10,
                     orderable: false,
                     render: function(data, type, full, meta) {
                         return "<center>" +
@@ -164,7 +139,8 @@
                 url: "views/assets/plugins/language/json/pt_br.json"
             }
 
-        });
+
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
     });
 </script>

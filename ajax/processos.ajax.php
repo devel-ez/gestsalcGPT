@@ -5,11 +5,11 @@ require_once "../models/processos.model.php";
 
 class AjaxProcessos{
 
-    public function ajaxGetDataProcessos(){
-        $data = ProcessosController::ctrGetDataProcessos();
+    // public function ajaxGetDataProcessos(){
+    //     $data = ProcessosController::ctrGetDataProcessos();
 
-        echo json_encode($data);
-    }
+    //     echo json_encode($data);
+    // }
 
     public function ajaxListarProcessos(){
         $processos = ProcessosController::ctrListarProcessos();
