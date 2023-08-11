@@ -23,7 +23,7 @@
                     <a style="cursor:pointer;" class="nav-link menu-link active" onclick="loadContents('views/contents/processos.php', 'content-wrapper')">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
-                            Processos
+                            Processos Origem
                         </p>
                     </a>
                 </li>

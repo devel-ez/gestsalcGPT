@@ -1,10 +1,14 @@
 table.dataTable tbody td{
 
     white-space: nowrap !important;
-    text-align: center;
+    text-align: left !important;
     font-size: 15px;
 }
 
 #example1 thead th{
     white-space: nowrap !important;
+}
+
+div.dataTables_filter{
+    margin-top: -30px !important;
 }
