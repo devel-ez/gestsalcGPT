@@ -1,15 +1,30 @@
-table.dataTable tbody td{
+table.dataTable tbody td {
 
     white-space: nowrap !important;
     text-align: left !important;
     font-size: 15px;
 }
 
-#example1 thead th{
+#example1 thead th {
     white-space: nowrap !important;
 }
 
-div.dataTables_filter{
+div.dataTables_filter {
     margin-top: -30px !important;
 }
 
+
+.modal-xl-custom {
+    max-width: 90%;
+    padding-left: 9%;
+    padding-top: 2%;
+
+}
+
+.masked-input {
+    font-family: monospace;
+    letter-spacing: 1px;
+    background: linear-gradient(to bottom, transparent 95%, gray 95%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}

@@ -53,6 +53,9 @@
     <script src="views/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="views/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
+    <!-- My custom JS -->
+    <script src="views/assets/dist/custom_js/custom_js.js"></script>
+
 </head>
 
 <body class="hold-transition sidebar-mini">

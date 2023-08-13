@@ -27,14 +27,12 @@
                                 <tr>
                                     <th></th>
                                     <th>%</th>
-                                    <th>DFD</th>
                                     <th>NUP</th>
                                     <th>Processo Origem</th>
                                     <th>Número do processo</th>
                                     <th>Objeto</th>
                                     <th>Requisitante</th>
-                                    <th>Analista</th>
-                                    <th>Situação</th>
+                                    <th>Fase</th>
                                     <th>Opções</th>
                                 </tr>
                             </thead>
@@ -52,7 +50,7 @@
 <!-- Tela modal para cadastro de processo -->
 <div class="modal fade" id="mdlCadastrarProcesso" role="dialog">
 
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl-custom">
         <!-- Conteúdo do modal -->
         <div class="modal-content">
 
@@ -70,37 +68,70 @@
 
                 <!-- Abrir uma linha -->
                 <div class="row">
-
-                    <!-- Coluna para registro do tipo do processo -->
-                    <div class="col-lg-4">
+                    <!-- Coluna para registro do NUP -->
+                    <div class="col-lg-2">
                         <div class="form-group mb-2">
-                            <label class="" for="selTipoProcesso"><i class="fas fa-dumpster fs-6"></i>
+                            <label class="" for="iNup">
+                                <span class="small">NUP</span><span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control form-control-sm" id="idNup" name="idNup" placeholder="NUP" required oninput="formatNUP(this)">
+                            <span id="validate_nup" class="text-danger small fst-italic" style="display:none"> Registre o números do NUP</span>
+                        </div>
+                    </div>
+                    <!-- /Coluna para registro do NUP-->
+                    <!-- Coluna para registro do número dos DFDs -->
+                    <div class="col-lg-2">
+                        <div class="form-group mb-2">
+                            <label class="" for="idDfd">
+                                <span class="small">Números dos DFDs</span><span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control form-control-sm" id="idDfd" name="idDfd" placeholder="Números dos DFDs" required oninput="formatDfdNrProcesso(this)">
+                            <span id="validate_dfd" class="text-danger small fst-italic" style="display:none"> Registre o números dos DFDs</span>
+                        </div>
+                    </div>
+                    <!-- /Coluna para registro do número dos DFDs -->
+                    <!-- Coluna para registro do tipo do processo -->
+                    <div class="col-lg-3">
+                        <div class="form-group mb-2">
+                            <label class="" for="selTipoProcesso">
                                 <span class="small">Tipo do processo</span><span class="text-danger">*</span>
                             </label> <br>
-                            <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selProcesso"></select>
+                            <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selProcesso">
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="Pregão SRP">Pregão SRP</option>
+                                <option value="Pregão Tradicional">Pregão Tradicional</option>
+                                <option value="Pregão IRP">Pregão IRP</option>
+                                <option value="Inexigibilidade">Inexigibilidade</option>
+                                <option value="Dispensa Eletrônica Com Disputa">Dispensa Eletrônica Com Disputa</option>
+                                <option value="Dispensa Eletrônica Sem Disputa">Dispensa Eletrônica Sem Disputa</option>
+                                <option value="Dispensa Ratificada">Dispensa Ratificada</option>
+                                <option value="Concorrência">Concorrência</option>
+                                <option value="Carona Pregão SRP">Carona Pregão SRP</option>
+                                <option value="Aguardando definição">Aguardando definição</option>
+                            </select>
                             <span id="validate_processo" class="text-danger small fst-italic" style="display:none"> Escolha uma das opções</span>
                         </div>
                     </div>
                     <!-- /Coluna para registro do tipo do processo -->
                     <!-- Coluna para registro do número do processo -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                         <div class="form-group mb-2">
-                            <label class="" for="idProcesso"><i class="fas fa-barcode fs-6"></i>
+                            <label class="" for="idNrProcesso">
                                 <span class="small">Número do processo</span><span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control form-control-sm" id="idProcesso" name="idProcesso" placeholder="Processo origem" required>
-                            <span id="validate_codigo" class="text-danger small fst-italic" style="display:none"> Registre o número do processo</span>
+                            <input type="text" class="form-control form-control-sm" id="idNrProcesso" name="idNrProcesso" placeholder="Processo origem" required oninput="formatDfdNrProcesso(this)">
+                            <span id="validate_nr_processo" class="text-danger small fst-italic" style="display:none"> Registre o número do processo</span>
                         </div>
                     </div>
                     <!-- /Coluna para registro do número do processo -->
 
                     <!-- Coluna para Descrição resumida do processo -->
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <div class="form-group mb-2">
                             <label class="" for="idDescricaoResumida"><i class="fas fa-file-signature fs-6"></i>
-                                <span class="small">Descrição resumida</span><span class="text-danger">*</span>
+                                <span class="small">Descrição resumida (50 caracteres)</span><span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control form-control-sm" id="idDescricaoResumida" placeholder="Faça uma descrição resumida do processo">
+                            <input type="text" class="form-control form-control-sm" id="idDescricaoResumida" placeholder="Faça uma descrição resumida do processo"  maxlength="50">
                             <span id="validate_descricao_resumida" class="text-danger small fst-italic" style="display:none"> Faça uma descrição resumida do processo</span>
                         </div>
                     </div>
@@ -117,8 +148,49 @@
                         </div>
                     </div>
                     <!-- /Coluna para Descrição detalhada do processo  -->
-
-
+                    <!-- Coluna para registro do requisitante -->
+                    <div class="col-lg-2">
+                        <div class="form-group mb-2">
+                            <label class="" for="selRequisitante">
+                                <span class="small">Requisitante</span><span class="text-danger">*</span>
+                            </label> <br>
+                            <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selProcesso">
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="Pregão SRP">7ºCTA</option>
+                                <option value="Pregão Tradicional">AC Defesa</option>
+                                <option value="Pregão IRP">DPI</option>
+                                <option value="Inexigibilidade">PAC</option>
+                                <option value="Dispensa Eletrônica Com Disputa">DCI</option>
+                                <option value="Dispensa Eletrônica Sem Disputa">FA</option>
+                                <option value="Dispensa Ratificada">DGSI</option>
+                                <option value="Concorrência">Almoxarifado</option>
+                            </select>
+                            <span id="validate_processo" class="text-danger small fst-italic" style="display:none"> Escolha o requisitante</span>
+                        </div>
+                    </div>
+                    <!-- /Coluna para registro do requisitante -->
+                    <!-- Coluna para registro da Fase -->
+                    <div class="col-lg-2">
+                        <div class="form-group mb-2">
+                            <label class="" for="selRequisitante">
+                                <span class="small">Fase</span><span class="text-danger">*</span>
+                            </label> <br>
+                            <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selProcesso">
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="Pregão SRP">Na fila</option>
+                                <option value="Pregão Tradicional">Fase 1 - EPC</option>
+                                <option value="Pregão IRP">Fase 2 - Análise SALC</option>
+                                <option value="Inexigibilidade">Fase 3 - Adequação EPC</option>
+                                <option value="Dispensa Eletrônica Com Disputa">Fase 4 - Conjur</option>
+                                <option value="Dispensa Eletrônica Sem Disputa">Fase 5 - Saneamento</option>
+                                <option value="Dispensa Ratificada">Fase 6 - Fase Externa</option>
+                                <option value="Concorrência">Fase 7 - Em contratação</option>
+                                <option value="Concorrência">Fase 8 - Contratado</option>
+                            </select>
+                            <span id="validate_processo" class="text-danger small fst-italic" style="display:none"> Escolha a fase do processo</span>
+                        </div>
+                    </div>
+                    <!-- /Coluna para registro da Fase-->
                 </div>
             </div>
         </div>
@@ -126,6 +198,16 @@
     <!-- /Tela modal para cadastro de processo -->
     <!-- Ajax scripts -->
     <script>
+        // Ao carregar a página, formata o campo NUP
+        window.onload = function() {
+            const nupInput = document.getElementById("idNup");
+            formatNUP(nupInput);
+            const dfdInput = document.getElementById("idDfd");
+            formatDfdNrProcesso(dfdInput);
+            const NrProcessoInput = document.getElementById("idNrProcesso");
+            formatDfdNrProcesso(NrProcessoInput);
+        };
+
         $(document).ready(function() {
             // $.ajax({
             //     url: "ajax/processos.ajax.php",
@@ -141,7 +223,8 @@
             // });
 
 
-            var table1 = $('#example1').DataTable({
+            var table = $('#example1').DataTable({
+
 
 
                 buttons: [{
@@ -178,8 +261,9 @@
                         orderable: false,
                         className: 'control'
                     },
+
                     {
-                        targets: 10,
+                        targets: 8,
                         orderable: false,
                         render: function(data, type, full, meta) {
                             return "<center>" +
@@ -213,6 +297,6 @@
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis", "pageLength"],
 
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)')
         });
     </script>
