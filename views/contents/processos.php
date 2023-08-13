@@ -69,7 +69,7 @@
                 <!-- Abrir uma linha -->
                 <div class="row">
                     <!-- Coluna para registro do NUP -->
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <div class="form-group mb-2">
                             <label class="" for="iNup">
                                 <span class="small">NUP</span><span class="text-danger">*</span>
@@ -79,17 +79,7 @@
                         </div>
                     </div>
                     <!-- /Coluna para registro do NUP-->
-                    <!-- Coluna para registro do número dos DFDs -->
-                    <div class="col-lg-2">
-                        <div class="form-group mb-2">
-                            <label class="" for="idDfd">
-                                <span class="small">Números dos DFDs</span><span class="text-danger">*</span>
-                            </label>
-                            <input type="text" class="form-control form-control-sm" id="idDfd" name="idDfd" placeholder="Números dos DFDs" required oninput="formatDfdNrProcesso(this)">
-                            <span id="validate_dfd" class="text-danger small fst-italic" style="display:none"> Registre o números dos DFDs</span>
-                        </div>
-                    </div>
-                    <!-- /Coluna para registro do número dos DFDs -->
+
                     <!-- Coluna para registro do tipo do processo -->
                     <div class="col-lg-3">
                         <div class="form-group mb-2">
@@ -126,12 +116,12 @@
                     <!-- /Coluna para registro do número do processo -->
 
                     <!-- Coluna para Descrição resumida do processo -->
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <div class="form-group mb-2">
                             <label class="" for="idDescricaoResumida"><i class="fas fa-file-signature fs-6"></i>
                                 <span class="small">Descrição resumida (50 caracteres)</span><span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control form-control-sm" id="idDescricaoResumida" placeholder="Faça uma descrição resumida do processo"  maxlength="50">
+                            <input type="text" class="form-control form-control-sm" id="idDescricaoResumida" placeholder="Faça uma descrição resumida do processo" maxlength="50">
                             <span id="validate_descricao_resumida" class="text-danger small fst-italic" style="display:none"> Faça uma descrição resumida do processo</span>
                         </div>
                     </div>
@@ -191,6 +181,38 @@
                         </div>
                     </div>
                     <!-- /Coluna para registro da Fase-->
+                    <!-- Coluna para registro do número dos DFDs -->
+                    <div class="col-lg-3">
+                        <div class="form-group mb-2 ">
+                            <label class="" for="idDfd">
+                                <span class="small">Números dos DFDs</span><span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-sm" id="idDfd" name="idDfd" placeholder="Números dos DFDs" required oninput="formatDfdNrProcesso(this)">
+                                <span id="validate_dfd" class="text-danger small fst-italic" style="display:none"> Registre o números dos DFDs</span>
+                                <div class="input-group-append">
+                                    <button id="addDfdButton" class="btn btn-dark btn-sm" onclick="addDfd()">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Coluna para registro do número dos DFDs -->
+                    <!-- Coluna para DFDs vinculados -->
+                    <div class="col-lg-5">
+                        <div class="form-group mb-2">
+                            <label class="" for="idDfd2"><i class="fas fa-file-signature fs-6"></i>
+                                <span class="small">DFD(s) vinculados ao processo</span><span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <textarea type="text" class="form-control form-control-sm" id="idDfd2" placeholder="DFD(s) adicionados"></textarea>
+                                <span id="validate_dfds_vinculados" class="text-danger small fst-italic" style="display:none;"> Registre o(s) DFD(s) vinculados ao processo</span>
+                                <div class="input-group-append">
+                                    <button id="deleteDfdButton" class="btn btn-dark btn-sm" onclick="deleteLastDfd()">Deletar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Coluna para DFDs vinculados  -->
                 </div>
             </div>
         </div>
