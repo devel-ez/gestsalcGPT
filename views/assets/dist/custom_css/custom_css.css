@@ -48,4 +48,8 @@ div.dataTables_filter {
     right: 5px;
 }
 
-
+hr{
+    border-color:#ced4da;
+    box-sizing:border-box;
+    width:100%;  
+  }

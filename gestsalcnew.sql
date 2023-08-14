@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10-Ago-2023 às 22:42
+-- Tempo de geração: 14-Ago-2023 às 22:08
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -44,6 +44,18 @@ from processos p;
 END$$
 
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `dfds_vinculados_processos`
+--
+
+CREATE TABLE `dfds_vinculados_processos` (
+  `id_dfds_vinculados` int(20) NOT NULL,
+  `id_processos` int(20) NOT NULL,
+  `nr_dfd` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -129,6 +141,12 @@ DELIMITER ;
 --
 
 --
+-- Índices para tabela `dfds_vinculados_processos`
+--
+ALTER TABLE `dfds_vinculados_processos`
+  ADD PRIMARY KEY (`id_dfds_vinculados`);
+
+--
 -- Índices para tabela `historico_data_entrada_saida`
 --
 ALTER TABLE `historico_data_entrada_saida`
@@ -144,6 +162,12 @@ ALTER TABLE `processos`
 --
 -- AUTO_INCREMENT de tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `dfds_vinculados_processos`
+--
+ALTER TABLE `dfds_vinculados_processos`
+  MODIFY `id_dfds_vinculados` int(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `historico_data_entrada_saida`
