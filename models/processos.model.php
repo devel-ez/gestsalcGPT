@@ -14,11 +14,17 @@ class ProcessosModel
     //     return $stmt->fetchAll(PDO::FETCH_OBJ);
     // }
 
-    static public function mdlListarProcessos(){
+    static public function mdlListarProcessos()
+    {
 
         $stmt = Connection::connect()->prepare('call prc_listarProcessosFaseInterna');
         $stmt->execute();
-        
+
         return $stmt->fetchAll();
+    }
+
+    static public function mdlRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDfd, $idDfd2)
+    {
+        
     }
 }
