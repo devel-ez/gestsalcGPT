@@ -56,7 +56,7 @@
             <!-- Cabecalho do modal -->
             <div class="modal-header bg-success py-1">
                 <h5 class="modal-title">Novo Processo</h5>
-                <button type="button" class="btn btn-outline-primary text-white border-0 fs-5" id="btnFecharModal">
+                <button type="button" class="btn btn-outline-primary text-white border-0 fs-5" id="btnFecharModal" data-dismiss="modal">
                     <i class="far fa-times-circle"></i>
                 </button>
             </div>
@@ -119,7 +119,7 @@
                             <label class="" for="selRequisitante">
                                 <span class="small">Requisitante</span><span class="text-danger">*</span>
                             </label> <br>
-                            <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selProcesso">
+                            <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selRequisitante">
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="Pregão SRP">7ºCTA</option>
                                 <option value="Pregão Tradicional">AC Defesa</option>
@@ -138,10 +138,10 @@
                     <!-- Coluna para registro da Fase -->
                     <div class="col-lg-4 mt-3 ">
                         <div class="form-group mb-2">
-                            <label class="" for="selRequisitante">
+                            <label class="" for="selFase">
                                 <span class="small">Fase</span><span class="text-danger">*</span>
                             </label> <br>
-                            <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selProcesso">
+                            <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selFase">
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="Pregão SRP">Na fila</option>
                                 <option value="Pregão Tradicional">Fase 1 - EPC</option>
@@ -213,8 +213,8 @@
                 <!-- /Coluna para registro do número dos DFDs-->
                 <!-- Botões Salvar e cancelar -->
                 <div class="form-group d-flex justify-content-end">
-                    <button id="salvarButton" class="btn btn-success btn-sm ml-2" onclick="deleteLastDfd()">Salvar</button>
-                    <button id="cancelarButton" class="btn btn-danger btn-sm ml-2" onclick="deleteLastDfd()">Cancelar</button>
+                    <button type="button" id="salvarButton" class="btn btn-success btn-sm ml-2" onclick="formSubmitClick()" data-bs-dismiss="modal">Salvar</button>
+                    <button type="button" id="cancelarButton" class="btn btn-danger btn-sm ml-2" data-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- /Botões Salvar e cancelar -->
 
@@ -312,5 +312,24 @@
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis", "pageLength"],
 
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)')
+
+
     });
+
+    /* -------------------------------------------------------------------------- */
+    /*             Limpar inputs do modal al cancelar ou fechar modal             */
+    /* -------------------------------------------------------------------------- */
+    $("#cancelarButton, #btnFecharModal").on('click', function() {
+
+        $("#idNup").val("");
+        $("#selProcesso").val(0);
+        $("#idNrProcesso").val("");
+        $("#selRequisitante").val(0);
+        $("#selFase").val(0);
+        $("#idDescricaoResumida").val("");
+        $("#idDescricaoDetalhada").val("");
+        $("#idDfd").val("");
+        $("#idDfd2").val("");
+
+    })
 </script>
