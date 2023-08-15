@@ -130,7 +130,7 @@
                                 <option value="Dispensa Ratificada">DGSI</option>
                                 <option value="Concorrência">Almoxarifado</option>
                             </select>
-                            <span id="validate_processo" class="text-danger small fst-italic" style="display:none"> Escolha o requisitante</span>
+                            <span id="validate_requisitante" class="text-danger small fst-italic" style="display:none"> Escolha o requisitante</span>
                         </div>
                     </div>
                     <!-- /Coluna para registro do requisitante -->
@@ -153,7 +153,7 @@
                                 <option value="Concorrência">Fase 7 - Em contratação</option>
                                 <option value="Concorrência">Fase 8 - Contratado</option>
                             </select>
-                            <span id="validate_processo" class="text-danger small fst-italic" style="display:none"> Escolha a fase do processo</span>
+                            <span id="validate_fase" class="text-danger small fst-italic" style="display:none"> Escolha a fase do processo</span>
                         </div>
                     </div>
                     <!-- /Coluna para registro da Fase-->
@@ -177,7 +177,7 @@
                                 <span class="small">Descrição detalhada</span><span class="text-danger">*</span>
                             </label>
                             <textarea type="text" class="form-control form-control-sm" id="idDescricaoDetalhada" placeholder="Faça uma descrição detalhada do processo"></textarea>
-                            <span id="validate_descricao_resumida" class="text-danger small fst-italic" style="display:none;"> Faça uma descrição detalhada do processo</span>
+                            <span id="validate_descricao_detalhada" class="text-danger small fst-italic" style="display:none;"> Faça uma descrição detalhada do processo</span>
                         </div>
                     </div>
                     <!-- /Coluna para Descrição detalhada do processo  -->
@@ -194,7 +194,6 @@
                                 </div>
                                 <button id="addDfdButton" class="btn btn-secondary btn-sm ml-2" onclick="addDfd()">Adicionar</button>
                             </div>
-                            <span id="validate_dfd" class="text-danger small fst-italic" style="display:none">Registre o números dos DFDs</span>
                         </div>
                     </div>
                     <div class="col-lg-4 mt-2">
@@ -205,6 +204,7 @@
                             <div class="d-flex">
                                 <textarea class="form-control form-control-sm flex-grow-1" id="idDfd2" style="margin: 0;" placeholder="_____/____" disabled></textarea>
                                 <button id="deleteDfdButton" class="btn btn-secondary btn-sm ml-2" onclick="deleteLastDfd()">Deletar</button>
+                                <span id="validate_dfd" class="text-danger small fst-italic" style="display:none">Registre o números dos DFDs</span>
                             </div>
                         </div>
                     </div>
@@ -330,6 +330,20 @@
         $("#idDescricaoDetalhada").val("");
         $("#idDfd").val("");
         $("#idDfd2").val("");
+
+
+
+        $("#validate_nup").css("display", "none");
+        $("#validate_processo").css("display", "none");
+        $("#validate_nr_processo").css("display", "none");
+        $("#validate_requisitante").css("display", "none");
+        $("#validate_fase").css("display", "none");
+        $("#validate_descricao_resumida").css("display", "none");
+        $("#validate_descricao_detalhada").css("display", "none");
+        $("#validate_dfd").css("display", "none");
+
+
+
 
     })
 </script>
