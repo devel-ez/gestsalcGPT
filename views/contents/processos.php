@@ -181,36 +181,8 @@
                         </div>
                     </div>
                     <!-- /Coluna para Descrição detalhada do processo  -->
-                    <hr />
-                    <!-- Coluna para registro do número dos DFDs -->
-                    <div class="col-lg-4 mt-2">
-                        <div class="form-group mb-2">
-                            <label for="idDfd" class="flex-grow-1">
-                                <span class="small">Números dos DFDs</span><span class="text-danger">*</span>
-                            </label>
-                            <div class="d-flex">
-                                <div class="input-container">
-                                    <input type="text" class="form-control form-control-sm" id="idDfd" name="idDfd" placeholder="_____/____" required oninput="maskedinput(this)">
-                                </div>
-                                <button id="addDfdButton" class="btn btn-secondary btn-sm ml-2" onclick="addDfd()">Adicionar</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 mt-2">
-                        <div class="form-group mb-2">
-                            <label for="idDfd" class="flex-grow-1">
-                                <span class="small">DFDs adicionados</span><span class="text-danger">*</span>
-                            </label>
-                            <div class="d-flex">
-                                <textarea class="form-control form-control-sm flex-grow-1" id="idDfd2" style="margin: 0;" placeholder="_____/____" disabled></textarea>
-                                <button id="deleteDfdButton" class="btn btn-secondary btn-sm ml-2" onclick="deleteLastDfd()">Deletar</button>
-                                <span id="validate_dfd" class="text-danger small fst-italic" style="display:none">Registre o números dos DFDs</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <hr />
-                <!-- /Coluna para registro do número dos DFDs-->
                 <!-- Botões Salvar e cancelar -->
                 <div class="form-group d-flex justify-content-end">
                     <button type="button" id="salvarButton" class="btn btn-success btn-sm ml-2" onclick="formSubmitClick()" data-bs-dismiss="modal">Salvar</button>
