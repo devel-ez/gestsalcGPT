@@ -285,37 +285,105 @@
 
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)')
 
+        /* -------------------------------------------------------------------------- */
+        /*             Limpar inputs do modal al cancelar ou fechar modal             */
+        /* -------------------------------------------------------------------------- */
+        $("#cancelarButton, #btnFecharModal").on('click', function() {
+
+            $("#idNup").val("");
+            $("#selProcesso").val(0);
+            $("#idNrProcesso").val("");
+            $("#selRequisitante").val(0);
+            $("#selFase").val(0);
+            $("#idDescricaoResumida").val("");
+            $("#idDescricaoDetalhada").val("");
+
+
+
+
+            $("#validate_nup").css("display", "none");
+            $("#validate_processo").css("display", "none");
+            $("#validate_nr_processo").css("display", "none");
+            $("#validate_requisitante").css("display", "none");
+            $("#validate_fase").css("display", "none");
+            $("#validate_descricao_resumida").css("display", "none");
+            $("#validate_descricao_detalhada").css("display", "none");
+
+
+
+
+        })
+
 
     });
 
-    /* -------------------------------------------------------------------------- */
-    /*             Limpar inputs do modal al cancelar ou fechar modal             */
-    /* -------------------------------------------------------------------------- */
-    $("#cancelarButton, #btnFecharModal").on('click', function() {
-
-        $("#idNup").val("");
-        $("#selProcesso").val(0);
-        $("#idNrProcesso").val("");
-        $("#selRequisitante").val(0);
-        $("#selFase").val(0);
-        $("#idDescricaoResumida").val("");
-        $("#idDescricaoDetalhada").val("");
-        $("#idDfd").val("");
-        $("#idDfd2").val("");
 
 
+    function formSubmitClick() {
 
-        $("#validate_nup").css("display", "none");
-        $("#validate_processo").css("display", "none");
-        $("#validate_nr_processo").css("display", "none");
-        $("#validate_requisitante").css("display", "none");
-        $("#validate_fase").css("display", "none");
-        $("#validate_descricao_resumida").css("display", "none");
-        $("#validate_descricao_detalhada").css("display", "none");
-        $("#validate_dfd").css("display", "none");
+        //Validar entrada nos campos inputs
+        Swal.fire({
+            title: 'Confirma o cadastro do processo?',
+            icon: 'warning',
+            ShowCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sim',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Não'
+        }).then((result) => {
+            if (result.isConfirmed) {
 
+                var dados = new FormData();
 
+                dados.append("id_nup", $("#idNup").val());
+                dados.append("sel_processo", $("#selProcesso").val());
+                dados.append("id_nr_processo", $("#idNrProcesso").val());
+                dados.append("sel_requisitante", $("#selRequisitante").val());
+                dados.append("sel_fase", $("#selFase").val());
+                dados.append("id_descricao_resumida", $("#idDescricaoResumida").val());
+                dados.append("id_descricao_detalhada", $("#idDescricaoDetalhada").val());
 
+            }
+        })
 
-    })
+        $.ajax({
+            url: "ajax/processos.ajax.php",
+            method: 'POST',
+            data: dados,
+            cache: false,
+            contentType: false,
+            dataType: 'json',
+            success: function(response) {
+
+                if (response == "Ok") {
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Processo cadastrado com sucesso!'
+                    });
+
+                    table.ajax.reaload();
+
+                    $("#mdlCadastrarProcesso").modal('hide');
+
+                    $("#idNup").val("");
+                    $("#selProcesso").val(0);
+                    $("#idNrProcesso").val("");
+                    $("#selRequisitante").val(0);
+                    $("#selFase").val(0);
+                    $("#idDescricaoResumida").val("");
+                    $("#idDescricaoDetalhada").val("");
+
+                } else {
+                    Toast.fire({
+
+                        icon: 'error',
+                        title: 'Processo não cadastrado!'
+                    })
+                }
+            }
+
+        })
+
+    }
 </script>
