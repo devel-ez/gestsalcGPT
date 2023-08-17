@@ -197,6 +197,8 @@
 <!-- /Tela modal para cadastro de processo -->
 <!-- Ajax scripts -->
 <script>
+    var table;
+
     $(document).ready(function() {
         // $.ajax({
         //     url: "ajax/processos.ajax.php",
@@ -212,7 +214,7 @@
         // });
 
 
-        var table = $('#example1').DataTable({
+        table = $('#example1').DataTable({
             buttons: [{
                 action: function(e, dt, node, config) {
                     $("mdlCadastrarProcesso").modal('show');
@@ -325,16 +327,18 @@
         Swal.fire({
             title: 'Confirma o cadastro do processo?',
             icon: 'warning',
-            ShowCancelButton: true,
+            showCancelButton: true,
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'Sim',
             cancelButtonColor: '#d33',
             cancelButtonText: 'Não'
         }).then((result) => {
+
             if (result.isConfirmed) {
 
                 var dados = new FormData();
 
+                dados.append("action", 2);
                 dados.append("id_nup", $("#idNup").val());
                 dados.append("sel_processo", $("#selProcesso").val());
                 dados.append("id_nr_processo", $("#idNrProcesso").val());
@@ -343,47 +347,53 @@
                 dados.append("id_descricao_resumida", $("#idDescricaoResumida").val());
                 dados.append("id_descricao_detalhada", $("#idDescricaoDetalhada").val());
 
+                <?php echo '<pre>';
+                print_r(dados);
+                echo '</pre>';
+                ?>
+
+                $.ajax({
+                    url: "ajax/processos.ajax.php",
+                    method: 'POST',
+                    data: dados,
+                    cache: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function(response) {
+
+                        if (response == "Ok") {
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Processo cadastrado com sucesso!'
+                            });
+
+                            table.ajax.reaload();
+
+                            $("#mdlCadastrarProcesso").modal('hide');
+
+                            $("#idNup").val("");
+                            $("#selProcesso").val(0);
+                            $("#idNrProcesso").val("");
+                            $("#selRequisitante").val(0);
+                            $("#selFase").val(0);
+                            $("#idDescricaoResumida").val("");
+                            $("#idDescricaoDetalhada").val("");
+
+                        } else {
+                            Toast.fire({
+
+                                icon: 'error',
+                                title: 'Processo não cadastrado!'
+                            })
+                        }
+                    }
+
+                })
             }
         })
 
-        $.ajax({
-            url: "ajax/processos.ajax.php",
-            method: 'POST',
-            data: dados,
-            cache: false,
-            contentType: false,
-            dataType: 'json',
-            success: function(response) {
 
-                if (response == "Ok") {
-
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Processo cadastrado com sucesso!'
-                    });
-
-                    table.ajax.reaload();
-
-                    $("#mdlCadastrarProcesso").modal('hide');
-
-                    $("#idNup").val("");
-                    $("#selProcesso").val(0);
-                    $("#idNrProcesso").val("");
-                    $("#selRequisitante").val(0);
-                    $("#selFase").val(0);
-                    $("#idDescricaoResumida").val("");
-                    $("#idDescricaoDetalhada").val("");
-
-                } else {
-                    Toast.fire({
-
-                        icon: 'error',
-                        title: 'Processo não cadastrado!'
-                    })
-                }
-            }
-
-        })
 
     }
 </script>

@@ -5,10 +5,10 @@ require_once "../models/processos.model.php";
 
 class AjaxProcessos
 {
+    public $idNup;
     public $selProcesso; 
     public $idNrProcesso;
-    public $selRequisitante;
-    public $idNup;
+    public $selRequisitante;    
     public $selFase;
     public $idDescricaoResumida;
     public $idDescricaoDetalhada;
@@ -41,6 +41,7 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
 
     $processos = new AjaxProcessos();
     $processos->ajaxListarProcessos();
+
 }else if (isset($_POST['action']) && $_POST['action'] == 2) { // Registrar processos    
 
     $processos = new AjaxProcessos();
@@ -57,6 +58,6 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
 
 }else{
     echo '<pre>';
-    var_dump($_POST);
+    print_r("parou aqui no ajax");
     echo '</pre>';
 }
