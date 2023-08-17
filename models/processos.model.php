@@ -31,7 +31,7 @@ class ProcessosModel
                 tipo_processo_origem, 
                 numero_processo_origem, 
                 requisitante, 
-                selFase, 
+                situacao, 
                 assunto_objeto, 
                 descricao_detalhada_objeto) 
                 
@@ -48,12 +48,12 @@ class ProcessosModel
                 $stmt->bindParam(":selProcesso", $tipo_processo_origem, PDO::PARAM_STR);
                 $stmt->bindParam(":idNrProcesso", $numero_processo_origem, PDO::PARAM_STR);
                 $stmt->bindParam(":selRequisitante", $requisitante, PDO::PARAM_STR);
-                $stmt->bindParam(":selFase", $selFase, PDO::PARAM_STR);
+                $stmt->bindParam(":selFase", $situacao, PDO::PARAM_STR);
                 $stmt->bindParam(":idDescricaoResumida", $assunto_objeto, PDO::PARAM_STR);
                 $stmt->bindParam(":idDescricaoDetalhada", $descricao_detalhada_objeto, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
-                $response = "Ok";
+                $response = "ok";
             } else {
                 $response = "Error";
             }

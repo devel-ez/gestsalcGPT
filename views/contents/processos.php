@@ -16,7 +16,7 @@
                     <div class="card-header">
                         <div class="col-lg-2 col-md-12">
                             <td>
-                                <button id="btnCadastrarProcesso" class="btn btn-block bg-gradient-success" data-toggle="modal" data-target="#mdlCadastrarProcesso">Cadastrar processo<i class="fas fa-plus fa-xs float-right" style="padding-top: 5px"></i></button>
+                                <button id="btnCadastrarProcesso"  class="btn btn-block bg-gradient-success" data-toggle="modal" data-target="#mdlCadastrarProcesso">Cadastrar processo<i class="fas fa-plus fa-xs float-right" style="padding-top: 5px"></i></button>
                             </td>
                         </div>
                     </div>
@@ -198,6 +198,14 @@
 <!-- Ajax scripts -->
 <script>
     var table;
+    var action;
+
+    var Toast = swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000
+    });
 
     $(document).ready(function() {
         // $.ajax({
@@ -339,39 +347,39 @@
                 var dados = new FormData();
 
                 dados.append("action", 2);
-                dados.append("id_nup", $("#idNup").val());
-                dados.append("sel_processo", $("#selProcesso").val());
-                dados.append("id_nr_processo", $("#idNrProcesso").val());
-                dados.append("sel_requisitante", $("#selRequisitante").val());
-                dados.append("sel_fase", $("#selFase").val());
-                dados.append("id_descricao_resumida", $("#idDescricaoResumida").val());
-                dados.append("id_descricao_detalhada", $("#idDescricaoDetalhada").val());
+                dados.append("idNup", $("#idNup").val());
+                dados.append("selProcesso", $("#selProcesso").val());
+                dados.append("idNrProcesso", $("#idNrProcesso").val());
+                dados.append("selRequisitante", $("#selRequisitante").val());
+                dados.append("selFase", $("#selFase").val());
+                dados.append("idDescricaoResumida", $("#idDescricaoResumida").val());
+                dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
 
-                <?php echo '<pre>';
-                print_r(dados);
-                echo '</pre>';
-                ?>
+
 
                 $.ajax({
+
                     url: "ajax/processos.ajax.php",
-                    method: 'POST',
+                    method: "POST",
                     data: dados,
                     cache: false,
                     contentType: false,
+                    processData: false,
                     dataType: 'json',
                     success: function(response) {
 
-                        if (response == "Ok") {
+
+
+                        if (response == "ok") {
 
                             Toast.fire({
                                 icon: 'success',
                                 title: 'Processo cadastrado com sucesso!'
                             });
 
-                            table.ajax.reaload();
+                            table.ajax.reload();
 
                             $("#mdlCadastrarProcesso").modal('hide');
-
                             $("#idNup").val("");
                             $("#selProcesso").val(0);
                             $("#idNrProcesso").val("");

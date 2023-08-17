@@ -55,7 +55,8 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
     $processos->idDescricaoDetalhada = $_POST['idDescricaoDetalhada'];
 
     $processos->ajaxRegistrarProcessos();
-
+    
+    
 }else{
     echo '<pre>';
     print_r("parou aqui no ajax");
