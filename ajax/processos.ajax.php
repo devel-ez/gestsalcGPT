@@ -13,11 +13,11 @@ class AjaxProcessos
     public $idDescricaoResumida;
     public $idDescricaoDetalhada;
 
-    // public function ajaxGetDataProcessos(){
-    //     $data = ProcessosController::ctrGetDataProcessos();
+    public function ajaxGetDataProcessos(){
+        $data = ProcessosController::ctrGetDataProcessos();
 
-    //     echo json_encode($data);
-    // }
+        echo json_encode($data);
+    }
 
     public function ajaxListarProcessos()
     {

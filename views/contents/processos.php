@@ -16,7 +16,7 @@
                     <div class="card-header">
                         <div class="col-lg-2 col-md-12">
                             <td>
-                                <button id="btnCadastrarProcesso"  class="btn btn-block bg-gradient-success" data-toggle="modal" data-target="#mdlCadastrarProcesso">Cadastrar processo<i class="fas fa-plus fa-xs float-right" style="padding-top: 5px"></i></button>
+                                <button id="btnCadastrarProcesso" class="btn btn-block bg-gradient-success" data-toggle="modal" data-target="#mdlCadastrarProcesso">Cadastrar processo<i class="fas fa-plus fa-xs float-right" style="padding-top: 5px"></i></button>
                             </td>
                         </div>
                     </div>
@@ -24,11 +24,10 @@
                         <table id="example1" class="table table-striped w-100 shadow ">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th> </th>
                                     <th>%</th>
                                     <th>NUP</th>
                                     <th>Processo Origem</th>
-                                    <th>Número do processo</th>
                                     <th>Objeto</th>
                                     <th>Requisitante</th>
                                     <th>Fase</th>
@@ -121,14 +120,14 @@
                             </label> <br>
                             <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selRequisitante">
                                 <option value="" disabled selected>Selecione...</option>
-                                <option value="Pregão SRP">7ºCTA</option>
-                                <option value="Pregão Tradicional">AC Defesa</option>
-                                <option value="Pregão IRP">DPI</option>
-                                <option value="Inexigibilidade">PAC</option>
-                                <option value="Dispensa Eletrônica Com Disputa">DCI</option>
-                                <option value="Dispensa Eletrônica Sem Disputa">FA</option>
-                                <option value="Dispensa Ratificada">DGSI</option>
-                                <option value="Concorrência">Almoxarifado</option>
+                                <option value="7ºCT">7ºCTA</option>
+                                <option value="AC Defesa">AC Defesa</option>
+                                <option value="DPI">DPI</option>
+                                <option value="PAC">PAC</option>
+                                <option value="DCI">DCI</option>
+                                <option value="FA">FA</option>
+                                <option value="DGSI">DGSI</option>
+                                <option value="Almoxarifado">Almoxarifado</option>
                             </select>
                             <span id="validate_requisitante" class="text-danger small fst-italic" style="display:none"> Escolha o requisitante</span>
                         </div>
@@ -143,15 +142,15 @@
                             </label> <br>
                             <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selFase">
                                 <option value="" disabled selected>Selecione...</option>
-                                <option value="Pregão SRP">Na fila</option>
-                                <option value="Pregão Tradicional">Fase 1 - EPC</option>
-                                <option value="Pregão IRP">Fase 2 - Análise SALC</option>
-                                <option value="Inexigibilidade">Fase 3 - Adequação EPC</option>
-                                <option value="Dispensa Eletrônica Com Disputa">Fase 4 - Conjur</option>
-                                <option value="Dispensa Eletrônica Sem Disputa">Fase 5 - Saneamento</option>
-                                <option value="Dispensa Ratificada">Fase 6 - Fase Externa</option>
-                                <option value="Concorrência">Fase 7 - Em contratação</option>
-                                <option value="Concorrência">Fase 8 - Contratado</option>
+                                <option value="Na fila">Na fila</option>
+                                <option value="Fase 1 - EPC">Fase 1 - EPC</option>
+                                <option value="Fase 2 - Análise SALC">Fase 2 - Análise SALC</option>
+                                <option value="Fase 3 - Adequação EPC">Fase 3 - Adequação EPC</option>
+                                <option value="Fase 4 - Conjur">Fase 4 - Conjur</option>
+                                <option value="Fase 5 - Saneamento">Fase 5 - Saneamento</option>
+                                <option value="Fase 6 - Fase Externa">Fase 6 - Fase Externa</option>
+                                <option value="Fase 7 - Em contratação">Fase 7 - Em contratação</option>
+                                <option value="Fase 8 - Contratado">Fase 8 - Contratado</option>
                             </select>
                             <span id="validate_fase" class="text-danger small fst-italic" style="display:none"> Escolha a fase do processo</span>
                         </div>
@@ -197,9 +196,6 @@
 <!-- /Tela modal para cadastro de processo -->
 <!-- Ajax scripts -->
 <script>
-    var table;
-    var action;
-
     var Toast = swal.mixin({
         toast: true,
         position: 'top',
@@ -208,6 +204,8 @@
     });
 
     $(document).ready(function() {
+
+        var table;
         // $.ajax({
         //     url: "ajax/processos.ajax.php",
         //     method: 'POST',
@@ -220,7 +218,6 @@
         //     }
 
         // });
-
 
         table = $('#example1').DataTable({
             buttons: [{
@@ -259,7 +256,7 @@
                 },
 
                 {
-                    targets: 8,
+                    targets: 7,
                     orderable: false,
                     render: function(data, type, full, meta) {
                         return "<center>" +
@@ -324,84 +321,98 @@
 
         })
 
+        function formSubmitClick() {
+
+            //Validar entrada nos campos inputs
+            Swal.fire({
+                title: 'Confirma o cadastro do processo?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Sim',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Não'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    var dados = new FormData();
+
+                    dados.append("action", 2);
+                    dados.append("idNup", $("#idNup").val());
+                    dados.append("selProcesso", $("#selProcesso").val());
+                    dados.append("idNrProcesso", $("#idNrProcesso").val());
+                    dados.append("selRequisitante", $("#selRequisitante").val());
+                    dados.append("selFase", $("#selFase").val());
+                    dados.append("idDescricaoResumida", $("#idDescricaoResumida").val());
+                    dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
+
+
+
+                    $.ajax({
+
+                        url: "ajax/processos.ajax.php",
+                        method: "POST",
+                        data: dados,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+
+
+
+                        success: function(response) {
+
+
+
+
+                            if (response == "ok") {
+
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Processo cadastrado com sucesso!'
+                                });
+
+
+                                console.log("Dados preenchidos no formulário:");
+                                console.log("idNup:", $("#idNup").val());
+                                console.log("selProcesso:", $("#selProcesso").val());
+                                console.log("idNrProcesso:", $("#idNrProcesso").val());
+                                console.log("selRequisitante:", $("#selRequisitante").val());
+                                console.log("selFase:", $("#selFase").val());
+                                console.log("idDescricaoResumida:", $("#idDescricaoResumida").val());
+                                console.log("idDescricaoDetalhada:", $("#idDescricaoDetalhada").val());
+
+
+                                $("#mdlCadastrarProcesso").modal('hide');
+                                $("#idNup").val("");
+                                $("#selProcesso").val(0);
+                                $("#idNrProcesso").val("");
+                                $("#selRequisitante").val(0);
+                                $("#selFase").val(0);
+                                $("#idDescricaoResumida").val("");
+                                $("#idDescricaoDetalhada").val("");
+
+                                table.ajax.reload();
+
+                            } else {
+
+
+                                Toast.fire({
+
+                                    icon: 'error',
+                                    title: 'Processo não cadastrado!'
+                                });
+                            }
+                        }
+
+                    });
+                }
+            })
+
+
+
+        }
 
     });
-
-
-
-    function formSubmitClick() {
-
-        //Validar entrada nos campos inputs
-        Swal.fire({
-            title: 'Confirma o cadastro do processo?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Sim',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Não'
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-
-                var dados = new FormData();
-
-                dados.append("action", 2);
-                dados.append("idNup", $("#idNup").val());
-                dados.append("selProcesso", $("#selProcesso").val());
-                dados.append("idNrProcesso", $("#idNrProcesso").val());
-                dados.append("selRequisitante", $("#selRequisitante").val());
-                dados.append("selFase", $("#selFase").val());
-                dados.append("idDescricaoResumida", $("#idDescricaoResumida").val());
-                dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
-
-
-
-                $.ajax({
-
-                    url: "ajax/processos.ajax.php",
-                    method: "POST",
-                    data: dados,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    dataType: 'json',
-                    success: function(response) {
-
-
-
-                        if (response == "ok") {
-
-                            Toast.fire({
-                                icon: 'success',
-                                title: 'Processo cadastrado com sucesso!'
-                            });
-
-                            table.ajax.reload();
-
-                            $("#mdlCadastrarProcesso").modal('hide');
-                            $("#idNup").val("");
-                            $("#selProcesso").val(0);
-                            $("#idNrProcesso").val("");
-                            $("#selRequisitante").val(0);
-                            $("#selFase").val(0);
-                            $("#idDescricaoResumida").val("");
-                            $("#idDescricaoDetalhada").val("");
-
-                        } else {
-                            Toast.fire({
-
-                                icon: 'error',
-                                title: 'Processo não cadastrado!'
-                            })
-                        }
-                    }
-
-                })
-            }
-        })
-
-
-
-    }
 </script>
