@@ -62,6 +62,12 @@
                                 <p>Execução PCA</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/contents/test.php', 'content-wrapper')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>TESTES</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

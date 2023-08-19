@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="views/assets/dist/custom_css/custom_css.css">
 
 
-    <!--ESTILOS PARA USO DE DATATABLES JS "antiga"-->
+    <!--CSS PARA USO DO DATATABLES JS-->
     <link rel="stylesheet" href="views/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="views/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="views/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
@@ -39,7 +39,8 @@
     <script src="views/assets/dist/custom_js/custom_js.js"></script>
 
     <!--BIBLIOTECAS PARA USO DE DATATABLES JS-->
-    <script src="views/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="views/assets/plugins/datatables/jquery.dataTables.min.js"></script> -->
     <script src="views/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="views/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="views/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>

@@ -184,7 +184,7 @@
                 <hr />
                 <!-- Botões Salvar e cancelar -->
                 <div class="form-group d-flex justify-content-end">
-                    <button type="button" id="salvarButton" class="btn btn-success btn-sm ml-2" onclick="formSubmitClick()" data-bs-dismiss="modal">Salvar</button>
+                    <button type="button" id="salvarButton" class="btn btn-success btn-sm ml-2" onclick="formsubmitClick()" data-bs-dismiss="modal">Salvar</button>
                     <button type="button" id="cancelarButton" class="btn btn-danger btn-sm ml-2" data-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- /Botões Salvar e cancelar -->
@@ -203,9 +203,12 @@
         timer: 3000
     });
 
+   
+    var table;
+    var action;
+
     $(document).ready(function() {
 
-        var table;
         // $.ajax({
         //     url: "ajax/processos.ajax.php",
         //     method: 'POST',
@@ -219,12 +222,16 @@
 
         // });
 
+
+
         table = $('#example1').DataTable({
-            buttons: [{
-                action: function(e, dt, node, config) {
-                    $("mdlCadastrarProcesso").modal('show');
-                }
-            }],
+
+            // buttons: [{
+            //     action: function(e, dt, node, config) {
+            //         $("mdlCadastrarProcesso").modal('show');
+            //         action = 2;
+            //     }
+            // }],
             language: {
                 url: "views/assets/plugins/language/json/pt_br.json"
             },
@@ -284,13 +291,15 @@
                 }
             ],
 
+
+
             dom: 'Bfrtip',
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis", "pageLength"],
 
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)')
+        })
 
         /* -------------------------------------------------------------------------- */
         /*             Limpar inputs do modal al cancelar ou fechar modal             */
@@ -305,9 +314,6 @@
             $("#idDescricaoResumida").val("");
             $("#idDescricaoDetalhada").val("");
 
-
-
-
             $("#validate_nup").css("display", "none");
             $("#validate_processo").css("display", "none");
             $("#validate_nr_processo").css("display", "none");
@@ -315,104 +321,80 @@
             $("#validate_fase").css("display", "none");
             $("#validate_descricao_resumida").css("display", "none");
             $("#validate_descricao_detalhada").css("display", "none");
-
-
-
-
         })
-
-        function formSubmitClick() {
-
-            //Validar entrada nos campos inputs
-            Swal.fire({
-                title: 'Confirma o cadastro do processo?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Sim',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Não'
-            }).then((result) => {
-
-                if (result.isConfirmed) {
-
-                    var dados = new FormData();
-
-                    dados.append("action", 2);
-                    dados.append("idNup", $("#idNup").val());
-                    dados.append("selProcesso", $("#selProcesso").val());
-                    dados.append("idNrProcesso", $("#idNrProcesso").val());
-                    dados.append("selRequisitante", $("#selRequisitante").val());
-                    dados.append("selFase", $("#selFase").val());
-                    dados.append("idDescricaoResumida", $("#idDescricaoResumida").val());
-                    dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
-
-
-
-                    $.ajax({
-
-                        url: "ajax/processos.ajax.php",
-                        method: "POST",
-                        data: dados,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        dataType: 'json',
-
-
-
-                        success: function(response) {
-
-
-
-
-                            if (response == "ok") {
-
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: 'Processo cadastrado com sucesso!'
-                                });
-
-
-                                console.log("Dados preenchidos no formulário:");
-                                console.log("idNup:", $("#idNup").val());
-                                console.log("selProcesso:", $("#selProcesso").val());
-                                console.log("idNrProcesso:", $("#idNrProcesso").val());
-                                console.log("selRequisitante:", $("#selRequisitante").val());
-                                console.log("selFase:", $("#selFase").val());
-                                console.log("idDescricaoResumida:", $("#idDescricaoResumida").val());
-                                console.log("idDescricaoDetalhada:", $("#idDescricaoDetalhada").val());
-
-
-                                $("#mdlCadastrarProcesso").modal('hide');
-                                $("#idNup").val("");
-                                $("#selProcesso").val(0);
-                                $("#idNrProcesso").val("");
-                                $("#selRequisitante").val(0);
-                                $("#selFase").val(0);
-                                $("#idDescricaoResumida").val("");
-                                $("#idDescricaoDetalhada").val("");
-
-                                table.ajax.reload();
-
-                            } else {
-
-
-                                Toast.fire({
-
-                                    icon: 'error',
-                                    title: 'Processo não cadastrado!'
-                                });
-                            }
-                        }
-
-                    });
-                }
-            })
-
-
-
-        }
-
     });
+
+    
+    function formsubmitClick() {
+
+        //Validar entrada nos campos inputs
+        Swal.fire({
+            title: 'Confirma o cadastro do processo?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sim',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Não'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                var dados = new FormData();
+
+                dados.append("action", 2);
+                dados.append("idNup", $("#idNup").val());
+                dados.append("selProcesso", $("#selProcesso").val());
+                dados.append("idNrProcesso", $("#idNrProcesso").val());
+                dados.append("selRequisitante", $("#selRequisitante").val());
+                dados.append("selFase", $("#selFase").val());
+                dados.append("idDescricaoResumida", $("#idDescricaoResumida").val());
+                dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
+
+
+
+                $.ajax({
+
+                    url: "ajax/processos.ajax.php",
+                    method: "POST",
+                    data: dados,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+
+                    success: function(response) {
+
+                        if (response == "ok") {
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Processo cadastrado com sucesso!'
+                            });
+
+                            table.ajax.reload();  
+
+                            $("#mdlCadastrarProcesso").modal('hide');
+                            $("#idNup").val("");
+                            $("#selProcesso").val(0);
+                            $("#idNrProcesso").val("");
+                            $("#selRequisitante").val(0);
+                            $("#selFase").val(0);
+                            $("#idDescricaoResumida").val("");
+                            $("#idDescricaoDetalhada").val("");
+
+                        } else {
+
+                            Toast.fire({
+
+                                icon: 'error',
+                                title: 'Processo não cadastrado!'
+                            });
+                        }
+                    },
+
+                });
+            }
+        })
+    }
 </script>
