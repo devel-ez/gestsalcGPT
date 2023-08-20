@@ -329,7 +329,7 @@
             $("#idDescricaoResumida").val("");
             $("#idDescricaoDetalhada").val("");
             $("#idDataEntrada").val(0);
-            
+
         })
     });
 
@@ -397,6 +397,7 @@
                                     $("#idDescricaoResumida").val("");
                                     $("#idDescricaoDetalhada").val("");
                                     $("#idDataEntrada").val("");
+                                    $(".needs-validation").removeClass("was-validated");
 
                                 } else {
 
