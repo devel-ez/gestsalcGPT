@@ -23,17 +23,18 @@ class ProcessosModel
         return $stmt->fetchAll();
     }
 
-    static public function mdlRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada)
+    static public function mdlRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada)
     {
         try {
-                $stmt = Connection::connect()->prepare("INSERT INTO PROCESSOS(
+            $stmt = Connection::connect()->prepare("INSERT INTO PROCESSOS(
                 NUP, 
                 tipo_processo_origem, 
                 numero_processo_origem, 
                 requisitante, 
                 situacao, 
                 assunto_objeto, 
-                descricao_detalhada_objeto) 
+                descricao_detalhada_objeto,
+                data_entrada)
 
             VALUES(
                 :idNup, 
@@ -42,15 +43,18 @@ class ProcessosModel
                 :selRequisitante, 
                 :selFase, 
                 :idDescricaoResumida, 
-                :idDescricaoDetalhada)");
+                :idDescricaoDetalhada,
+                :idDataEntrada)");
 
-                $stmt->bindParam(":idNup", $idNup, PDO::PARAM_STR);
-                $stmt->bindParam(":selProcesso", $selProcesso, PDO::PARAM_STR);
-                $stmt->bindParam(":idNrProcesso", $idNrProcesso, PDO::PARAM_STR);
-                $stmt->bindParam(":selRequisitante", $selRequisitante, PDO::PARAM_STR);
-                $stmt->bindParam(":selFase", $selFase, PDO::PARAM_STR);
-                $stmt->bindParam(":idDescricaoResumida", $idDescricaoResumida, PDO::PARAM_STR);
-                $stmt->bindParam(":idDescricaoDetalhada", $idDescricaoDetalhada, PDO::PARAM_STR);
+
+            $stmt->bindParam(":idNup", $idNup, PDO::PARAM_STR);
+            $stmt->bindParam(":selProcesso", $selProcesso, PDO::PARAM_STR);
+            $stmt->bindParam(":idNrProcesso", $idNrProcesso, PDO::PARAM_STR);
+            $stmt->bindParam(":selRequisitante", $selRequisitante, PDO::PARAM_STR);
+            $stmt->bindParam(":selFase", $selFase, PDO::PARAM_STR);
+            $stmt->bindParam(":idDescricaoResumida", $idDescricaoResumida, PDO::PARAM_STR);
+            $stmt->bindParam(":idDescricaoDetalhada", $idDescricaoDetalhada, PDO::PARAM_STR);
+            $stmt->bindParam(":idDataEntrada", $idDataEntrada, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
                 $response = "ok";

@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="views/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="views/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
+
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
     <script src="views/assets/plugins/jquery/jquery.min.js"></script>
@@ -39,8 +40,7 @@
     <script src="views/assets/dist/custom_js/custom_js.js"></script>
 
     <!--BIBLIOTECAS PARA USO DE DATATABLES JS-->
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <!-- <script src="views/assets/plugins/datatables/jquery.dataTables.min.js"></script> -->
+    <script src="views/assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="views/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="views/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="views/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
@@ -52,6 +52,10 @@
     <script src="views/assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="views/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="views/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+    
+    
 
 </head>
 
