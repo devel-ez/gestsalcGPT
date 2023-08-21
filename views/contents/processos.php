@@ -161,7 +161,7 @@
                         <div class="col-lg-6 mt-4">
                             <div class="form-group mb-2">
                                 <label class="" for="idDescricaoResumida">
-                                    <span class="small">Descrição resumida (50 caracteres)</span><span class="text-danger">*</span>
+                                    <span class="small">Descrição resumida (30 caracteres)</span><span class="text-danger">*</span>
                                 </label>
                                 <textarea type="text" class="form-control form-control-sm" id="idDescricaoResumida" placeholder="Faça uma descrição resumida do processo" maxlength="50" required></textarea>
                                 <div class="invalid-feedback"> Escreva uma descrição resumida</div>
@@ -366,6 +366,14 @@
                         dados.append("idDescricaoResumida", $("#idDescricaoResumida").val());
                         dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
                         dados.append("idDataEntrada", $("#idDataEntrada").val());
+
+
+                        // Exibir os dados no console
+                        console.log("Dados do Formulário:");
+                        for (var pair of dados.entries()) {
+                            console.log(pair[0] + ": " + pair[1]);
+                        }
+
 
                         $.ajax({
 
