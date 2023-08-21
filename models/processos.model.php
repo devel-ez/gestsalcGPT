@@ -68,4 +68,44 @@ class ProcessosModel
         return $response;
         $stmt = null;
     }
+
+    static public function mdlEditarProcessos($table, $data, $id, $nameId)
+    {
+
+        $set = "";
+
+        foreach ($data as $key => $value) {
+
+            $set .= $key . " = :" . $key . ",";
+        }
+
+
+        echo $set;
+
+        // foreach ($set as $key => $value) {
+        //     echo "$set: $value\n";
+        // }
+
+
+        // echo 'Valor do set: '.$set. '  ' . 'Valor da key:  '. $key;
+
+        $set = substr($set, 0, -1);
+
+        $stmt = Connection::connect()->prepare("UPDATE $table SET $set WHERE $nameId = :$nameId");
+
+        foreach ($data as $key => $value) {
+
+            $stmt->bindParam(":" . $key, $data[$key], PDO::PARAM_STR);
+        }
+
+        $stmt->bindParam(":" . $nameId, $id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+
+            return "ok";
+        } else {
+
+            return Connection::connect()->errorInfo();
+        }
+    }
 }

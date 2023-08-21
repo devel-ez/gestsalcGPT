@@ -23,4 +23,10 @@ class ProcessosController{
         $registroProcessos = ProcessosModel::mdlRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada); 
         return $registroProcessos;
     }
+
+    static public function ctrEditarProcesso($table, $data, $id, $nameId){
+        $response = ProcessosModel::mdlEditarProcessos($table, $data, $id, $nameId);
+
+        return $response;
+    }
 }

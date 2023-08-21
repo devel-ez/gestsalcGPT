@@ -316,23 +316,41 @@
 
         })
 
-        /* -------------------------------------------------------------------------- */
-        /*             Limpar inputs do modal al cancelar ou fechar modal             */
-        /* -------------------------------------------------------------------------- */
-        $("#cancelarButton, #btnFecharModal").on('click', function() {
 
-            $("#idNup").val("");
-            $("#selProcesso").val(0);
-            $("#idNrProcesso").val("");
-            $("#selRequisitante").val(0);
-            $("#selFase").val(0);
-            $("#idDescricaoResumida").val("");
-            $("#idDescricaoDetalhada").val("");
-            $("#idDataEntrada").val(0);
-
-        })
     });
 
+    /* -------------------------------------------------------------------------- */
+    /*             Limpar inputs do modal al cancelar ou fechar modal             */
+    /* -------------------------------------------------------------------------- */
+    $("#cancelarButton, #btnFecharModal").on('click', function() {
+
+        $("#idNup").val("");
+        $("#selProcesso").val(0);
+        $("#idNrProcesso").val("");
+        $("#selRequisitante").val(0);
+        $("#selFase").val(0);
+        $("#idDescricaoResumida").val("");
+        $("#idDescricaoDetalhada").val("");
+        $("#idDataEntrada").val(0);
+
+    })
+
+    /* -------------------------------------------------------------------------- */
+    /*           Limpar a validação quando o botão cancelar é pressionado          */
+    /* -------------------------------------------------------------------------- */
+    document.getElementById("cancelarButton").addEventListener("click", function() {
+
+        $(".needs-validation").removeClass("was-validated");
+    });
+
+    $("#btnCadastrarProcesso").on('click', function() {
+
+        action = 2;
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*       Validar formulário, cadastrar processos e atualizar tabela           */
+    /* -------------------------------------------------------------------------- */
     document.getElementById("salvarButton").addEventListener("click", function() {
 
         var forms = document.getElementsByClassName("needs-validation");
@@ -357,7 +375,7 @@
 
                         var dados = new FormData();
 
-                        dados.append("action", 2);
+                        dados.append("action", action);
                         dados.append("idNup", $("#idNup").val());
                         dados.append("selProcesso", $("#selProcesso").val());
                         dados.append("idNrProcesso", $("#idNrProcesso").val());
@@ -374,6 +392,14 @@
                             console.log(pair[0] + ": " + pair[1]);
                         }
 
+                        if (action == 2) {
+                            var title_msg = "Processo cadastrado com sucesso!"
+                        }
+
+                        if (action == 3) {
+                            var title_msg = "Processo editado com sucesso!"
+                            console.log(title_msg);
+                        }
 
                         $.ajax({
 
@@ -391,7 +417,7 @@
 
                                     Toast.fire({
                                         icon: 'success',
-                                        title: 'Processo cadastrado com sucesso!'
+                                        title: title_msg
                                     });
 
                                     table.ajax.reload();
@@ -430,8 +456,48 @@
 
     });
 
-    document.getElementById("cancelarButton").addEventListener("click", function() {
+    /* -------------------------------------------------------------------------- */
+    /*                         Editar processos cadastrados                        */
+    /* -------------------------------------------------------------------------- */
+    $("#example1").on("click", ".btnEditarProcesso", function() {
 
-        $(".needs-validation").removeClass("was-validated");
+        action = 3;
+
+        $("#mdlCadastrarProcesso").modal('show');
+
+        var data = table.row($(this).parents('tr')).data();
+
+        $("#idNup").val(data[2]);
+        $("#selRequisitante").val(data[5]);
+        $("#selFase").val(data[6]);
+        $("#idDescricaoResumida").val(data[4]);
+        // $("#idDescricaoDetalhada").val(data[7]);
+        // $("#idDataEntrada").val(data[9]);
+
+        /* -------------------------------------------------------------------------- */
+        /*              Dividir As informações da coluna processo origem              */
+        /*             para obter o tipo do processo e número do processo             */
+        /* -------------------------------------------------------------------------- */
+        var info = data[3]; // Conteúdo da posição 3
+
+        // Use uma expressão regular para separar o texto e o número
+        var regex = /([^0-9]+)([0-9].*)/; // Captura a parte não numérica e a parte numérica
+        var matches = info.match(regex);
+
+        if (matches) {
+            var parteNaoNumerica = matches[1].trim();
+            var parteNumerica = matches[2].trim();
+
+            // Preenche os campos correspondentes
+            $("#selProcesso").val(parteNaoNumerica);
+            $("#idNrProcesso").val(parteNumerica);
+        } else {
+            // Trate o caso em que a expressão regular não encontra uma correspondência
+            // Nesse caso, você pode optar por definir ambos os campos para o valor completo
+            $("#selProcesso").val(info);
+            $("#idNrProcesso").val("");
+        }
+
+
     });
 </script>

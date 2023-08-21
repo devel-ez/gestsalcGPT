@@ -14,6 +14,7 @@ class AjaxProcessos
     public $idDescricaoDetalhada;
     public $idDataEntrada;
 
+
     public function ajaxGetDataProcessos()
     {
         $data = ProcessosController::ctrGetDataProcessos();
@@ -43,6 +44,17 @@ class AjaxProcessos
 
         echo json_encode($processos);
     }
+
+    public function ajaxEditarProcesso($data)
+    {
+        $table = "processos";
+        $id = $_POST["idNup"];
+        $nameId = "NUP";
+
+        $response = ProcessosController::ctrEditarProcesso($table, $data, $id, $nameId);
+
+        echo json_encode($response);
+    }
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
@@ -63,6 +75,29 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
     $processos->idDataEntrada = $_POST['idDataEntrada'];
 
     $processos->ajaxRegistrarProcessos();
+} else if (isset($_POST['action']) && $_POST['action'] == 3) { // Registrar processos 
+
+    $editarProcesso = new AjaxProcessos;
+
+    $data = array(
+        'NUP' => $_POST['idNup'],
+        'tipo_processo_origem' => $_POST['selProcesso'],
+        'numero_processo_origem' => $_POST['idNrProcesso'],
+        'requisitante' => $_POST['selRequisitante'],
+        'situacao' => $_POST['selFase'],
+        'assunto_objeto' => $_POST['idDescricaoResumida'],
+        'descricao_detalhada_objeto' => $_POST['idDescricaoDetalhada'],
+        'data_entrada' => $_POST['idDataEntrada'],
+
+    );
+
+    // foreach ($data as $key => $value) {
+    //     echo "$key: $value\n";
+    // }
+
+
+    $editarProcesso->ajaxEditarProcesso($data);
+
 } else {
     echo '<pre>';
     print_r("parou aqui no ajax");
