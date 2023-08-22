@@ -77,17 +77,8 @@ class ProcessosModel
         foreach ($data as $key => $value) {
 
             $set .= $key . " = :" . $key . ",";
+            // echo $key . " = :" . $key . "<br>"; // Imprime o resultado atual
         }
-
-
-        echo $set;
-
-        // foreach ($set as $key => $value) {
-        //     echo "$set: $value\n";
-        // }
-
-
-        // echo 'Valor do set: '.$set. '  ' . 'Valor da key:  '. $key;
 
         $set = substr($set, 0, -1);
 
@@ -99,6 +90,36 @@ class ProcessosModel
         }
 
         $stmt->bindParam(":" . $nameId, $id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+
+            return "ok";
+        } else {
+
+            return Connection::connect()->errorInfo();
+        }
+    }
+
+    static public function mdlDeletarProcesso($table, $id, $nameId)
+    {
+
+        try {
+            $historico_data_entrada_saida = "historico_data_entrada_saida";
+
+            $stmt = Connection::connect()->prepare("DELETE FROM $historico_data_entrada_saida WHERE $nameId = :$nameId");
+
+            $stmt->bindParam(":" . $nameId,  $id,  PDO::PARAM_INT);
+
+            $stmt->execute();
+        } catch (Exception $e) {
+            $response = 'Exception capturada no mdlDeletar:' . $e->getMessage();
+        }
+
+
+
+        $stmt = Connection::connect()->prepare("DELETE FROM $table WHERE $nameId = :$nameId");
+
+        $stmt->bindParam(":" . $nameId,  $id,  PDO::PARAM_INT);
 
         if ($stmt->execute()) {
 

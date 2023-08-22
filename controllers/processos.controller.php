@@ -29,4 +29,12 @@ class ProcessosController{
 
         return $response;
     }
+
+
+    static public function ctrDeletarProcesso($table, $id, $nameId){
+
+        $response = ProcessosModel::mdlDeletarProcesso($table, $id, $nameId);
+
+        return $response;
+    }
 }

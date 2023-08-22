@@ -48,12 +48,24 @@ class AjaxProcessos
     public function ajaxEditarProcesso($data)
     {
         $table = "processos";
-        $id = $_POST["idNup"];
-        $nameId = "NUP";
+        $id = $_POST["idId"];
+        $nameId = "id_processos";
 
         $response = ProcessosController::ctrEditarProcesso($table, $data, $id, $nameId);
 
         echo json_encode($response);
+
+    }
+    public function ajaxDeletarProcesso()
+    {
+        $table = "processos";
+        $id = $_POST["idId"];
+        $nameId = "id_processos";
+
+        $response = ProcessosController::ctrDeletarProcesso($table, $id, $nameId);
+
+        echo json_encode($response);
+
     }
 }
 
@@ -75,11 +87,12 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
     $processos->idDataEntrada = $_POST['idDataEntrada'];
 
     $processos->ajaxRegistrarProcessos();
-} else if (isset($_POST['action']) && $_POST['action'] == 3) { // Registrar processos 
+} else if (isset($_POST['action']) && $_POST['action'] == 3) { // Editar processos 
 
     $editarProcesso = new AjaxProcessos;
 
     $data = array(
+
         'NUP' => $_POST['idNup'],
         'tipo_processo_origem' => $_POST['selProcesso'],
         'numero_processo_origem' => $_POST['idNrProcesso'],
@@ -94,9 +107,17 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
     // foreach ($data as $key => $value) {
     //     echo "$key: $value\n";
     // }
-
-
     $editarProcesso->ajaxEditarProcesso($data);
+
+
+} else if (isset($_POST['action']) && $_POST['action'] == 4) { // Deletar processo
+
+    $deletarProcesso = new AjaxProcessos;
+    $deletarProcesso -> ajaxDeletarProcesso();
+
+
+ 
+
 
 } else {
     echo '<pre>';

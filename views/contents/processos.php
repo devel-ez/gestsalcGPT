@@ -24,14 +24,21 @@
                         <table id="example1" class="table table-striped w-100 shadow ">
                             <thead>
                                 <tr>
-                                    <th> </th>
+
+                                    <th>id</th>
+                                    <th>control</th>
                                     <th>%</th>
+                                    <th>Tipo processo Origem</th>
+                                    <th>Número do processo</th>
                                     <th>NUP</th>
                                     <th>Processo Origem</th>
                                     <th>Objeto</th>
+                                    <th>descrição detalhada</th>
+                                    <th>data de entrada</th>
                                     <th>Requisitante</th>
                                     <th>Fase</th>
                                     <th>Opções</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,6 +72,10 @@
                 <form class="needs-validation" novalidate>
                     <!-- Abrir uma linha -->
                     <div class="row">
+                        <!-- Coluna para RETORNO DO ID NO EDITAR HIDEN -->
+                        <input id="idId" type="text" hidden></ipnput>
+                        <!-- /Coluna para RETORNO DO ID NO EDITAR HIDEN -->
+
                         <!-- Coluna para registro do NUP -->
                         <div class="col-lg-3">
                             <div class="form-group mb-2">
@@ -270,15 +281,37 @@
             },
 
 
+            columnDefs: [
 
-            columnDefs: [{
+                {
                     targets: 0,
-                    orderable: false,
-                    className: 'control'
+                    visible: false,
                 },
 
                 {
-                    targets: 7,
+                    targets: 1,
+                    orderable: false,
+                    className: 'control'
+                },
+                {
+                    targets: 03,
+                    visible: false,
+                },
+                {
+                    targets: 04,
+                    visible: false,
+                },
+                {
+                    targets: 08,
+                    visible: false,
+                },
+                {
+                    targets: 09,
+                    visible: false,
+                },
+
+                {
+                    targets: 12,
                     orderable: false,
                     render: function(data, type, full, meta) {
                         return "<center>" +
@@ -376,6 +409,7 @@
                         var dados = new FormData();
 
                         dados.append("action", action);
+                        dados.append("idId", $("#idId").val());
                         dados.append("idNup", $("#idNup").val());
                         dados.append("selProcesso", $("#selProcesso").val());
                         dados.append("idNrProcesso", $("#idNrProcesso").val());
@@ -387,10 +421,10 @@
 
 
                         // Exibir os dados no console
-                        console.log("Dados do Formulário:");
-                        for (var pair of dados.entries()) {
-                            console.log(pair[0] + ": " + pair[1]);
-                        }
+                        // console.log("Dados do Formulário:");
+                        // for (var pair of dados.entries()) {
+                        //     console.log(pair[0] + ": " + pair[1]);
+                        // }
 
                         if (action == 2) {
                             var title_msg = "Processo cadastrado com sucesso!"
@@ -398,7 +432,6 @@
 
                         if (action == 3) {
                             var title_msg = "Processo editado com sucesso!"
-                            console.log(title_msg);
                         }
 
                         $.ajax({
@@ -467,37 +500,89 @@
 
         var data = table.row($(this).parents('tr')).data();
 
-        $("#idNup").val(data[2]);
-        $("#selRequisitante").val(data[5]);
-        $("#selFase").val(data[6]);
-        $("#idDescricaoResumida").val(data[4]);
-        // $("#idDescricaoDetalhada").val(data[7]);
-        // $("#idDataEntrada").val(data[9]);
+        $("#idId").val(data[0]);
+        $("#idNup").val(data[5]);
+        $("#selProcesso").val(data[3]);
+        $("#idNrProcesso").val(data[4]);
+        $("#selRequisitante").val(data[10]);
+        $("#selFase").val(data[11]);
+        $("#idDescricaoResumida").val(data[7]);
+        $("#idDescricaoDetalhada").val(data[8]);
+        $("#idDataEntrada").val(data[9]);
+    });
 
-        /* -------------------------------------------------------------------------- */
-        /*              Dividir As informações da coluna processo origem              */
-        /*             para obter o tipo do processo e número do processo             */
-        /* -------------------------------------------------------------------------- */
-        var info = data[3]; // Conteúdo da posição 3
 
-        // Use uma expressão regular para separar o texto e o número
-        var regex = /([^0-9]+)([0-9].*)/; // Captura a parte não numérica e a parte numérica
-        var matches = info.match(regex);
+    /* -------------------------------------------------------------------------- */
+    /*                         Deletar processo da tabela                         */
+    /* -------------------------------------------------------------------------- */
 
-        if (matches) {
-            var parteNaoNumerica = matches[1].trim();
-            var parteNumerica = matches[2].trim();
+    $('#example1').on("click", ".btnDeletarProcesso", function() {
 
-            // Preenche os campos correspondentes
-            $("#selProcesso").val(parteNaoNumerica);
-            $("#idNrProcesso").val(parteNumerica);
-        } else {
-            // Trate o caso em que a expressão regular não encontra uma correspondência
-            // Nesse caso, você pode optar por definir ambos os campos para o valor completo
-            $("#selProcesso").val(info);
-            $("#idNrProcesso").val("");
-        }
+        action = 4;
 
+        var data = table.row($(this).parents('tr')).data();
+
+        var idId = data[0];
+
+        //Validar entrada nos campos inputs
+        Swal.fire({
+            title: 'Confirma detelar o processo?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sim, desejo deletar!',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Não'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                var dados = new FormData();
+
+                dados.append("action", action);
+                dados.append("idId", idId);
+
+                // Exibir os dados no console
+                // console.log("Dados do Formulário:");
+                for (var pair of dados.entries()) {
+                    console.log(pair[0] + ": " + pair[1]);
+                }
+
+                $.ajax({
+
+                    url: "ajax/processos.ajax.php",
+                    method: "POST",
+                    data: dados,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+
+                    success: function(response) {
+
+                        if (response == "ok") {
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: "Processo deletado com sucesso!"
+                            });
+
+                            table.ajax.reload();
+
+
+                        } else {
+
+                            Toast.fire({
+
+                                icon: 'error',
+                                title: 'Processo não foi deletado!'
+                            });
+                        }
+                    },
+
+                });
+            }
+        })
 
     });
 </script>
