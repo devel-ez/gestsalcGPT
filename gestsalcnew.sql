@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21-Ago-2023 às 22:24
+-- Tempo de geração: 22-Ago-2023 às 20:51
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -27,11 +27,16 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_listarProcessosFaseInterna` ()   BEGIN
   select 
+    p.id_processos,
     '' as detalhes, 
     '' as progresso,
+    p.tipo_processo_origem,
+    p.numero_processo_origem,
     p.NUP,
     CONCAT(p.tipo_processo_origem, ' ', p.numero_processo_origem) as tipo_num_processo,
     p.assunto_objeto,
+    p.descricao_detalhada_objeto,
+    p.data_entrada,    
     p.requisitante,
     p.situacao,
     '' as opcoes
@@ -54,19 +59,6 @@ CREATE TABLE `historico_data_entrada_saida` (
   `hist_data_saida` date NOT NULL,
   `hist_motivo_data_saida` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `historico_data_entrada_saida`
---
-
-INSERT INTO `historico_data_entrada_saida` (`id_hist_entrada_saida`, `id_processos`, `hist_data_entrada`, `hist_motivo_data_entrada`, `hist_data_saida`, `hist_motivo_data_saida`) VALUES
-(24, 23, '2023-08-02', '', '0000-00-00', ''),
-(25, 24, '2023-08-15', '', '0000-00-00', ''),
-(26, 23, '2023-08-11', '', '0000-00-00', ''),
-(27, 24, '2023-08-11', '', '0000-00-00', ''),
-(28, 25, '2023-08-03', '', '0000-00-00', ''),
-(29, 23, '2023-08-09', '', '0000-00-00', ''),
-(30, 24, '2023-08-09', '', '0000-00-00', '');
 
 -- --------------------------------------------------------
 
@@ -95,15 +87,6 @@ CREATE TABLE `processos` (
   `protocolista` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `processos`
---
-
-INSERT INTO `processos` (`id_processos`, `data_entrada`, `motivo_data_entrada`, `data_saída`, `motivo_data_saida`, `dfd`, `NUP`, `tipo_processo_origem`, `numero_processo_origem`, `assunto_objeto`, `descricao_detalhada_objeto`, `requisitante`, `analista`, `previsao_conclusao`, `situacao`, `operador_fase_externa`, `resultado_fase_externa`, `protocolista`, `status`) VALUES
-(23, '2023-08-09', '', '0000-00-00', '', '', '11111', 'Pregão IRP', '11111/1111', '11111', 'dfgdsgfgsd', 'AC Defesa', '', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
-(24, '2023-08-09', '', '0000-00-00', '', '', '11111', 'Pregão IRP', '11111/1111', '11111', 'dfgdsgfgsd', 'AC Defesa', '', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
-(25, '2023-08-03', '', '0000-00-00', '', '', '22222.222222/2222-22', 'Dispensa Eletrônica Sem Disputa', '22222/2222', '222', '222', 'PAC', '', '0000-00-00', 'Fase 5 - Saneamento', '', '', '', '');
 
 --
 -- Acionadores `processos`
@@ -148,13 +131,13 @@ ALTER TABLE `processos`
 -- AUTO_INCREMENT de tabela `historico_data_entrada_saida`
 --
 ALTER TABLE `historico_data_entrada_saida`
-  MODIFY `id_hist_entrada_saida` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_hist_entrada_saida` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT de tabela `processos`
 --
 ALTER TABLE `processos`
-  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Restrições para despejos de tabelas
