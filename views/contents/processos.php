@@ -294,6 +294,20 @@
                     className: 'control'
                 },
                 {
+                    targets: 2,
+                    orderable: false,
+                    render: function(data, type, full, meta) {
+                        var fase = full[11]; // Valor da coluna "fase"
+                        var percentual = getPercentualPorFase(fase);
+                        var badgeClass = getBadgeClassPorFase(fase);
+
+                        return "<center>" +
+                            "<span class='" + badgeClass + " btnProgresso text-navy px-1'>" + percentual + "%" +
+                            "</span>" +
+                            "</center>";
+                    }
+                },
+                {
                     targets: 03,
                     visible: false,
                 },
@@ -352,6 +366,72 @@
 
     });
 
+    function getPercentualPorFase(fase) {
+        // lógica para retornar o percentual baseado na fase selecionada
+        // Exemplo: se fase for 1, retorne 10%; se fase for 2, retorne 20%, etc.
+        switch (fase) {
+            case "Na fila":
+                return 0;
+            case "Fase 1 - EPC":
+                return 10;
+            case "Fase 2 - Análise SALC":
+                return 20;
+            case "Fase 3 - Adequação EPC":
+                return 30;
+            case "Fase 4 - Conjur":
+                return 40;
+            case "Fase 5 - Saneamento":
+                return 50;
+            case "Fase 6 - Fase Externa":
+                return 70;
+            case "Fase 7 - Em contratação":
+                return 80;
+            case "Fase 8 - Contratado":
+                return 100;
+                // Defina mais casos conforme necessário
+            default:
+                return 0; // Percentual padrão se a fase não for reconhecida
+        }
+    }
+
+    function getBadgeClassPorFase(fase) {
+        // lógica para retornar a classe da badge baseada na fase selecionada
+        // Exemplo: se fase for 1, retorne 'badge bg-danger'; se fase for 2, retorne 'badge bg-warning', etc.
+        switch (fase) {
+
+            case "Na fila":
+                return 'badge bg-danger';
+
+            case "Fase 1 - EPC":
+                return 'badge bg-danger';
+
+            case "Fase 2 - Análise SALC":
+                return 'badge bg-danger';
+
+            case "Fase 3 - Adequação EPC":
+                return 'badge bg-danger';
+
+            case "Fase 4 - Conjur":
+                return 'badge bg-warning';
+
+            case "Fase 5 - Saneamento":
+                return 'badge bg-warning';
+
+            case "Fase 6 - Fase Externa":
+                return 'badge bg-primary';
+
+            case "Fase 7 - Em contratação":
+                return 'badge bg-primary';
+
+            case "Fase 8 - Contratado":
+                return 'badge bg-success';
+                // Defina mais casos conforme necessário
+
+            default:
+                return 'badge bg-secondary'; // Classe padrão se a fase não for reconhecida
+        }
+    }
+
     /* -------------------------------------------------------------------------- */
     /*             Limpar inputs do modal al cancelar ou fechar modal             */
     /* -------------------------------------------------------------------------- */
@@ -392,6 +472,11 @@
 
             if (form.checkValidity() === true) {
                 console.log("Preenchimento válido")
+
+                var text_msgSwal = "";
+                if (action == 2) {
+
+                }
 
                 //Validar entrada nos campos inputs
                 Swal.fire({

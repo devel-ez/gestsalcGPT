@@ -2,12 +2,14 @@
 table.dataTable tbody td {
 
     white-space: nowrap !important;
-    text-align: left !important;
     font-size: 15px;
+    text-align: center !important;
 }
 
 #example1 thead th {
     white-space: nowrap !important;
+    text-align: center !important;
+
 }
 
 div.dataTables_filter {
