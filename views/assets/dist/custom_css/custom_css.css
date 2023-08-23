@@ -18,11 +18,20 @@ div.dataTables_filter {
 
 
 .modal-xl-custom {
-    max-width: 70%;
-    padding-left: 9%;
-    padding-top: 2%;
-
+    
+    max-width: 100%;
+    width: 95%;
+    margin: 0 auto;
 }
+
+.modal-xl-custom .modal-content {
+    height: 80vh; /* Ajuste a altura conforme necessário */
+}
+
+.modal-xl-custom .modal-body {
+    overflow-y: auto;
+}
+
 
 .masked-input {
     font-family: monospace;
