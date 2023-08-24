@@ -1,4 +1,3 @@
-
 table.dataTable tbody td {
 
     white-space: nowrap !important;
@@ -18,18 +17,11 @@ div.dataTables_filter {
 
 
 .modal-xl-custom {
-    
+
     max-width: 100%;
-    width: 95%;
-    margin: 0 auto;
-}
-
-.modal-xl-custom .modal-content {
-    height: 80vh; /* Ajuste a altura conforme necessário */
-}
-
-.modal-xl-custom .modal-body {
-    overflow-y: auto;
+    width: 90%;
+    margin-left: 7%;
+    margin-top: 2%;
 }
 
 
@@ -59,8 +51,25 @@ div.dataTables_filter {
     right: 5px;
 }
 
-hr{
-    border-color:#ced4da;
-    box-sizing:border-box;
-    width:100%;  
-  }
+hr {
+    border-color: #ced4da;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+
+
+.form-control.placeholder {
+    border: none;
+    resize: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.card-title-bold {
+    font-weight: bold;
+}
+
+.dragging {
+    cursor: grabbing !important;
+}

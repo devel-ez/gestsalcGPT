@@ -223,195 +223,65 @@
 
 <!-- Tela modal para kanban do processo -->
 <div class="modal fade modal-xl-custom" id="mdlKanbanProcesso" role="dialog">
-
     <div class="modal-dialog modal-xl-custom">
         <!-- Conteúdo do modal -->
         <div class="modal-content">
-
             <!-- Cabecalho do modal -->
-            <div class="modal-header bg-success py-1">
-                <h5 class="modal-title">Tarefas do processo</h5>
+            <div class="modal-header bg-gray-dark py-1">
+                <h5 class="modal-title">Tarefas do processo - Kanban Board</h5>
                 <button type="button" class="btn btn-outline-primary text-white border-0 fs-5" id="btnFecharModal" data-dismiss="modal">
                     <i class="far fa-times-circle"></i>
                 </button>
             </div>
             <!-- Corpo do modal -->
-            <div class="modal-body">
-                <div class="content-wrapper kanban">
-                    <section class="content pb-3">
-                        <div class="container-fluid h-100">
-                            <div class="card card-row card-secondary">
-                                <div class="card-header">
-                                    <h3 class="card-title">
-                                        Backlog
-                                    </h3>
+            <div class="modal-body bg-light">
+                <div class="container-fluid kanban-container">
+                    <div class="row">
+                        <div class="col-md-4" id="tarefas-pendentes">
+                            <div class="card">
+                                <div class="card-header bg-warning">
+                                    Pendentes
                                 </div>
-                                <div class="card-body">
-                                    <div class="card card-info card-outline">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Create Labels</h5>
-                                            <div class="card-tools">
-                                                <a href="#" class="btn btn-tool btn-link">#3</a>
-                                                <a href="#" class="btn btn-tool">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1" disabled>
-                                                <label for="customCheckbox1" class="custom-control-label">Bug</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" disabled>
-                                                <label for="customCheckbox2" class="custom-control-label">Feature</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" type="checkbox" id="customCheckbox3" disabled>
-                                                <label for="customCheckbox3" class="custom-control-label">Enhancement</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" type="checkbox" id="customCheckbox4" disabled>
-                                                <label for="customCheckbox4" class="custom-control-label">Documentation</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" type="checkbox" id="customCheckbox5" disabled>
-                                                <label for="customCheckbox5" class="custom-control-label">Examples</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card card-primary card-outline">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Create Issue template</h5>
-                                            <div class="card-tools">
-                                                <a href="#" class="btn btn-tool btn-link">#4</a>
-                                                <a href="#" class="btn btn-tool">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1_1" disabled>
-                                                <label for="customCheckbox1_1" class="custom-control-label">Bug Report</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input" type="checkbox" id="customCheckbox1_2" disabled>
-                                                <label for="customCheckbox1_2" class="custom-control-label">Feature Request</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card card-primary card-outline">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Create PR template</h5>
-                                            <div class="card-tools">
-                                                <a href="#" class="btn btn-tool btn-link">#6</a>
-                                                <a href="#" class="btn btn-tool">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card card-light card-outline">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Create Actions</h5>
-                                            <div class="card-tools">
-                                                <a href="#" class="btn btn-tool btn-link">#7</a>
-                                                <a href="#" class="btn btn-tool">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                            </div>
-
-                                        </div>
-                                        <div class="card-body">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                                Aenean commodo ligula eget dolor. Aenean massa.
-                                                Cum sociis natoque penatibus et magnis dis parturient montes,
-                                                nascetur ridiculus mus.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card card-row card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">
-                                        To Do
-                                    </h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card card-primary card-outline">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Create first milestone</h5>
-                                            <div class="card-tools">
-                                                <a href="#" class="btn btn-tool btn-link">#5</a>
-                                                <a href="#" class="btn btn-tool">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card card-row card-default">
-                                <div class="card-header bg-info">
-                                    <h3 class="card-title">
-                                        In Progress
-                                    </h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card card-light card-outline">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Update Readme</h5>
-                                            <div class="card-tools">
-                                                <a href="#" class="btn btn-tool btn-link">#2</a>
-                                                <a href="#" class="btn btn-tool">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                                                Aenean commodo ligula eget dolor. Aenean massa.
-                                                Cum sociis natoque penatibus et magnis dis parturient montes,
-                                                nascetur ridiculus mus.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card card-row card-success">
-                                <div class="card-header">
-                                    <h3 class="card-title">
-                                        Done
-                                    </h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="card card-primary card-outline">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Create repo</h5>
-                                            <div class="card-tools">
-                                                <a href="#" class="btn btn-tool btn-link">#1</a>
-                                                <a href="#" class="btn btn-tool">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="card-body" id="pendentes">
+                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="showTextArea('pendentes')"><i class="fas fa-plus"></i></button>
+                                    <!-- Adicione suas tarefas pendentes aqui -->
                                 </div>
                             </div>
                         </div>
-                    </section>
+                        <div class="col-md-4" id="tarefas-em-progresso">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    Em Progresso
+                                </div>
+                                <div class="card-body" id="em-progresso">
+                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="showTextArea('em-progresso')"><i class="fas fa-plus"></i></button>
+                                    <!-- Adicione suas tarefas em progresso aqui -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="tarefas-concluidas">
+                            <div class="card">
+                                <div class="card-header bg-success text-white">
+                                    Concluídas
+                                </div>
+                                <div class="card-body" id="concluidas">
+                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="showTextArea('concluidas')"><i class="fas fa-plus"></i></button>
+                                    <!-- Adicione suas tarefas concluídas aqui -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
             <!-- Corpo do modal -->
         </div>
     </div>
 </div>
 <!-- /Tela modal para kanban do processo -->
+
+
+
+
 <!-- Ajax scripts -->
 <script>
     var Toast = swal.mixin({
@@ -420,8 +290,6 @@
         showConfirmButton: false,
         timer: 3000
     });
-
-
     var table;
     var action;
 
@@ -521,7 +389,7 @@
                     orderable: false,
                     render: function(data, type, full, meta) {
                         return "<center>" +
-                            "<span class='btnKanbanProcesso text-navy px-1' style='cursor: pointer;'>" +
+                            "<span class='btnKanbanProcesso text-bg-gray-dark px-1' style='cursor: pointer;'>" +
                             "<i class='fas fa-clipboard fs-5'></i>" +
                             "</span>" +
 
@@ -558,6 +426,9 @@
 
     });
 
+    /* -------------------------------------------------------------------------- */
+    /*                  Sincroniza o progresso com a coluna fase                  */
+    /* -------------------------------------------------------------------------- */
     function getPercentualPorFase(fase) {
         // lógica para retornar o percentual baseado na fase selecionada
         // Exemplo: se fase for 1, retorne 10%; se fase for 2, retorne 20%, etc.
@@ -586,6 +457,9 @@
         }
     }
 
+    /* -------------------------------------------------------------------------- */
+    /*                  Sincroniza o progresso com a coluna fase                  */
+    /* -------------------------------------------------------------------------- */
     function getBadgeClassPorFase(fase) {
         // lógica para retornar a classe da badge baseada na fase selecionada
         // Exemplo: se fase for 1, retorne 'badge bg-danger'; se fase for 2, retorne 'badge bg-warning', etc.
@@ -885,4 +759,91 @@
         // $("#idDescricaoDetalhada").val(data[8]);
         // $("#idDataEntrada").val(data[9]);
     });
+
+    function showTextArea(containerId) {
+        var container = document.getElementById(containerId);
+        var cardWrapper = document.createElement("div");
+        cardWrapper.className = "card-wrapper";
+
+        var card = document.createElement("div");
+        card.className = "card card-dark card-outline mt-2 col-md-12";
+
+        var cardHeader = document.createElement("div");
+        cardHeader.className = "card-header";
+        cardHeader.style.position = "relative"; // Adicione esta linha
+
+        var cardDeleteButton = document.createElement("button");
+        cardDeleteButton.className = "btn btn-link btn-sm text-secondary card-delete-button";
+        cardDeleteButton.innerHTML = '<i class="fas fa-times"></i>';
+        cardDeleteButton.style.position = "absolute";
+        cardDeleteButton.style.top = "0";
+        cardDeleteButton.style.right = "0";
+
+        cardDeleteButton.addEventListener("click", function() {
+            cardWrapper.parentNode.removeChild(cardWrapper); // Remova o cardWrapper do seu pai
+        });
+
+        cardHeader.appendChild(cardDeleteButton);
+
+        var cardTitle = document.createElement("h5");
+        cardTitle.className = "card-title";
+        cardHeader.appendChild(cardTitle);
+
+        var cardTitleTextArea = document.createElement("textarea");
+        cardTitleTextArea.className = "form-control placeholder card-title-bold";
+        cardTitleTextArea.setAttribute("rows", "1");
+        cardTitleTextArea.setAttribute("placeholder", "Título da Nova Tarefa");
+        cardHeader.appendChild(cardTitleTextArea);
+
+        var cardBody = document.createElement("div");
+        cardBody.className = "card-body";
+
+        var cardBodyTextArea = document.createElement("textarea");
+        cardBodyTextArea.className = "form-control placeholder";
+        cardBodyTextArea.setAttribute("rows", "3");
+        cardBodyTextArea.setAttribute("placeholder", "Digite a descrição da tarefa...");
+        cardBody.appendChild(cardBodyTextArea);
+
+        card.appendChild(cardHeader);
+        card.appendChild(cardBody);
+
+        cardWrapper.appendChild(card);
+
+        container.appendChild(cardWrapper);
+
+        // Resto do seu código para inicializar o drag-and-drop com dragula
+    }
+
+
+    $(document).ready(function() {
+        $(".card-body").sortable({
+            connectWith: ".card-body",
+            handle: ".card-header",
+            placeholder: "card-placeholder",
+            start: function(event, ui) {
+                ui.item.data("originalParent", ui.item.parent());
+            },
+            stop: function(event, ui) {
+                var originalParent = ui.item.data("originalParent");
+                var targetColumn = ui.item.parent();
+
+                if (!isValidTarget(targetColumn)) {
+                    originalParent.append(ui.item);
+                }
+            }
+        }).disableSelection();
+
+        $(".card-delete-button").click(function() {
+            $(this).closest(".card-wrapper").remove();
+        });
+
+        function isValidTarget(targetColumn) {
+            var validColumns = ["tarefas-pendentes", "tarefas-em-progresso", "tarefas-concluidas"];
+            return validColumns.includes(targetColumn.closest(".col-md-4").attr("id"));
+        }
+    });
+
+
+
+    
 </script>
