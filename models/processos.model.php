@@ -129,4 +129,8 @@ class ProcessosModel
             return Connection::connect()->errorInfo();
         }
     }
+
+    static public function mdlRegistrarTarefasKanban($rowId, $cardData){
+        
+    }
 }

@@ -54,7 +54,6 @@ class AjaxProcessos
         $response = ProcessosController::ctrEditarProcesso($table, $data, $id, $nameId);
 
         echo json_encode($response);
-
     }
     public function ajaxDeletarProcesso()
     {
@@ -65,7 +64,13 @@ class AjaxProcessos
         $response = ProcessosController::ctrDeletarProcesso($table, $id, $nameId);
 
         echo json_encode($response);
+    }
+    public function ajaxRegistrarTarefasKanban($rowId, $cardData)
+    {
 
+        $response = ProcessosController::ctrRegistrarTarefasKanban($rowId, $cardData);
+
+        echo json_encode($response);
     }
 }
 
@@ -108,17 +113,14 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
     //     echo "$key: $value\n";
     // }
     $editarProcesso->ajaxEditarProcesso($data);
-
-
 } else if (isset($_POST['action']) && $_POST['action'] == 4) { // Deletar processo
 
     $deletarProcesso = new AjaxProcessos;
-    $deletarProcesso -> ajaxDeletarProcesso();
+    $deletarProcesso->ajaxDeletarProcesso();
+} else if (isset($_POST['action']) && $_POST['action'] == 5) { // Cadastrar as informações dos cards do kanban por processo
 
-
- 
-
-
+    $registrarTarefasKanban = new AjaxProcessos;
+    $registrarTarefasKanban->ajaxRegistrarTarefasKanban($_POST['rowId'], $_POST['cardData']);
 } else {
     echo '<pre>';
     print_r("parou aqui no ajax");

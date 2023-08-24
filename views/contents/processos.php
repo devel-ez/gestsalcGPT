@@ -229,7 +229,7 @@
             <!-- Cabecalho do modal -->
             <div class="modal-header bg-gray-dark py-1">
                 <h5 class="modal-title">Tarefas do processo - Kanban Board</h5>
-                <button type="button" class="btn btn-outline-primary text-white border-0 fs-5" id="btnFecharModal" data-dismiss="modal">
+                <button type="button" class="btn btn-outline-primary text-white border-0 fs-5" id="btnFecharModalKanban" data-dismiss="modal">
                     <i class="far fa-times-circle"></i>
                 </button>
             </div>
@@ -237,7 +237,7 @@
             <div class="modal-body bg-light">
                 <div class="container-fluid kanban-container">
                     <div class="row">
-                        <div class="col-md-4" id="tarefas-pendentes">
+                        <div class="col-md-4 tarefas-col" id="tarefas-pendentes">
                             <div class="card">
                                 <div class="card-header bg-warning">
                                     Pendentes
@@ -248,7 +248,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4" id="tarefas-em-progresso">
+                        <div class="col-md-4 tarefas-col" id="tarefas-em-progresso">
                             <div class="card">
                                 <div class="card-header bg-primary text-white">
                                     Em Progresso
@@ -259,7 +259,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4" id="tarefas-concluidas">
+                        <div class="col-md-4 tarefas-col" id="tarefas-concluidas">
                             <div class="card">
                                 <div class="card-header bg-success text-white">
                                     Concluídas
@@ -278,6 +278,8 @@
     </div>
 </div>
 <!-- /Tela modal para kanban do processo -->
+
+
 
 
 
@@ -666,7 +668,6 @@
     /* -------------------------------------------------------------------------- */
     /*                         Deletar processo da tabela                         */
     /* -------------------------------------------------------------------------- */
-
     $('#example1').on("click", ".btnDeletarProcesso", function() {
 
         action = 4;
@@ -742,24 +743,20 @@
     /* -------------------------------------------------------------------------- */
 
     $("#example1").on("click", ".btnKanbanProcesso", function() {
+        var data = table.row($(this).parents('tr')).data();
+        var rowId = data[0]; // Assuming the ID is in the first column
 
-        action = 5;
+        var modal = $("#mdlKanbanProcesso");
 
-        $("#mdlKanbanProcesso").modal('show');
+        // Lógica para preencher o modal com informações específicas da linha
+        // Você pode usar o valor do rowId para buscar e preencher as informações
 
-        // var data = table.row($(this).parents('tr')).data();
-
-        // $("#idId").val(data[0]);
-        // $("#idNup").val(data[5]);
-        // $("#selProcesso").val(data[3]);
-        // $("#idNrProcesso").val(data[4]);
-        // $("#selRequisitante").val(data[10]);
-        // $("#selFase").val(data[11]);
-        // $("#idDescricaoResumida").val(data[7]);
-        // $("#idDescricaoDetalhada").val(data[8]);
-        // $("#idDataEntrada").val(data[9]);
+        // Show the modal
+        modal.modal('show');
     });
-
+    /* -------------------------------------------------------------------------- */
+    /*                   Adiciona os cards das tarefas do kanban                  */
+    /* -------------------------------------------------------------------------- */
     function showTextArea(containerId) {
         var container = document.getElementById(containerId);
         var cardWrapper = document.createElement("div");
@@ -814,7 +811,9 @@
         // Resto do seu código para inicializar o drag-and-drop com dragula
     }
 
-
+    /* -------------------------------------------------------------------------- */
+    /*           Possibilida mover os cards das tarefas entre as colunas          */
+    /* -------------------------------------------------------------------------- */
     $(document).ready(function() {
         $(".card-body").sortable({
             connectWith: ".card-body",
@@ -843,7 +842,54 @@
         }
     });
 
+    $("#btnFecharModal").on("click", function() {
 
+        action = 5;
+        var data = table.row($(this).parents('tr')).data();
+        var rowId = data[0]; // Assuming the ID is in the first column
 
-    
+        var cardData = []; // Crie um array para armazenar os dados dos cards
+
+        $(".card-wrapper").each(function() {
+            var cardTitle = $(this).find(".card-title-textarea").val();
+            var cardDescription = $(this).find(".card-description-textarea").val();
+            cardData.push({
+                title: cardTitle,
+                description: cardDescription
+            });
+        });
+
+        // Enviar os dados dos cards para o servidor
+        $.ajax({
+            url: "ajax/processos.ajax.php",
+            method: "POST",
+            data: {
+                rowId: rowId,
+                cardData: cardData
+            }, // Envie o ID da linha e os dados dos cards
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+
+            success: function(response) {
+                if (response == "ok") {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Kanban salvo com sucesso!"
+                    });
+                    table.ajax.reload();
+                    $("#mdlCadastrarProcessoKanban").modal('hide');
+                } else {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Processo não cadastrado!'
+                    });
+                }
+            },
+            error: function(error) {
+                console.error("Erro ao salvar informações no servidor:", error);
+            }
+        });
+    });
 </script>
