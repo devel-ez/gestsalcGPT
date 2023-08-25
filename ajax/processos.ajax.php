@@ -71,6 +71,7 @@ class AjaxProcessos
         $response = ProcessosController::ctrRegistrarTarefasKanban($rowId, $cardData);
 
         echo json_encode($response);
+
     }
 }
 
@@ -122,7 +123,8 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
     $registrarTarefasKanban = new AjaxProcessos;
     $registrarTarefasKanban->ajaxRegistrarTarefasKanban($_POST['rowId'], $_POST['cardData']);
 } else {
+
     echo '<pre>';
-    print_r("parou aqui no ajax");
+    print_r("parou aqui no else das actions ajax.php");
     echo '</pre>';
 }

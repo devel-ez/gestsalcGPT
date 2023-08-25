@@ -130,7 +130,37 @@ class ProcessosModel
         }
     }
 
-    static public function mdlRegistrarTarefasKanban($rowId, $cardData){
-        
+    static public function mdlRegistrarTarefasKanban($rowId, $cardData)
+    {
+
+
+        try {
+            $conn = Connection::connect();
+
+            $stmt = $conn->prepare("INSERT INTO kanban_tasks (id_processo, title, description) VALUES (:rowId, :title, :description)");
+
+            $response = "ok"; // Suponhamos que tudo correu bem
+
+            foreach ($cardData as $card) {
+                $title = $card['title'];
+                $description = $card['description'];
+
+                $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
+                $stmt->bindParam(":title", $title, PDO::PARAM_STR);
+                $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+
+                if (!$stmt->execute()) {
+                    $response = "Error";
+                    break; // Se um erro ocorrer, saia do loop
+                }
+            }
+
+            return $response;
+        } catch (Exception $e) {
+            return 'Exception capturada:' . $e->getMessage();
+        } finally {
+            $stmt = null;
+            $conn = null;
+        }
     }
 }

@@ -229,7 +229,7 @@
             <!-- Cabecalho do modal -->
             <div class="modal-header bg-gray-dark py-1">
                 <h5 class="modal-title">Tarefas do processo - Kanban Board</h5>
-                <button type="button" class="btn btn-outline-primary text-white border-0 fs-5" id="btnFecharModalKanban" data-dismiss="modal">
+                <button type="button" class="btn btn-outline-primary text-white border-0 fs-5 btnFecharModalKanban" id="btnFecharModalKanban" data-dismiss="modal">
                     <i class="far fa-times-circle"></i>
                 </button>
             </div>
@@ -294,6 +294,7 @@
     });
     var table;
     var action;
+    var linhaId;
 
     $(document).ready(function() {
 
@@ -741,11 +742,10 @@
     /* -------------------------------------------------------------------------- */
     /*                     Abre o kanban do processo no modal                     */
     /* -------------------------------------------------------------------------- */
-
     $("#example1").on("click", ".btnKanbanProcesso", function() {
         var data = table.row($(this).parents('tr')).data();
-        var rowId = data[0]; // Assuming the ID is in the first column
-
+        linhaId = data[0]; // Assuming the ID is in the first column
+        
         var modal = $("#mdlKanbanProcesso");
 
         // Lógica para preencher o modal com informações específicas da linha
@@ -753,6 +753,7 @@
 
         // Show the modal
         modal.modal('show');
+        return linhaId;
     });
     /* -------------------------------------------------------------------------- */
     /*                   Adiciona os cards das tarefas do kanban                  */
@@ -787,7 +788,7 @@
         cardHeader.appendChild(cardTitle);
 
         var cardTitleTextArea = document.createElement("textarea");
-        cardTitleTextArea.className = "form-control placeholder card-title-bold";
+        cardTitleTextArea.className = "form-control placeholder card-title-bold card-title-textarea";
         cardTitleTextArea.setAttribute("rows", "1");
         cardTitleTextArea.setAttribute("placeholder", "Título da Nova Tarefa");
         cardHeader.appendChild(cardTitleTextArea);
@@ -796,7 +797,7 @@
         cardBody.className = "card-body";
 
         var cardBodyTextArea = document.createElement("textarea");
-        cardBodyTextArea.className = "form-control placeholder";
+        cardBodyTextArea.className = "form-control placeholder card-description-textarea";
         cardBodyTextArea.setAttribute("rows", "3");
         cardBodyTextArea.setAttribute("placeholder", "Digite a descrição da tarefa...");
         cardBody.appendChild(cardBodyTextArea);
@@ -842,11 +843,17 @@
         }
     });
 
-    $("#btnFecharModal").on("click", function() {
+    $("#btnFecharModalKanban").on("click", function() {
 
-        action = 5;
-        var data = table.row($(this).parents('tr')).data();
-        var rowId = data[0]; // Assuming the ID is in the first column
+
+        
+        // var data = table.row($(this).parents('tr')).data();
+        // console.log(data);
+        //rowId = data[0]; // Assuming the ID is in the first column
+
+        var rowId = linhaId;
+        
+
 
         var cardData = []; // Crie um array para armazenar os dados dos cards
 
@@ -859,18 +866,20 @@
             });
         });
 
-        // Enviar os dados dos cards para o servidor
+        console.log("cardData:", cardData);
+        // Enviar os dados d    os cards para o servidor
         $.ajax({
             url: "ajax/processos.ajax.php",
             method: "POST",
             data: {
                 rowId: rowId,
-                cardData: cardData
+                cardData: cardData,
+                action: 5,
             }, // Envie o ID da linha e os dados dos cards
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: 'json',
+            // cache: false,
+            // contentType: false,
+            // processData: false,
+            // dataType: 'json',
 
             success: function(response) {
                 if (response == "ok") {
