@@ -222,7 +222,7 @@
 <!-- /Tela modal para cadastro de processo -->
 
 <!-- Tela modal para kanban do processo -->
-<div class="modal fade modal-xl-custom" id="mdlKanbanProcesso" role="dialog">
+<div class="modal fade modal-xl-custom" id="mdlKanbanProcesso" role=" dialog">
     <div class="modal-dialog modal-xl-custom">
         <!-- Conteúdo do modal -->
         <div class="modal-content">
@@ -242,7 +242,7 @@
                                 <div class="card-header bg-warning">
                                     Pendentes
                                 </div>
-                                <div class="card-body" id="pendentes">
+                                <div class="card-body column-kanban" id="pendentes">
                                     <button class="btn btn-secondary btn-sm float-left mb-2" onclick="showTextArea('pendentes')"><i class="fas fa-plus"></i></button>
                                     <!-- Adicione suas tarefas pendentes aqui -->
                                 </div>
@@ -253,7 +253,7 @@
                                 <div class="card-header bg-primary text-white">
                                     Em Progresso
                                 </div>
-                                <div class="card-body" id="em-progresso">
+                                <div class="card-body column-kanban" id="em-progresso">
                                     <button class="btn btn-secondary btn-sm float-left mb-2" onclick="showTextArea('em-progresso')"><i class="fas fa-plus"></i></button>
                                     <!-- Adicione suas tarefas em progresso aqui -->
                                 </div>
@@ -264,7 +264,7 @@
                                 <div class="card-header bg-success text-white">
                                     Concluídas
                                 </div>
-                                <div class="card-body" id="concluidas">
+                                <div class="card-body column-kanban" id="concluidas">
                                     <button class="btn btn-secondary btn-sm float-left mb-2" onclick="showTextArea('concluidas')"><i class="fas fa-plus"></i></button>
                                     <!-- Adicione suas tarefas concluídas aqui -->
                                 </div>
@@ -502,7 +502,7 @@
     }
 
     /* -------------------------------------------------------------------------- */
-    /*             Limpar inputs do modal al cancelar ou fechar modal             */
+    /*             Limpar inputs do modal ao cancelar ou fechar modal             */
     /* -------------------------------------------------------------------------- */
     $("#cancelarButton, #btnFecharModal").on('click', function() {
 
@@ -742,19 +742,32 @@
     /* -------------------------------------------------------------------------- */
     /*                     Abre o kanban do processo no modal                     */
     /* -------------------------------------------------------------------------- */
+
     $("#example1").on("click", ".btnKanbanProcesso", function() {
         var data = table.row($(this).parents('tr')).data();
         linhaId = data[0]; // Assuming the ID is in the first column
-        
-        var modal = $("#mdlKanbanProcesso");
+
+        var modalKanban = document.getElementById('mdlKanbanProcesso');
+        modalKanban.setAttribute('id', 'mdlKanbanProcesso' + linhaId);
+
+        var modal = $("#mdlKanbanProcesso" + linhaId);
 
         // Lógica para preencher o modal com informações específicas da linha
         // Você pode usar o valor do rowId para buscar e preencher as informações
 
         // Show the modal
         modal.modal('show');
+
+
+
+        console.log(linhaId);
+
         return linhaId;
+
+
+
     });
+
     /* -------------------------------------------------------------------------- */
     /*                   Adiciona os cards das tarefas do kanban                  */
     /* -------------------------------------------------------------------------- */
@@ -807,6 +820,7 @@
 
         cardWrapper.appendChild(card);
 
+
         container.appendChild(cardWrapper);
 
         // Resto do seu código para inicializar o drag-and-drop com dragula
@@ -843,17 +857,13 @@
         }
     });
 
+    /* -------------------------------------------------------------------------- */
+    /*                 Fecha o kanban e registra as tarefas no bd                 */
+    /* -------------------------------------------------------------------------- */
     $("#btnFecharModalKanban").on("click", function() {
 
 
-        
-        // var data = table.row($(this).parents('tr')).data();
-        // console.log(data);
-        //rowId = data[0]; // Assuming the ID is in the first column
-
         var rowId = linhaId;
-        
-
 
         var cardData = []; // Crie um array para armazenar os dados dos cards
 
@@ -866,7 +876,19 @@
             });
         });
 
-        console.log("cardData:", cardData);
+        console.log("cardData: " + cardData);
+
+        // Correção setAttribute do mdlKanbanProcesso  
+        if (cardData == "") {
+            var modalKanban = document.getElementById('mdlKanbanProcesso' + linhaId);
+            console.log("modalKanban: " + modalKanban);
+            if (modalKanban != null) {
+                modalKanban.setAttribute('id', 'mdlKanbanProcesso');
+                return;
+            }else{
+                return;
+            }
+        }
         // Enviar os dados d    os cards para o servidor
         $.ajax({
             url: "ajax/processos.ajax.php",
@@ -881,24 +903,49 @@
             // processData: false,
             // dataType: 'json',
 
+
             success: function(response) {
-                if (response == "ok") {
+
+                console.log("response: " + response);
+
+                if (response == '"ok"') {
                     Toast.fire({
                         icon: 'success',
                         title: "Kanban salvo com sucesso!"
                     });
-                    table.ajax.reload();
-                    $("#mdlCadastrarProcessoKanban").modal('hide');
+                } else if (rowId || cardData == null) {
+                    return "vazio";
                 } else {
                     Toast.fire({
                         icon: 'error',
-                        title: 'Processo não cadastrado!'
+                        title: 'Processo não cadastrado!',
+
                     });
                 }
             },
             error: function(error) {
                 console.error("Erro ao salvar informações no servidor:", error);
-            }
+            },
+
+
         });
+
+        // Remove todos os cards do kanban     
+        $(".card-wrapper").each(function() {
+            $(this).remove();
+        });
+
+        var modalKanban = document.getElementById('mdlKanbanProcesso' + linhaId);
+        modalKanban.setAttribute('id', 'mdlKanbanProcesso');
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                        Ações ao clicar fora do modal                       */
+    /* -------------------------------------------------------------------------- */
+    $(document).on("click", function(event) {
+        if (!$(event.target).closest("#mdlKanbanProcesso").length) {
+            // O usuário clicou fora do modal, portanto, feche o modal e execute as ações desejadas
+            $("#btnFecharModalKanban").click();
+        }
     });
 </script>

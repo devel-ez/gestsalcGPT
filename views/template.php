@@ -58,7 +58,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Biblioteca Dragula -->
-    <!-- <script src="views/assets/plugins/dragula/dragula.min.js"></script> -->
+    <script src="views/assets/plugins/dragula/dragula.min.js"></script>
     <!-- Adicione os links para as bibliotecas CSS e JS do jQuery e do Dragula -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script> -->

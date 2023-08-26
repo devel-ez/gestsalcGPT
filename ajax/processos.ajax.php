@@ -71,8 +71,15 @@ class AjaxProcessos
         $response = ProcessosController::ctrRegistrarTarefasKanban($rowId, $cardData);
 
         echo json_encode($response);
-
     }
+
+    // public function ajaxAtualizarPosicaoTarefa($taskId, $newPosition)
+    // {
+
+    //     $response = ProcessosController::ctrAtualizarPosicaoTarefa($taskId, $newPosition);
+
+    //     echo json_encode($response);
+    // }
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
@@ -122,9 +129,14 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
 
     $registrarTarefasKanban = new AjaxProcessos;
     $registrarTarefasKanban->ajaxRegistrarTarefasKanban($_POST['rowId'], $_POST['cardData']);
+   
+    // } else if (isset($_POST['action']) && $_POST['action'] == 6) { // Atualizar a posição de uma tarefa
+
+    //     $atualizarPosicaoTarefa = new AjaxProcessos;
+    //     $atualizarPosicaoTarefa->ajaxAtualizarPosicaoTarefa($_POST['taskId'], $_POST['newPosition']);
 } else {
 
     echo '<pre>';
-    print_r("parou aqui no else das actions ajax.php");
+    print_r("deu erro nas actions do ajax.php");
     echo '</pre>';
 }

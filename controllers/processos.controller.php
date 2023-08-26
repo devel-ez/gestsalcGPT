@@ -2,48 +2,64 @@
 
 require_once "../controllers/processos.controller.php";
 
-class ProcessosController{
+class ProcessosController
+{
 
-    static public function ctrGetDataProcessos(){
+    static public function ctrGetDataProcessos()
+    {
 
         $data = ProcessosModel::mdlGetDataProcessos();
-        
-        return $data;
 
+        return $data;
     }
 
-    static public function ctrListarProcessos(){
+    static public function ctrListarProcessos()
+    {
 
         $processos = ProcessosModel::mdlListarProcessos();
 
         return $processos;
     }
 
-    static public function ctrRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada){
-        $registroProcessos = ProcessosModel::mdlRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada); 
+    static public function ctrRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada)
+    {
+        $registroProcessos = ProcessosModel::mdlRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada);
         return $registroProcessos;
     }
 
-    static public function ctrEditarProcesso($table, $data, $id, $nameId){
+    static public function ctrEditarProcesso($table, $data, $id, $nameId)
+    {
         $response = ProcessosModel::mdlEditarProcessos($table, $data, $id, $nameId);
 
         return $response;
     }
 
 
-    static public function ctrDeletarProcesso($table, $id, $nameId){
+    static public function ctrDeletarProcesso($table, $id, $nameId)
+    {
 
         $response = ProcessosModel::mdlDeletarProcesso($table, $id, $nameId);
 
         return $response;
     }
 
-    static public function ctrRegistrarTarefasKanban($rowId, $cardData){
+    static public function ctrRegistrarTarefasKanban($rowId, $cardData)
+    {
 
         $response = ProcessosModel::mdlRegistrarTarefasKanban($rowId, $cardData);
-       
+
         return $response;
 
+        echo '<pre>';
+        print_r("parou aqui no else das amdlRegistrarTarefasKanban");
+        echo '</pre>';
     }
-    
+
+    // static public function ctrAtualizarPosicaoTarefa($taskId, $newPosition)
+    // {
+
+    //     $response = ProcessosModel::mdlAtualizarPosicaoTarefa($taskId, $newPosition);
+
+    //     return $response;
+    // }
 }
