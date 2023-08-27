@@ -847,7 +847,7 @@
         /* -------------------------------------------------------------------------- */
         $(document).ready(function() {
             $(".card-body").sortable({
-                connectWith: ".card-body",
+                connectWith: ".column-kanban",
                 handle: ".card-header",
                 placeholder: "card-placeholder",
                 start: function(event, ui) {
@@ -952,35 +952,4 @@
 
         });
 
-        /* -------------------------------------------------------------------------- */
-        /*                        Ações ao clicar fora do modal                       */
-        /* -------------------------------------------------------------------------- */
-        $(document).on("click", function(event) {
-            if (!$(event.target).closest("#mdlKanbanProcesso").length) {
-                // O usuário clicou fora do modal, portanto, verifique se o modal está aberto antes de simular o clique no botão #btnFecharModalKanban
-                if ($("#mdlKanbanProcesso").is(":visible")) {}
-            }
-        });
-
-        // $(document).on("click", function(event) {
-        //     if (!$(event.target).closest("#mdlKanbanProcesso").length) {
-        //         // Remove todos os cards do kanban     
-        //         $(".card-wrapper").each(function() {
-        //             $(this).remove();
-        //         });
-        //         $("#mdlKanbanProcesso").modal('hide');
-        //         // O usuário clicou fora do modal, portanto, verifique se o usuário clicou dentro do modal ou na parte de cima ou de baixo do modal
-
-        //         if ($("#mdlKanbanProcesso").is(":visible") && !$(event.target).closest("#mdlKanbanProcesso.modal-content").length && !$(event.target).closest("#mdlKanbanProcesso.modal-header").length) {
-        //             // Remove todos os cards do kanban     
-        //             $(".card-wrapper").each(function() {
-        //                 $(this).remove();
-        //             });
-        //             $("#mdlKanbanProcesso").modal('hide');
-        //             // Aqui você pode adicionar o código para executar as ações que devem ser executadas quando o usuário clicar fora do modal
-
-        //             // Aqui você pode adicionar o código para executar as ações que devem ser executadas quando o usuário clicar fora do modal
-        //         }
-        //     }
-        // });
     </script>
