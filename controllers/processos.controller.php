@@ -43,6 +43,12 @@ class ProcessosController
         return $response;
     }
 
+    static public function ctrAdicionaCard($rowId){
+        $response = ProcessosModel::mdlAdicionaCard($rowId);
+
+        return $response;
+    }
+
     static public function ctrRegistrarTarefasKanban($rowId, $cardData)
     {
 

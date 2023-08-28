@@ -65,6 +65,13 @@ class AjaxProcessos
 
         echo json_encode($response);
     }
+
+    public function ajaxAdicionaCard($rowId)
+    {
+
+        $response = ProcessosController::ctrAdicionaCard($rowId);
+        echo json_encode($response);
+    }
     public function ajaxRegistrarTarefasKanban($rowId, $cardData)
     {
 
@@ -125,11 +132,19 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
 
     $deletarProcesso = new AjaxProcessos;
     $deletarProcesso->ajaxDeletarProcesso();
-} else if (isset($_POST['action']) && $_POST['action'] == 5) { // Cadastrar as informações dos cards do kanban por processo
+} else if (isset($_POST['action']) && $_POST['action'] == 5) { // Adicionar card no BD para gerar o ID
+
+    $ajaxAdicionaCardKanban = new AjaxProcessos;
+    $ajaxAdicionaCardKanban->ajaxAdicionaCard($_POST['rowId']);
+} else if (isset($_POST['action']) && $_POST['action'] == 6) { // Deletar o card no BD
+
+    $registrarTarefasKanban = new AjaxProcessos;
+    $registrarTarefasKanban->ajaxAdicionaCard($_POST['rowId'], $_POST['cardData']);
+} else if (isset($_POST['action']) && $_POST['action'] == 7) { // Cadastrar as informações dos cards do kanban por processo
 
     $registrarTarefasKanban = new AjaxProcessos;
     $registrarTarefasKanban->ajaxRegistrarTarefasKanban($_POST['rowId'], $_POST['cardData']);
-   
+
     // } else if (isset($_POST['action']) && $_POST['action'] == 6) { // Atualizar a posição de uma tarefa
 
     //     $atualizarPosicaoTarefa = new AjaxProcessos;

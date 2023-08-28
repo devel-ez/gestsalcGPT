@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22-Ago-2023 às 20:51
+-- Tempo de geração: 28-Ago-2023 às 05:00
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -60,6 +60,32 @@ CREATE TABLE `historico_data_entrada_saida` (
   `hist_motivo_data_saida` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Extraindo dados da tabela `historico_data_entrada_saida`
+--
+
+INSERT INTO `historico_data_entrada_saida` (`id_hist_entrada_saida`, `id_processos`, `hist_data_entrada`, `hist_motivo_data_entrada`, `hist_data_saida`, `hist_motivo_data_saida`) VALUES
+(50, 34, '2023-08-07', '', '0000-00-00', ''),
+(51, 34, '2023-08-07', '', '0000-00-00', ''),
+(52, 34, '2023-08-07', '', '0000-00-00', ''),
+(53, 35, '2023-08-22', '', '0000-00-00', ''),
+(55, 37, '2023-08-27', '', '0000-00-00', ''),
+(56, 38, '2023-08-30', '', '0000-00-00', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `kanban_tasks`
+--
+
+CREATE TABLE `kanban_tasks` (
+  `id_task` int(11) NOT NULL,
+  `id_processo` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `position` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -87,6 +113,16 @@ CREATE TABLE `processos` (
   `protocolista` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `processos`
+--
+
+INSERT INTO `processos` (`id_processos`, `data_entrada`, `motivo_data_entrada`, `data_saída`, `motivo_data_saida`, `dfd`, `NUP`, `tipo_processo_origem`, `numero_processo_origem`, `assunto_objeto`, `descricao_detalhada_objeto`, `requisitante`, `analista`, `previsao_conclusao`, `situacao`, `operador_fase_externa`, `resultado_fase_externa`, `protocolista`, `status`) VALUES
+(34, '2023-08-07', '', '0000-00-00', '', '', '11111.111111/1111-11', 'Pregão SRP', '11111/1111', 'descrição resumida', 'descrição detalhada', '7ºCT', '', '0000-00-00', 'Fase 5 - Saneamento', '', '', '', ''),
+(35, '2023-08-22', '', '0000-00-00', '', '', '22222.222222/2222-22', 'Pregão SRP', '22222/2222', '2', '2222', 'AC Defesa', '', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
+(37, '2023-08-27', '', '0000-00-00', '', '', '44444.444444/4444-44', 'Dispensa Eletrônica Sem Disputa', '44444/4444', '444444', '44444444444', 'AC Defesa', '', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
+(38, '2023-08-30', '', '0000-00-00', '', '', '55555.555555/5555-55', 'Dispensa Ratificada', '55555/5555', '55555', '555555', 'FA', '', '0000-00-00', 'Fase 6 - Fase Externa', '', '', '', '');
 
 --
 -- Acionadores `processos`
@@ -118,6 +154,12 @@ ALTER TABLE `historico_data_entrada_saida`
   ADD KEY `fk_id_processos` (`id_processos`) USING BTREE;
 
 --
+-- Índices para tabela `kanban_tasks`
+--
+ALTER TABLE `kanban_tasks`
+  ADD PRIMARY KEY (`id_task`);
+
+--
 -- Índices para tabela `processos`
 --
 ALTER TABLE `processos`
@@ -131,13 +173,19 @@ ALTER TABLE `processos`
 -- AUTO_INCREMENT de tabela `historico_data_entrada_saida`
 --
 ALTER TABLE `historico_data_entrada_saida`
-  MODIFY `id_hist_entrada_saida` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id_hist_entrada_saida` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- AUTO_INCREMENT de tabela `kanban_tasks`
+--
+ALTER TABLE `kanban_tasks`
+  MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `processos`
 --
 ALTER TABLE `processos`
-  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Restrições para despejos de tabelas

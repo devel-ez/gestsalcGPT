@@ -130,6 +130,35 @@ class ProcessosModel
         }
     }
 
+    static public function mdlAdicionaCard($rowId)
+    {
+
+
+        try {
+            $conn = Connection::connect();
+
+            $stmt = $conn->prepare("INSERT INTO kanban_tasks (id_processo) VALUES (:rowId)");
+
+            $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
+
+            $response = "ok"; // Suponhamos que tudo correu bem
+
+            if (!$stmt->execute()) {
+
+                return "erro no mdlAdicionaCard";
+                return Connection::connect()->errorInfo();
+            }
+
+            return $response;
+            
+        } catch (Exception $e) {
+            return 'Exception capturada:' . $e->getMessage();
+        } finally {
+            $stmt = null;
+            $conn = null;
+        }
+    }
+
     static public function mdlRegistrarTarefasKanban($rowId, $cardData)
     {
 
@@ -149,7 +178,7 @@ class ProcessosModel
                 $stmt->bindParam(":title", $title, PDO::PARAM_STR);
                 $stmt->bindParam(":description", $description, PDO::PARAM_STR);
 
-                
+
                 $response = "ok"; // Suponhamos que tudo correu bem
 
                 if (!$stmt->execute()) {

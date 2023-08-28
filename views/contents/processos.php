@@ -225,7 +225,7 @@
 <div class="modal fade modal-xl-custom" id="mdlKanbanProcesso" role=" dialog">
     <div class="modal-dialog modal-xl-custom">
         <!-- Conteúdo do modal -->
-        <div class="modal-content">
+        <div class="modal-content bg-dark">
             <!-- Cabecalho do modal -->
             <div class="modal-header bg-gray-dark py-1">
                 <h5 class="modal-title">Tarefas do processo - Kanban Board</h5>
@@ -240,747 +240,781 @@
                     <button type="button" id="salvarButtonKanban" class="btn btn-success btn-sm ml-2">Salvar</button>
                     <button type="button" id="limparButtonKanban" class="btn btn-danger btn-sm ml-2">Limpar</button>
                 </div>
-                <!-- /Botões Salvar e Limpar -->
-                <!-- Corpo do modal -->
-                <div class="modal-body bg-light">
-                    <div class="container-fluid kanban-container">
-                        <div class="row">
-                            <div class="col-md-4 tarefas-col" id="tarefas-pendentes">
-                                <div class="card">
-                                    <div class="card-header bg-warning">
-                                        Pendentes
-                                    </div>
-                                    <div class="card-body column-kanban" id="pendentes">
-                                        <button class="btn btn-secondary btn-sm float-left mb-2" onclick="showTextArea('pendentes')"><i class="fas fa-plus"></i></button>
-                                        <!-- Adicione suas tarefas pendentes aqui -->
-                                    </div>
+            </div>
+            <!-- /Botões Salvar e Limpar -->
+            <!-- Corpo do modal -->
+            <div class="modal-body bg-dark">
+                <div class="container-fluid kanban-container">
+                    <div class="row">
+                        <div class="col-md-4 tarefas-col" id="tarefas-pendentes">
+                            <div class="card">
+                                <div class="card-header bg-warning text-center">
+                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="addCard('pendentes')"><i class="fas fa-plus"></i></button>
+
+                                    Pendentes
+                                </div>
+                                <div class="card-body column-kanban bg-secondary" id="pendentes">
+                                    <!-- Adicione suas tarefas pendentes aqui -->
                                 </div>
                             </div>
-                            <div class="col-md-4 tarefas-col" id="tarefas-em-progresso">
-                                <div class="card">
-                                    <div class="card-header bg-primary text-white">
-                                        Em Progresso
-                                    </div>
-                                    <div class="card-body column-kanban" id="em-progresso">
-                                        <button class="btn btn-secondary btn-sm float-left mb-2" onclick="showTextArea('em-progresso')"><i class="fas fa-plus"></i></button>
-                                        <!-- Adicione suas tarefas em progresso aqui -->
-                                    </div>
+                        </div>
+                        <div class="col-md-4 tarefas-col" id="tarefas-em-progresso">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white text-center">
+                                    Em Progresso
+                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="addCard('em-progresso')"><i class="fas fa-plus"></i></button>
+
+                                </div>
+                                <div class="card-body column-kanban bg-secondary" id="em-progresso">
+                                    <!-- Adicione suas tarefas em progresso aqui -->
                                 </div>
                             </div>
-                            <div class="col-md-4 tarefas-col" id="tarefas-concluidas">
-                                <div class="card">
-                                    <div class="card-header bg-success text-white">
-                                        Concluídas
-                                    </div>
-                                    <div class="card-body column-kanban" id="concluidas">
-                                        <button class="btn btn-secondary btn-sm float-left mb-2" onclick="showTextArea('concluidas')"><i class="fas fa-plus"></i></button>
-                                        <!-- Adicione suas tarefas concluídas aqui -->
-                                    </div>
+                        </div>
+                        <div class="col-md-4 tarefas-col" id="tarefas-concluidas">
+                            <div class="card">
+                                <div class="card-header bg-success text-white text-center">
+                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="addCard('concluidas')"><i class="fas fa-plus"></i></button>
+
+                                    Concluídas
+                                </div>
+                                <div class="card-body column-kanban bg-secondary"  id="concluidas">
+                                    <!-- Adicione suas tarefas concluídas aqui -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Corpo do modal -->
             </div>
+            <!-- Corpo do modal -->
         </div>
     </div>
-    <!-- /Tela modal para kanban do processo -->
+</div>
+<!-- /Tela modal para kanban do processo -->
 
 
 
 
 
 
-    <!-- Ajax scripts -->
-    <script>
-        /* -------------------------------------------------------------------------- */
-        /*                                 Sweetalert                                 */
-        /* -------------------------------------------------------------------------- */
-        var Toast = swal.mixin({
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 3000
-        });
+<!-- Ajax scripts -->
+<script>
+    /* -------------------------------------------------------------------------- */
+    /*                                 Sweetalert                                 */
+    /* -------------------------------------------------------------------------- */
+    var Toast = swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 3000
+    });
 
-        var table;
-        var action;
-        var linhaId;
+    /* -------------------------------------------------------------------------- */
+    /*                              Variáveis gobais                              */
+    /* -------------------------------------------------------------------------- */
+    var table;
+    var action;
+    var linhaId;
 
-        $(document).ready(function() {
+    $(document).ready(function() {
 
-            // $.ajax({
-            //     url: "ajax/processos.ajax.php",
-            //     method: 'POST',
-            //     data: {
-            //         'action': 1
-            //     }, //1: Listar Processos no console
-            //     dataType: 'json',
-            //     success: function(response) {
-            //         console.log("reponse", response);
+        // $.ajax({
+        //     url: "ajax/processos.ajax.php",
+        //     method: 'POST',
+        //     data: {
+        //         'action': 1
+        //     }, //1: Listar Processos no console
+        //     dataType: 'json',
+        //     success: function(response) {
+        //         console.log("reponse", response);
+        //     }
+
+        // });
+
+
+
+        table = $('#example1').DataTable({
+
+            // buttons: [{
+            //     action: function(e, dt, node, config) {
+            //         $("mdlCadastrarProcesso").modal('show');
+            //         action = 2;
             //     }
+            // }],
+            language: {
+                url: "views/assets/plugins/language/json/pt_br.json"
+            },
 
-            // });
+            ajax: {
+                url: "ajax/processos.ajax.php",
+                dataSrc: '',
+                type: "POST",
+                data: {
+                    'action': 1
+                }, //1: Listar Processos na tabela
+            },
+
+            pageLength: [20, 50, 100],
+            pageLength: 20,
+
+            responsive: {
+                details: {
+                    type: 'column'
+                }
+            },
 
 
+            columnDefs: [
 
-            table = $('#example1').DataTable({
-
-                // buttons: [{
-                //     action: function(e, dt, node, config) {
-                //         $("mdlCadastrarProcesso").modal('show');
-                //         action = 2;
-                //     }
-                // }],
-                language: {
-                    url: "views/assets/plugins/language/json/pt_br.json"
+                {
+                    targets: 0,
+                    visible: false,
                 },
 
-                ajax: {
-                    url: "ajax/processos.ajax.php",
-                    dataSrc: '',
-                    type: "POST",
-                    data: {
-                        'action': 1
-                    }, //1: Listar Processos na tabela
+                {
+                    targets: 1,
+                    orderable: false,
+                    className: 'control'
                 },
+                {
+                    targets: 2,
+                    orderable: false,
+                    render: function(data, type, full, meta) {
+                        var fase = full[11]; // Valor da coluna "fase"
+                        var percentual = getPercentualPorFase(fase);
+                        var badgeClass = getBadgeClassPorFase(fase);
 
-                pageLength: [20, 50, 100],
-                pageLength: 20,
-
-                responsive: {
-                    details: {
-                        type: 'column'
+                        return "<center>" +
+                            "<span class='" + badgeClass + " btnProgresso text-navy px-1'>" + percentual + "%" +
+                            "</span>" +
+                            "</center>";
                     }
                 },
+                {
+                    targets: 03,
+                    visible: false,
+                },
+                {
+                    targets: 04,
+                    visible: false,
+                },
+                {
+                    targets: 08,
+                    visible: false,
+                },
+                {
+                    targets: 09,
+                    visible: false,
+                },
 
+                {
+                    targets: 12,
+                    orderable: false,
+                    render: function(data, type, full, meta) {
+                        return "<center>" +
+                            "<span class='btnKanbanProcesso text-bg-gray-dark px-1' style='cursor: pointer;'>" +
+                            "<i class='fas fa-clipboard fs-5'></i>" +
+                            "</span>" +
 
-                columnDefs: [
+                            "<span class='btnPregoeiroProcesso text-orange px-1' style='cursor: pointer;'>" +
+                            "<i class='fas fa-gavel fs-5'></i>" +
+                            "</span>" +
 
-                    {
-                        targets: 0,
-                        visible: false,
-                    },
+                            "<span class='btnProtocoProcesso text-primary px-1' style='cursor: pointer;'>" +
+                            "<i class='fas fa-stamp fs-5'></i>" +
+                            "</span>" +
 
-                    {
-                        targets: 1,
-                        orderable: false,
-                        className: 'control'
-                    },
-                    {
-                        targets: 2,
-                        orderable: false,
-                        render: function(data, type, full, meta) {
-                            var fase = full[11]; // Valor da coluna "fase"
-                            var percentual = getPercentualPorFase(fase);
-                            var badgeClass = getBadgeClassPorFase(fase);
+                            "<span class='btnEditarProcesso text-success px-1' style='cursor: pointer;'>" +
+                            "<i class='fas fa-edit'></i>" +
+                            "</span>" +
 
-                            return "<center>" +
-                                "<span class='" + badgeClass + " btnProgresso text-navy px-1'>" + percentual + "%" +
-                                "</span>" +
-                                "</center>";
-                        }
-                    },
-                    {
-                        targets: 03,
-                        visible: false,
-                    },
-                    {
-                        targets: 04,
-                        visible: false,
-                    },
-                    {
-                        targets: 08,
-                        visible: false,
-                    },
-                    {
-                        targets: 09,
-                        visible: false,
-                    },
-
-                    {
-                        targets: 12,
-                        orderable: false,
-                        render: function(data, type, full, meta) {
-                            return "<center>" +
-                                "<span class='btnKanbanProcesso text-bg-gray-dark px-1' style='cursor: pointer;'>" +
-                                "<i class='fas fa-clipboard fs-5'></i>" +
-                                "</span>" +
-
-                                "<span class='btnPregoeiroProcesso text-orange px-1' style='cursor: pointer;'>" +
-                                "<i class='fas fa-gavel fs-5'></i>" +
-                                "</span>" +
-
-                                "<span class='btnProtocoProcesso text-primary px-1' style='cursor: pointer;'>" +
-                                "<i class='fas fa-stamp fs-5'></i>" +
-                                "</span>" +
-
-                                "<span class='btnEditarProcesso text-success px-1' style='cursor: pointer;'>" +
-                                "<i class='fas fa-edit'></i>" +
-                                "</span>" +
-
-                                "<span class='btnDeletarProcesso text-danger px-1' style='cursor: pointer;'>" +
-                                "<i class='fas fa-trash fs-5'></i>" +
-                                "</span>" +
-                                "</center>"
-                        }
+                            "<span class='btnDeletarProcesso text-danger px-1' style='cursor: pointer;'>" +
+                            "<i class='fas fa-trash fs-5'></i>" +
+                            "</span>" +
+                            "</center>"
                     }
-                ],
+                }
+            ],
 
 
 
-                dom: 'Bfrtip',
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis", "pageLength"],
-
-            })
-
-
-        });
-
-        /* -------------------------------------------------------------------------- */
-        /*                  Sincroniza o progresso com a coluna fase                  */
-        /* -------------------------------------------------------------------------- */
-        function getPercentualPorFase(fase) {
-            // lógica para retornar o percentual baseado na fase selecionada
-            // Exemplo: se fase for 1, retorne 10%; se fase for 2, retorne 20%, etc.
-            switch (fase) {
-                case "Na fila":
-                    return 0;
-                case "Fase 1 - EPC":
-                    return 10;
-                case "Fase 2 - Análise SALC":
-                    return 20;
-                case "Fase 3 - Adequação EPC":
-                    return 30;
-                case "Fase 4 - Conjur":
-                    return 40;
-                case "Fase 5 - Saneamento":
-                    return 50;
-                case "Fase 6 - Fase Externa":
-                    return 70;
-                case "Fase 7 - Em contratação":
-                    return 80;
-                case "Fase 8 - Contratado":
-                    return 100;
-                    // Defina mais casos conforme necessário
-                default:
-                    return 0; // Percentual padrão se a fase não for reconhecida
-            }
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /*                  Sincroniza o progresso com a coluna fase                  */
-        /* -------------------------------------------------------------------------- */
-        function getBadgeClassPorFase(fase) {
-            // lógica para retornar a classe da badge baseada na fase selecionada
-            // Exemplo: se fase for 1, retorne 'badge bg-danger'; se fase for 2, retorne 'badge bg-warning', etc.
-            switch (fase) {
-
-                case "Na fila":
-                    return 'badge bg-danger';
-
-                case "Fase 1 - EPC":
-                    return 'badge bg-danger';
-
-                case "Fase 2 - Análise SALC":
-                    return 'badge bg-danger';
-
-                case "Fase 3 - Adequação EPC":
-                    return 'badge bg-danger';
-
-                case "Fase 4 - Conjur":
-                    return 'badge bg-warning';
-
-                case "Fase 5 - Saneamento":
-                    return 'badge bg-warning';
-
-                case "Fase 6 - Fase Externa":
-                    return 'badge bg-primary';
-
-                case "Fase 7 - Em contratação":
-                    return 'badge bg-primary';
-
-                case "Fase 8 - Contratado":
-                    return 'badge bg-success';
-                    // Defina mais casos conforme necessário
-
-                default:
-                    return 'badge bg-secondary'; // Classe padrão se a fase não for reconhecida
-            }
-        }
-
-        /* -------------------------------------------------------------------------- */
-        /*             Limpar inputs do modal ao cancelar ou fechar modal             */
-        /* -------------------------------------------------------------------------- */
-        $("#cancelarButton, #btnFecharModal").on('click', function() {
-
-            $("#idNup").val("");
-            $("#selProcesso").val(0);
-            $("#idNrProcesso").val("");
-            $("#selRequisitante").val(0);
-            $("#selFase").val(0);
-            $("#idDescricaoResumida").val("");
-            $("#idDescricaoDetalhada").val("");
-            $("#idDataEntrada").val(0);
+            dom: 'Bfrtip',
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis", "pageLength"],
 
         })
 
-        /* -------------------------------------------------------------------------- */
-        /*           Limpar a validação quando o botão cancelar é pressionado          */
-        /* -------------------------------------------------------------------------- */
-        document.getElementById("cancelarButton").addEventListener("click", function() {
 
-            $(".needs-validation").removeClass("was-validated");
-        });
-
-        $("#btnCadastrarProcesso").on('click', function() {
-
-            action = 2;
-        });
-
-        /* -------------------------------------------------------------------------- */
-        /*       Validar formulário, cadastrar processos e atualizar tabela           */
-        /* -------------------------------------------------------------------------- */
-        document.getElementById("salvarButton").addEventListener("click", function() {
-
-            var forms = document.getElementsByClassName("needs-validation");
-
-            var validation = Array.prototype.filter.call(forms, function(form) {
-
-                if (form.checkValidity() === true) {
-                    console.log("Preenchimento válido")
-
-                    var text_msgSwal = "";
-                    if (action == 2) {
-
-                    }
-
-                    //Validar entrada nos campos inputs
-                    Swal.fire({
-                        title: 'Confirma o cadastro do processo?',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'Sim',
-                        cancelButtonColor: '#d33',
-                        cancelButtonText: 'Não'
-                    }).then((result) => {
-
-                        if (result.isConfirmed) {
-
-                            var dados = new FormData();
-
-                            dados.append("action", action);
-                            dados.append("idId", $("#idId").val());
-                            dados.append("idNup", $("#idNup").val());
-                            dados.append("selProcesso", $("#selProcesso").val());
-                            dados.append("idNrProcesso", $("#idNrProcesso").val());
-                            dados.append("selRequisitante", $("#selRequisitante").val());
-                            dados.append("selFase", $("#selFase").val());
-                            dados.append("idDescricaoResumida", $("#idDescricaoResumida").val());
-                            dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
-                            dados.append("idDataEntrada", $("#idDataEntrada").val());
-
-
-                            // Exibir os dados no console
-                            // console.log("Dados do Formulário:");
-                            // for (var pair of dados.entries()) {
-                            //     console.log(pair[0] + ": " + pair[1]);
-                            // }
-
-                            if (action == 2) {
-                                var title_msg = "Processo cadastrado com sucesso!"
-                            }
-
-                            if (action == 3) {
-                                var title_msg = "Processo editado com sucesso!"
-                            }
-
-                            $.ajax({
-
-                                url: "ajax/processos.ajax.php",
-                                method: "POST",
-                                data: dados,
-                                cache: false,
-                                contentType: false,
-                                processData: false,
-                                dataType: 'json',
-
-                                success: function(response) {
-
-                                    if (response == "ok") {
-
-                                        Toast.fire({
-                                            icon: 'success',
-                                            title: title_msg
-                                        });
-
-                                        table.ajax.reload();
-
-                                        $("#mdlCadastrarProcesso").modal('hide');
-                                        $("#idNup").val("");
-                                        $("#selProcesso").val(0);
-                                        $("#idNrProcesso").val("");
-                                        $("#selRequisitante").val(0);
-                                        $("#selFase").val(0);
-                                        $("#idDescricaoResumida").val("");
-                                        $("#idDescricaoDetalhada").val("");
-                                        $("#idDataEntrada").val("");
-                                        $(".needs-validation").removeClass("was-validated");
-
-                                    } else {
-
-                                        Toast.fire({
-
-                                            icon: 'error',
-                                            title: 'Processo não cadastrado!'
-                                        });
-                                    }
-                                },
-
-                            });
-                        }
-                    })
-                } else {
-                    console.log("Preenchimento inválido")
-                }
-
-                form.classList.add('was-validated');
-
-            });
-
-        });
-
-        /* -------------------------------------------------------------------------- */
-        /*                         Editar processos cadastrados                        */
-        /* -------------------------------------------------------------------------- */
-        $("#example1").on("click", ".btnEditarProcesso", function() {
-
-            action = 3;
-
-            $("#mdlCadastrarProcesso").modal('show');
-
-            var data = table.row($(this).parents('tr')).data();
-
-            $("#idId").val(data[0]);
-            $("#idNup").val(data[5]);
-            $("#selProcesso").val(data[3]);
-            $("#idNrProcesso").val(data[4]);
-            $("#selRequisitante").val(data[10]);
-            $("#selFase").val(data[11]);
-            $("#idDescricaoResumida").val(data[7]);
-            $("#idDescricaoDetalhada").val(data[8]);
-            $("#idDataEntrada").val(data[9]);
-        });
-
-
-        /* -------------------------------------------------------------------------- */
-        /*                         Deletar processo da tabela                         */
-        /* -------------------------------------------------------------------------- */
-        $('#example1').on("click", ".btnDeletarProcesso", function() {
-
-            action = 4;
-
-            var data = table.row($(this).parents('tr')).data();
-
-            var idId = data[0];
-
-            //Validar entrada nos campos inputs
-            Swal.fire({
-                title: 'Confirma detelar o processo?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Sim, desejo deletar!',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Não'
-            }).then((result) => {
-
-                if (result.isConfirmed) {
-
-                    var dados = new FormData();
-
-                    dados.append("action", action);
-                    dados.append("idId", idId);
-
-                    // Exibir os dados no console
-                    // console.log("Dados do Formulário:");
-                    for (var pair of dados.entries()) {
-                        console.log(pair[0] + ": " + pair[1]);
-                    }
-
-                    $.ajax({
-
-                        url: "ajax/processos.ajax.php",
-                        method: "POST",
-                        data: dados,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        dataType: 'json',
-
-                        success: function(response) {
-
-                            if (response == "ok") {
-
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: "Processo deletado com sucesso!"
-                                });
-
-                                table.ajax.reload();
-
-
-                            } else {
-
-                                Toast.fire({
-
-                                    icon: 'error',
-                                    title: 'Processo não foi deletado!'
-                                });
-                            }
-                        },
-
-                    });
-                }
-            })
-
-        });
-
-        /* -------------------------------------------------------------------------- */
-        /*                     Abre o kanban do processo no modal                     */
-        /* -------------------------------------------------------------------------- */
-
-        $("#example1").on("click", ".btnKanbanProcesso", function() {
-            var data = table.row($(this).parents('tr')).data();
-            linhaId = data[0]; // Assuming the ID is in the first column
-
-            // var modalKanban = document.getElementById('mdlKanbanProcesso');
-            // modalKanban.setAttribute('id', 'mdlKanbanProcesso' + linhaId);
-
-            // var modal = $("#mdlKanbanProcesso" + linhaId);
-
-            // Lógica para preencher o modal com informações específicas da linha
-            // Você pode usar o valor do rowId para buscar e preencher as informações
-
-            // Show the modal
-            // modal.modal('show');
-            $("#mdlKanbanProcesso").modal('show');
-
-            $(".card-wrapper").each(function() {
-                $(this).remove();
-
-            });
-
-            // console.log(linhaId);
-
-            return linhaId;
-
-
-
-        });
-
-        /* -------------------------------------------------------------------------- */
-        /*                   Adiciona os cards das tarefas do kanban                  */
-        /* -------------------------------------------------------------------------- */
-        function showTextArea(containerId) {
-            var container = document.getElementById(containerId);
-            var cardWrapper = document.createElement("div");
-            cardWrapper.className = "card-wrapper";
-
-            var card = document.createElement("div");
-            card.className = "card card-dark card-outline mt-2 col-md-12";
-
-            var cardHeader = document.createElement("div");
-            cardHeader.className = "card-header";
-            cardHeader.style.position = "relative"; // Adicione esta linha
-
-            var cardDeleteButton = document.createElement("button");
-            cardDeleteButton.className = "btn btn-link btn-sm text-secondary card-delete-button";
-            cardDeleteButton.innerHTML = '<i class="fas fa-times"></i>';
-            cardDeleteButton.style.position = "absolute";
-            cardDeleteButton.style.top = "0";
-            cardDeleteButton.style.right = "0";
-
-            cardDeleteButton.addEventListener("click", function() {
-                cardWrapper.parentNode.removeChild(cardWrapper); // Remova o cardWrapper do seu pai
-            });
-
-            cardHeader.appendChild(cardDeleteButton);
-
-            var cardTitle = document.createElement("h5");
-            cardTitle.className = "card-title";
-            cardHeader.appendChild(cardTitle);
-
-            var cardTitleTextArea = document.createElement("textarea");
-            cardTitleTextArea.className = "form-control placeholder card-title-bold card-title-textarea";
-            cardTitleTextArea.setAttribute("rows", "1");
-            cardTitleTextArea.setAttribute("placeholder", "Título da Nova Tarefa");
-            cardHeader.appendChild(cardTitleTextArea);
-
-            var cardBody = document.createElement("div");
-            cardBody.className = "card-body";
-
-            var cardBodyTextArea = document.createElement("textarea");
-            cardBodyTextArea.className = "form-control placeholder card-description-textarea";
-            cardBodyTextArea.setAttribute("rows", "3");
-            cardBodyTextArea.setAttribute("placeholder", "Digite a descrição da tarefa...");
-            cardBody.appendChild(cardBodyTextArea);
-
-            card.appendChild(cardHeader);
-            card.appendChild(cardBody);
-
-            cardWrapper.appendChild(card);
-
-
-            container.appendChild(cardWrapper);
-
-            // Resto do seu código para inicializar o drag-and-drop com dragula
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                  Sincroniza o progresso com a coluna fase                  */
+    /* -------------------------------------------------------------------------- */
+    function getPercentualPorFase(fase) {
+        // lógica para retornar o percentual baseado na fase selecionada
+        // Exemplo: se fase for 1, retorne 10%; se fase for 2, retorne 20%, etc.
+        switch (fase) {
+            case "Na fila":
+                return 0;
+            case "Fase 1 - EPC":
+                return 10;
+            case "Fase 2 - Análise SALC":
+                return 20;
+            case "Fase 3 - Adequação EPC":
+                return 30;
+            case "Fase 4 - Conjur":
+                return 40;
+            case "Fase 5 - Saneamento":
+                return 50;
+            case "Fase 6 - Fase Externa":
+                return 70;
+            case "Fase 7 - Em contratação":
+                return 80;
+            case "Fase 8 - Contratado":
+                return 100;
+                // Defina mais casos conforme necessário
+            default:
+                return 0; // Percentual padrão se a fase não for reconhecida
         }
+    }
 
-        /* -------------------------------------------------------------------------- */
-        /*           Possibilida mover os cards das tarefas entre as colunas          */
-        /* -------------------------------------------------------------------------- */
-        $(document).ready(function() {
-            $(".card-body").sortable({
-                connectWith: ".card-body",
-                handle: ".card-header",
-                placeholder: "card-placeholder",
-                start: function(event, ui) {
-                    ui.item.data("originalParent", ui.item.parent());
-                },
-                stop: function(event, ui) {
-                    var originalParent = ui.item.data("originalParent");
-                    var targetColumn = ui.item.parent();
+    /* -------------------------------------------------------------------------- */
+    /*                  Sincroniza o progresso com a coluna fase                  */
+    /* -------------------------------------------------------------------------- */
+    function getBadgeClassPorFase(fase) {
+        // lógica para retornar a classe da badge baseada na fase selecionada
+        // Exemplo: se fase for 1, retorne 'badge bg-danger'; se fase for 2, retorne 'badge bg-warning', etc.
+        switch (fase) {
 
-                    if (!isValidTarget(targetColumn)) {
-                        originalParent.append(ui.item);
-                    }
+            case "Na fila":
+                return 'badge bg-danger';
+
+            case "Fase 1 - EPC":
+                return 'badge bg-danger';
+
+            case "Fase 2 - Análise SALC":
+                return 'badge bg-danger';
+
+            case "Fase 3 - Adequação EPC":
+                return 'badge bg-danger';
+
+            case "Fase 4 - Conjur":
+                return 'badge bg-warning';
+
+            case "Fase 5 - Saneamento":
+                return 'badge bg-warning';
+
+            case "Fase 6 - Fase Externa":
+                return 'badge bg-primary';
+
+            case "Fase 7 - Em contratação":
+                return 'badge bg-primary';
+
+            case "Fase 8 - Contratado":
+                return 'badge bg-success';
+                // Defina mais casos conforme necessário
+
+            default:
+                return 'badge bg-secondary'; // Classe padrão se a fase não for reconhecida
+        }
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*             Limpar inputs do modal ao cancelar ou fechar modal             */
+    /* -------------------------------------------------------------------------- */
+    $("#cancelarButton, #btnFecharModal").on('click', function() {
+
+        $("#idNup").val("");
+        $("#selProcesso").val(0);
+        $("#idNrProcesso").val("");
+        $("#selRequisitante").val(0);
+        $("#selFase").val(0);
+        $("#idDescricaoResumida").val("");
+        $("#idDescricaoDetalhada").val("");
+        $("#idDataEntrada").val(0);
+
+    })
+
+    /* -------------------------------------------------------------------------- */
+    /*           Limpar a validação quando o botão cancelar é pressionado          */
+    /* -------------------------------------------------------------------------- */
+    document.getElementById("cancelarButton").addEventListener("click", function() {
+
+        $(".needs-validation").removeClass("was-validated");
+    });
+
+    $("#btnCadastrarProcesso").on('click', function() {
+
+        action = 2;
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*       Validar formulário, cadastrar processos e atualizar tabela           */
+    /* -------------------------------------------------------------------------- */
+    document.getElementById("salvarButton").addEventListener("click", function() {
+
+        var forms = document.getElementsByClassName("needs-validation");
+
+        var validation = Array.prototype.filter.call(forms, function(form) {
+
+            if (form.checkValidity() === true) {
+                console.log("Preenchimento válido")
+
+                var text_msgSwal = "";
+                if (action == 2) {
+
                 }
-            }).disableSelection();
 
-            $(".card-delete-button").click(function() {
-                $(this).closest(".card-wrapper").remove();
-            });
+                //Validar entrada nos campos inputs
+                Swal.fire({
+                    title: 'Confirma o cadastro do processo?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Sim',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Não'
+                }).then((result) => {
 
-            function isValidTarget(targetColumn) {
-                var validColumns = ["tarefas-pendentes", "tarefas-em-progresso", "tarefas-concluidas"];
-                return validColumns.includes(targetColumn.closest(".col-md-4").attr("id"));
+                    if (result.isConfirmed) {
+
+                        var dados = new FormData();
+
+                        dados.append("action", action);
+                        dados.append("idId", $("#idId").val());
+                        dados.append("idNup", $("#idNup").val());
+                        dados.append("selProcesso", $("#selProcesso").val());
+                        dados.append("idNrProcesso", $("#idNrProcesso").val());
+                        dados.append("selRequisitante", $("#selRequisitante").val());
+                        dados.append("selFase", $("#selFase").val());
+                        dados.append("idDescricaoResumida", $("#idDescricaoResumida").val());
+                        dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
+                        dados.append("idDataEntrada", $("#idDataEntrada").val());
+
+
+                        // Exibir os dados no console
+                        // console.log("Dados do Formulário:");
+                        // for (var pair of dados.entries()) {
+                        //     console.log(pair[0] + ": " + pair[1]);
+                        // }
+
+                        if (action == 2) {
+                            var title_msg = "Processo cadastrado com sucesso!"
+                        }
+
+                        if (action == 3) {
+                            var title_msg = "Processo editado com sucesso!"
+                        }
+
+                        $.ajax({
+
+                            url: "ajax/processos.ajax.php",
+                            method: "POST",
+                            data: dados,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            dataType: 'json',
+
+                            success: function(response) {
+
+                                if (response == "ok") {
+
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: title_msg
+                                    });
+
+                                    table.ajax.reload();
+
+                                    $("#mdlCadastrarProcesso").modal('hide');
+                                    $("#idNup").val("");
+                                    $("#selProcesso").val(0);
+                                    $("#idNrProcesso").val("");
+                                    $("#selRequisitante").val(0);
+                                    $("#selFase").val(0);
+                                    $("#idDescricaoResumida").val("");
+                                    $("#idDescricaoDetalhada").val("");
+                                    $("#idDataEntrada").val("");
+                                    $(".needs-validation").removeClass("was-validated");
+
+                                } else {
+
+                                    Toast.fire({
+
+                                        icon: 'error',
+                                        title: 'Processo não cadastrado!'
+                                    });
+                                }
+                            },
+
+                        });
+                    }
+                })
+            } else {
+                console.log("Preenchimento inválido")
             }
+
+            form.classList.add('was-validated');
+
         });
 
+    });
 
-        /* -------------------------------------------------------------------------- */
-        /*                             Salvar kanban no bd                            */
-        /* -------------------------------------------------------------------------- */
-        $('#salvarButtonKanban').on('click', function() {
+    /* -------------------------------------------------------------------------- */
+    /*                         Editar processos cadastrados                        */
+    /* -------------------------------------------------------------------------- */
+    $("#example1").on("click", ".btnEditarProcesso", function() {
 
-            var rowId = linhaId;
+        action = 3;
 
-            var cardData = []; // Crie um array para armazenar os dados dos cards
+        $("#mdlCadastrarProcesso").modal('show');
 
-            $(".card-wrapper").each(function() {
-                var cardTitle = $(this).find(".card-title-textarea").val();
-                var cardDescription = $(this).find(".card-description-textarea").val();
-                cardData.push({
-                    title: cardTitle,
-                    description: cardDescription
-                });
+        var data = table.row($(this).parents('tr')).data();
 
-                if (cardData == "") {
-                    return "cardData Vazio";
+        $("#idId").val(data[0]);
+        $("#idNup").val(data[5]);
+        $("#selProcesso").val(data[3]);
+        $("#idNrProcesso").val(data[4]);
+        $("#selRequisitante").val(data[10]);
+        $("#selFase").val(data[11]);
+        $("#idDescricaoResumida").val(data[7]);
+        $("#idDescricaoDetalhada").val(data[8]);
+        $("#idDataEntrada").val(data[9]);
+    });
+
+
+    /* -------------------------------------------------------------------------- */
+    /*                         Deletar processo da tabela                         */
+    /* -------------------------------------------------------------------------- */
+    $('#example1').on("click", ".btnDeletarProcesso", function() {
+
+        action = 4;
+
+        var data = table.row($(this).parents('tr')).data();
+
+        var idId = data[0];
+
+        //Validar entrada nos campos inputs
+        Swal.fire({
+            title: 'Confirma detelar o processo?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sim, desejo deletar!',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Não'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                var dados = new FormData();
+
+                dados.append("action", action);
+                dados.append("idId", idId);
+
+                // Exibir os dados no console
+                // console.log("Dados do Formulário:");
+                for (var pair of dados.entries()) {
+                    console.log(pair[0] + ": " + pair[1]);
                 }
 
-                // Enviar os dados dos cards para o servidor
                 $.ajax({
+
                     url: "ajax/processos.ajax.php",
                     method: "POST",
-                    data: {
-                        rowId: rowId,
-                        cardData: cardData,
-                        action: 5,
-                    }, // Envie o ID da linha e os dados dos cards
-                    // cache: false,
-                    // contentType: false,
-                    // processData: false,
-                    // dataType: 'json',
-
+                    data: dados,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
 
                     success: function(response) {
 
-                        console.log("response: " + response);
+                        if (response == "ok") {
 
-                        if (response == '"ok"') {
                             Toast.fire({
                                 icon: 'success',
-                                title: "Kanban salvo com sucesso!"
+                                title: "Processo deletado com sucesso!"
                             });
-                        } else if (rowId || cardData == null) {
-                            return "vazio";
-                        } else {
-                            Toast.fire({
-                                icon: 'error',
-                                title: 'Processo não cadastrado!',
 
+                            table.ajax.reload();
+
+
+                        } else {
+
+                            Toast.fire({
+
+                                icon: 'error',
+                                title: 'Processo não foi deletado!'
                             });
                         }
                     },
-                    error: function(error) {
-                        console.error("Erro ao salvar informações no servidor:", error);
-                    },
-
 
                 });
-            });
-
-
-        });
-
-        /* -------------------------------------------------------------------------- */
-        /*                      Limpar todas as tarefas do kanban                     */
-        /* -------------------------------------------------------------------------- */
-        $('#limparButtonKanban').on('click', function() {
-
-            
-            $(".card-wrapper").each(function() {
-                $(this).remove();
-            });
-
-        });
-
-        /* -------------------------------------------------------------------------- */
-        /*                        Ações ao clicar fora do modal                       */
-        /* -------------------------------------------------------------------------- */
-        $(document).on("click", function(event) {
-            if (!$(event.target).closest("#mdlKanbanProcesso").length) {
-                // O usuário clicou fora do modal, portanto, verifique se o modal está aberto antes de simular o clique no botão #btnFecharModalKanban
-                if ($("#mdlKanbanProcesso").is(":visible")) {}
             }
+        })
+
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                     Abre o kanban do processo no modal                     */
+    /* -------------------------------------------------------------------------- */
+    $("#example1").on("click", ".btnKanbanProcesso", function() {
+        var data = table.row($(this).parents('tr')).data();
+        linhaId = data[0]; // Assuming the ID is in the first column
+
+        $("#mdlKanbanProcesso").modal('show');
+
+        $(".card-wrapper").each(function() {
+            $(this).remove();
+
         });
 
-        // $(document).on("click", function(event) {
-        //     if (!$(event.target).closest("#mdlKanbanProcesso").length) {
-        //         // Remove todos os cards do kanban     
-        //         $(".card-wrapper").each(function() {
-        //             $(this).remove();
-        //         });
-        //         $("#mdlKanbanProcesso").modal('hide');
-        //         // O usuário clicou fora do modal, portanto, verifique se o usuário clicou dentro do modal ou na parte de cima ou de baixo do modal
+        return linhaId;
+    });
 
-        //         if ($("#mdlKanbanProcesso").is(":visible") && !$(event.target).closest("#mdlKanbanProcesso.modal-content").length && !$(event.target).closest("#mdlKanbanProcesso.modal-header").length) {
-        //             // Remove todos os cards do kanban     
-        //             $(".card-wrapper").each(function() {
-        //                 $(this).remove();
-        //             });
-        //             $("#mdlKanbanProcesso").modal('hide');
-        //             // Aqui você pode adicionar o código para executar as ações que devem ser executadas quando o usuário clicar fora do modal
+    /* -------------------------------------------------------------------------- */
+    /*              Adiciona os cards das tarefas na coluna do kanban             */
+    /* -------------------------------------------------------------------------- */
+    function addCard(containerId) {
 
-        //             // Aqui você pode adicionar o código para executar as ações que devem ser executadas quando o usuário clicar fora do modal
-        //         }
-        //     }
-        // });
-    </script>
+        var rowId = linhaId;
+
+        var container = document.getElementById(containerId);
+        var cardWrapper = document.createElement("div");
+        cardWrapper.className = "card-wrapper";
+
+        var card = document.createElement("div");
+        card.className = "card card-dark card-outline mt-2 col-md-12";
+
+        var cardHeader = document.createElement("div");
+        cardHeader.className = "card-header";
+        cardHeader.style.position = "relative"; // Adicione esta linha
+
+        var cardDeleteButton = document.createElement("button");
+        cardDeleteButton.className = "btn btn-link btn-sm text-secondary card-delete-button";
+        cardDeleteButton.innerHTML = '<i class="fas fa-times"></i>';
+        cardDeleteButton.style.position = "absolute";
+        cardDeleteButton.style.top = "0";
+        cardDeleteButton.style.right = "0";
+
+        cardDeleteButton.addEventListener("click", function() {
+            cardWrapper.parentNode.removeChild(cardWrapper); // Remova o cardWrapper do seu pai
+        });
+
+        cardHeader.appendChild(cardDeleteButton);
+
+        var cardTitle = document.createElement("h5");
+        cardTitle.className = "card-title";
+        cardHeader.appendChild(cardTitle);
+
+        var cardTitleTextArea = document.createElement("textarea");
+        cardTitleTextArea.className = "form-control placeholder card-title-bold card-title-textarea";
+        cardTitleTextArea.setAttribute("rows", "1");
+        cardTitleTextArea.setAttribute("placeholder", "Título da Nova Tarefa");
+        cardHeader.appendChild(cardTitleTextArea);
+
+        var cardBody = document.createElement("div");
+        cardBody.className = "card-body";
+
+        var cardBodyTextArea = document.createElement("textarea");
+        cardBodyTextArea.className = "form-control placeholder card-description-textarea";
+        cardBodyTextArea.setAttribute("rows", "3");
+        cardBodyTextArea.setAttribute("placeholder", "Digite a descrição da tarefa...");
+        cardBody.appendChild(cardBodyTextArea);
+
+        card.appendChild(cardHeader);
+        card.appendChild(cardBody);
+        cardWrapper.appendChild(card);
+        container.appendChild(cardWrapper);
+
+        // Resto do seu código para inicializar o drag-and-drop com dragula
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*              Remove os cards das tarefas na coluna do kanban               */
+    /* -------------------------------------------------------------------------- */
+    // $(document).on("click", ".card-delete-button", function() {
+    //     var cardWrapper = $(this).closest(".card-wrapper");
+    //     cardWrapper.remove();
+
+    //     // Enviar os dados dos cards para o servidor
+    //     $.ajax({
+    //         url: "ajax/processos.ajax.php",
+    //         method: "POST",
+    //         data: {
+    //             action: 6,
+    //         },
+
+    //         success: function(response) {
+    //             console.log("response: " + response);
+
+    //             if (response == '"ok"') {
+    //                 console.log("Card removido com sucesso!");
+    //             } else {
+    //                 console.log("Card não removido!");
+    //             }
+    //         },
+    //         error: function(error) {
+    //             console.error("Erro ao salvar informações no servidor:", error);
+    //         },
+
+
+    //     });
+    // });
+
+    /* -------------------------------------------------------------------------- */
+    /*           Possibilida mover os cards das tarefas entre as colunas          */
+    /* -------------------------------------------------------------------------- */
+    $(document).ready(function() {
+        $(".column-kanban").sortable({
+
+            connectWith: ".column-kanban",
+            handle: ".card-header",
+
+            start: function(event, ui) {
+                ui.item.data("originalParent", ui.item.parent());
+                var cardId = ui.item.attr("id");
+                var columnIndex = ui.item.parent().attr("id");
+                var columnChildrenCount = ui.item.parent().children().index(this);
+                var indexChildren = $(this).parent().children().index(this);
+                var columnAttrClass = ui.item.parent().attr("id");
+                console.log("Coluna: " + columnIndex + " - " + columnChildrenCount + " - " + columnAttrClass + " - " + indexChildren);
+            },
+            stop: function(event, ui) {
+                var originalParent = ui.item.data("originalParent");
+                var targetColumn = ui.item.parent();
+                var cardId = ui.item.attr("id");
+                var columnIndex = ui.item.parent().attr("id");
+                var columnChildrenCount = ui.item.parent().children().index(this);
+                var columnAttrClass = ui.item.parent().attr("id");
+                console.log("Coluna: " + columnIndex + " - " + columnChildrenCount + " - " + columnAttrClass);
+
+                if (!isValidTarget(targetColumn)) {
+                    originalParent.append(ui.item);
+                }
+            }
+        }).disableSelection();
+
+        $(".card-delete-button").click(function() {
+            $(this).closest(".card-wrapper").remove();
+        });
+
+        function isValidTarget(targetColumn) {
+            var validColumns = ["tarefas-pendentes", "tarefas-em-progresso", "tarefas-concluidas"];
+            return validColumns.includes(targetColumn.closest(".col-md-4").attr("id"));
+        }
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                             Salvar kanban no bd                            */
+    /* -------------------------------------------------------------------------- */
+    $('#salvarButtonKanban').on('click', function() {
+
+        var rowId = linhaId;
+
+        var cardData = []; // Crie um array para armazenar os dados dos cards
+
+        $(".card-wrapper").each(function() {
+            var cardTitle = $(this).find(".card-title-textarea").val();
+            var cardDescription = $(this).find(".card-description-textarea").val();
+            cardData.push({
+                title: cardTitle,
+                description: cardDescription
+            });
+
+            if (cardData == "") {
+                return "cardData Vazio";
+            }
+
+            // Enviar os dados dos cards para o servidor
+            $.ajax({
+                url: "ajax/processos.ajax.php",
+                method: "POST",
+                data: {
+                    rowId: rowId,
+                    cardData: cardData,
+                    action: 7,
+                }, // Envie o ID da linha e os dados dos cards
+                // cache: false,
+                // contentType: false,
+                // processData: false,
+                // dataType: 'json',
+
+
+                success: function(response) {
+
+                    console.log("response: " + response);
+
+                    if (response == '"ok"') {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Kanban salvo com sucesso!"
+                        });
+                    } else if (rowId || cardData == null) {
+                        return "vazio";
+                    } else {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Processo não cadastrado!',
+
+                        });
+                    }
+                },
+                error: function(error) {
+                    console.error("Erro ao salvar informações no servidor:", error);
+                },
+
+
+            });
+        });
+
+
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                      Limpar todas as tarefas do kanban                     */
+    /* -------------------------------------------------------------------------- */
+    $('#limparButtonKanban').on('click', function() {
+
+
+        $(".card-wrapper").each(function() {
+            $(this).remove();
+        });
+
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                        Ações ao clicar fora do modal                       */
+    /* -------------------------------------------------------------------------- */
+    $(document).on("click", function(event) {
+        if (!$(event.target).closest("#mdlKanbanProcesso").length) {
+            // O usuário clicou fora do modal, portanto, verifique se o modal está aberto antes de simular o clique no botão #btnFecharModalKanban
+            if ($("#mdlKanbanProcesso").is(":visible")) {}
+        }
+    });
+
+    // $(document).on("click", function(event) {
+    //     if (!$(event.target).closest("#mdlKanbanProcesso").length) {
+    //         // Remove todos os cards do kanban     
+    //         $(".card-wrapper").each(function() {
+    //             $(this).remove();
+    //         });
+    //         $("#mdlKanbanProcesso").modal('hide');
+    //         // O usuário clicou fora do modal, portanto, verifique se o usuário clicou dentro do modal ou na parte de cima ou de baixo do modal
+
+    //         if ($("#mdlKanbanProcesso").is(":visible") && !$(event.target).closest("#mdlKanbanProcesso.modal-content").length && !$(event.target).closest("#mdlKanbanProcesso.modal-header").length) {
+    //             // Remove todos os cards do kanban     
+    //             $(".card-wrapper").each(function() {
+    //                 $(this).remove();
+    //             });
+    //             $("#mdlKanbanProcesso").modal('hide');
+    //             // Aqui você pode adicionar o código para executar as ações que devem ser executadas quando o usuário clicar fora do modal
+
+    //             // Aqui você pode adicionar o código para executar as ações que devem ser executadas quando o usuário clicar fora do modal
+    //         }
+    //     }
+    // });
+</script>
