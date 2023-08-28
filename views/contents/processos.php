@@ -277,7 +277,7 @@
 
                                     Concluídas
                                 </div>
-                                <div class="card-body column-kanban bg-secondary"  id="concluidas">
+                                <div class="card-body column-kanban bg-secondary" id="concluidas">
                                     <!-- Adicione suas tarefas concluídas aqui -->
                                 </div>
                             </div>
@@ -876,21 +876,17 @@
 
             start: function(event, ui) {
                 ui.item.data("originalParent", ui.item.parent());
-                var cardId = ui.item.attr("id");
+
                 var columnIndex = ui.item.parent().attr("id");
-                var columnChildrenCount = ui.item.parent().children().index(this);
-                var indexChildren = $(this).parent().children().index(this);
-                var columnAttrClass = ui.item.parent().attr("id");
-                console.log("Coluna: " + columnIndex + " - " + columnChildrenCount + " - " + columnAttrClass + " - " + indexChildren);
+                var indexChildren = ui.item.index();
+                console.log("Coluna: " + columnIndex + " - " + indexChildren);
             },
             stop: function(event, ui) {
                 var originalParent = ui.item.data("originalParent");
                 var targetColumn = ui.item.parent();
-                var cardId = ui.item.attr("id");
                 var columnIndex = ui.item.parent().attr("id");
-                var columnChildrenCount = ui.item.parent().children().index(this);
-                var columnAttrClass = ui.item.parent().attr("id");
-                console.log("Coluna: " + columnIndex + " - " + columnChildrenCount + " - " + columnAttrClass);
+                var indexChildren = ui.item.index();
+                console.log("Coluna: " + columnIndex + " - " + indexChildren);
 
                 if (!isValidTarget(targetColumn)) {
                     originalParent.append(ui.item);
