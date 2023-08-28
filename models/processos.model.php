@@ -150,7 +150,6 @@ class ProcessosModel
             }
 
             return $response;
-            
         } catch (Exception $e) {
             return 'Exception capturada:' . $e->getMessage();
         } finally {
@@ -161,63 +160,67 @@ class ProcessosModel
 
     static public function mdlRegistrarTarefasKanban($rowId, $cardData)
     {
+        // foreach ($cardData as $key => $value) {
+        //     print_r($value);
+        // }
 
+        foreach ($cardData as $card) {
+            $title = $card['title'];
+            $description = $card['description'];
+            $column = $card['column'];
+            $index = $card['index'];
 
-        try {
-            $conn = Connection::connect();
+            try {
+                $conn = Connection::connect();
 
-            $stmt = $conn->prepare("INSERT INTO kanban_tasks (id_processo, title, description) VALUES (:rowId, :title, :description)");
-
-
-
-            foreach ($cardData as $card) {
-                $title = $card['title'];
-                $description = $card['description'];
-
+                $stmt = $conn->prepare("SELECT * FROM kanban_tasks WHERE id_processo = :rowId AND columnKanban = :column AND position = :index");
                 $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
-                $stmt->bindParam(":title", $title, PDO::PARAM_STR);
-                $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+                $stmt->bindParam(":column", $column, PDO::PARAM_STR);
+                $stmt->bindParam(":index", $index, PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+                if (count($result) > 0) {
 
-                $response = "ok"; // Suponhamos que tudo correu bem
+                    // print_r("entrou no if");
+                    // Atualizar tarefas existentes
+                    $stmt = $conn->prepare("UPDATE kanban_tasks SET title = :title, description = :description WHERE id_processo = :rowId AND columnKanban = :column AND position = :index");
+                    $response = "ok"; // Suponhamos que tudo correu bem
 
-                if (!$stmt->execute()) {
+                    $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
+                    $stmt->bindParam(":title", $title, PDO::PARAM_STR);
+                    $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+                    $stmt->bindParam(":column", $column, PDO::PARAM_STR);
+                    $stmt->bindParam(":index", $index, PDO::PARAM_INT);
 
-                    return "erro no mdlRegistrarTarefasKanban";
-                    return Connection::connect()->errorInfo();
+                    if (!$stmt->execute()) {
+                        return "erro no mdlRegistrarTarefasKanban";
+                        return Connection::connect()->errorInfo();
+                    }
+                } else {
+
+                    // Cadastrar tarefas
+                    $stmt = $conn->prepare("INSERT INTO kanban_tasks (id_processo, title, description, columnKanban, position) VALUES (:rowId, :title, :description, :column, :index)");
+                    $response = "ok"; // Suponhamos que tudo correu bem
+
+                    $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
+                    $stmt->bindParam(":title", $title, PDO::PARAM_STR);
+                    $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+                    $stmt->bindParam(":column", $column, PDO::PARAM_STR);
+                    $stmt->bindParam(":index", $index, PDO::PARAM_INT);
+
+                    if (!$stmt->execute()) {
+                        return "erro no mdlRegistrarTarefasKanban";
+                        return Connection::connect()->errorInfo();
+                    }
                 }
+                return $response;
+            } catch (Exception $e) {
+                return 'Exception capturada:' . $e->getMessage();
+            } finally {
+                $stmt = null;
+                $conn = null;
             }
-
-            return $response;
-        } catch (Exception $e) {
-            return 'Exception capturada:' . $e->getMessage();
-        } finally {
-            $stmt = null;
-            $conn = null;
         }
     }
-
-    // static public function mdlAtualizarPosicaoTarefa($taskId, $newPosition)
-    // {
-
-    //     try {
-    //         $conn = Connection::connect();
-
-    //         $stmt = $conn->prepare("UPDATE kanban_tasks SET position = :newPosition WHERE id = :taskId");
-
-    //         $stmt->bindParam(":newPosition", $newPosition, PDO::PARAM_INT);
-    //         $stmt->bindParam(":taskId", $taskId, PDO::PARAM_INT);
-
-    //         if ($stmt->execute()) {
-    //             return "ok";
-    //         } else {
-    //             return "Error";
-    //         }
-    //     } catch (Exception $e) {
-    //         return 'Exception capturada:' . $e->getMessage();
-    //     } finally {
-    //         $stmt = null;
-    //         $conn = null;
-    //     }
-    // }
 }

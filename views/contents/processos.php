@@ -830,7 +830,7 @@
         cardWrapper.appendChild(card);
         container.appendChild(cardWrapper);
 
-        // Resto do seu código para inicializar o drag-and-drop com dragula
+
     }
 
     /* -------------------------------------------------------------------------- */
@@ -876,17 +876,16 @@
 
             start: function(event, ui) {
                 ui.item.data("originalParent", ui.item.parent());
-
-                var columnIndex = ui.item.parent().attr("id");
-                var indexChildren = ui.item.index();
-                console.log("Coluna: " + columnIndex + " - " + indexChildren);
+                // var columnIndex = ui.item.parent().attr("id");
+                // var indexChildren = ui.item.index();
+                // console.log("Coluna: " + columnIndex + " - " + indexChildren);
             },
             stop: function(event, ui) {
                 var originalParent = ui.item.data("originalParent");
                 var targetColumn = ui.item.parent();
-                var columnIndex = ui.item.parent().attr("id");
-                var indexChildren = ui.item.index();
-                console.log("Coluna: " + columnIndex + " - " + indexChildren);
+                // var columnIndex = ui.item.parent().attr("id");
+                // var indexChildren = ui.item.index();
+                // console.log("Coluna: " + columnIndex + " - " + indexChildren);
 
                 if (!isValidTarget(targetColumn)) {
                     originalParent.append(ui.item);
@@ -905,7 +904,7 @@
     });
 
     /* -------------------------------------------------------------------------- */
-    /*                             Salvar kanban no bd                            */
+    /*                          Salvar tasks kanban no bd                         */
     /* -------------------------------------------------------------------------- */
     $('#salvarButtonKanban').on('click', function() {
 
@@ -916,59 +915,59 @@
         $(".card-wrapper").each(function() {
             var cardTitle = $(this).find(".card-title-textarea").val();
             var cardDescription = $(this).find(".card-description-textarea").val();
+            var targetColumn = $(this).parent();
+            var columnIndex = $(this).parent().attr("id");
+            var indexChildren = $(this).index();
+            
             cardData.push({
                 title: cardTitle,
-                description: cardDescription
+                description: cardDescription,
+                column: columnIndex,
+                index: indexChildren,
             });
-
-            if (cardData == "") {
-                return "cardData Vazio";
-            }
-
-            // Enviar os dados dos cards para o servidor
-            $.ajax({
-                url: "ajax/processos.ajax.php",
-                method: "POST",
-                data: {
-                    rowId: rowId,
-                    cardData: cardData,
-                    action: 7,
-                }, // Envie o ID da linha e os dados dos cards
-                // cache: false,
-                // contentType: false,
-                // processData: false,
-                // dataType: 'json',
-
-
-                success: function(response) {
-
-                    console.log("response: " + response);
-
-                    if (response == '"ok"') {
-                        Toast.fire({
-                            icon: 'success',
-                            title: "Kanban salvo com sucesso!"
-                        });
-                    } else if (rowId || cardData == null) {
-                        return "vazio";
-                    } else {
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Processo não cadastrado!',
-
-                        });
-                    }
-                },
-                error: function(error) {
-                    console.error("Erro ao salvar informações no servidor:", error);
-                },
-
-
-            });
+            var i = 0;
+            console.log(cardData[i]);
+            i++
         });
 
 
+        // Enviar os dados dos cards para o servidor
+        $.ajax({
+            url: "ajax/processos.ajax.php",
+            method: "POST",
+            data: {
+                rowId: rowId,
+                cardData: cardData,
+                action: 7,
+            }, // Envie o ID da linha e os dados dos cards
+
+            success: function(response) {
+
+                console.log("response: " + response);
+
+                if (response == '"ok"') {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Kanban salvo com sucesso!"
+                    });
+                } else if (rowId || cardData == null) {
+                    return "vazio";
+                } else {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'O Kanban não foi salvo!',
+
+                    });
+                }
+            },
+            error: function(error) {
+                console.error("Erro ao salvar informações no servidor:", error);
+            },
+
+
+        });
     });
+
 
     /* -------------------------------------------------------------------------- */
     /*                      Limpar todas as tarefas do kanban                     */
