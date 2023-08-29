@@ -317,29 +317,8 @@
 
     $(document).ready(function() {
 
-        // $.ajax({
-        //     url: "ajax/processos.ajax.php",
-        //     method: 'POST',
-        //     data: {
-        //         'action': 1
-        //     }, //1: Listar Processos no console
-        //     dataType: 'json',
-        //     success: function(response) {
-        //         console.log("reponse", response);
-        //     }
-
-        // });
-
-
-
         table = $('#example1').DataTable({
 
-            // buttons: [{
-            //     action: function(e, dt, node, config) {
-            //         $("mdlCadastrarProcesso").modal('show');
-            //         action = 2;
-            //     }
-            // }],
             language: {
                 url: "views/assets/plugins/language/json/pt_br.json"
             },
@@ -361,8 +340,6 @@
                     type: 'column'
                 }
             },
-
-
             columnDefs: [
 
                 {
@@ -435,8 +412,6 @@
                 }
             ],
 
-
-
             dom: 'Bfrtip',
             "responsive": true,
             "lengthChange": false,
@@ -444,7 +419,6 @@
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis", "pageLength"],
 
         })
-
 
     });
 
@@ -800,9 +774,9 @@
         cardDeleteButton.style.top = "0";
         cardDeleteButton.style.right = "0";
 
-        cardDeleteButton.addEventListener("click", function() {
-            cardWrapper.parentNode.removeChild(cardWrapper); // Remova o cardWrapper do seu pai
-        });
+        // cardDeleteButton.addEventListener("click", function() {
+        //     cardWrapper.parentNode.removeChild(cardWrapper); // Remova o cardWrapper do seu pai
+        // });
 
         cardHeader.appendChild(cardDeleteButton);
 
@@ -918,7 +892,7 @@
             var targetColumn = $(this).parent();
             var columnIndex = $(this).parent().attr("id");
             var indexChildren = $(this).index();
-            
+
             cardData.push({
                 title: cardTitle,
                 description: cardDescription,
@@ -938,7 +912,7 @@
             data: {
                 rowId: rowId,
                 cardData: cardData,
-                action: 7,
+                action: 5,
             }, // Envie o ID da linha e os dados dos cards
 
             success: function(response) {
@@ -969,47 +943,122 @@
     });
 
 
+
     /* -------------------------------------------------------------------------- */
     /*                      Limpar todas as tarefas do kanban                     */
     /* -------------------------------------------------------------------------- */
     $('#limparButtonKanban').on('click', function() {
 
+        var rowId = linhaId;
+
+        Swal.fire({
+            title: 'Confirma limpar todos  os cartões?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sim, desejo limpar!',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Não'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                // Enviar os dados dos cards para o servidor
+                $.ajax({
+                    url: "ajax/processos.ajax.php",
+                    method: "POST",
+                    data: {
+                        rowId: rowId,
+                        action: 6,
+                    }, // Envie o ID da linha e os dados dos cards
+
+                    success: function(response) {
+
+                        console.log("response: " + response);
+
+                        if (response == '"ok"') {
+                            Toast.fire({
+                                icon: 'success',
+                                title: "Kanban limpo com sucesso!"
+                            });
+                        } else if (rowId || cardData == null) {
+                            return "vazio";
+                        } else {
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'O Kanban não foi limpo!',
+
+                            });
+                        }
+                    },
+                    error: function(error) {
+                        console.error("Erro ao limpar informações no servidor:", error);
+                    },
+
+
+                });
+
+                $(".card-wrapper").each(function() {
+                    $(this).remove();
+                });
+            }
+        });
+
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                      Deletar um único card  do kanban no BD                */
+    /* -------------------------------------------------------------------------- */
+    $(document).on("click", ".card-delete-button", function() {
+
+              
 
         $(".card-wrapper").each(function() {
+            var column = $(this).parent().attr("id");
+            var index = $(this).index();
+            var rowId = linhaId;  
+
+            // Enviar os dados dos cards para o servidor
+            $.ajax({
+                url: "ajax/processos.ajax.php",
+                method: "POST",
+                data: {
+                    rowId: rowId,
+                    column: column,
+                    index: index,
+                    action: 7,
+                }, // Envie o ID da linha e os dados dos cards
+
+                success: function(response) {
+
+                    console.log("response: " + response);
+
+                    if (response == '"ok"') {
+                        console.log("Card removido com sucesso!");
+                    } else if (rowId || cardData == null) {
+                        return "vazio";
+                    } else {
+                        console.log("Card não removido!");
+                    }
+                },
+                error: function(error) {
+                    console.error("Erro ao remover card no servidor:", error);
+                },
+            });
+
+            
             $(this).remove();
         });
+
 
     });
 
     /* -------------------------------------------------------------------------- */
     /*                        Ações ao clicar fora do modal                       */
     /* -------------------------------------------------------------------------- */
-    $(document).on("click", function(event) {
-        if (!$(event.target).closest("#mdlKanbanProcesso").length) {
-            // O usuário clicou fora do modal, portanto, verifique se o modal está aberto antes de simular o clique no botão #btnFecharModalKanban
-            if ($("#mdlKanbanProcesso").is(":visible")) {}
-        }
-    });
-
     // $(document).on("click", function(event) {
     //     if (!$(event.target).closest("#mdlKanbanProcesso").length) {
-    //         // Remove todos os cards do kanban     
-    //         $(".card-wrapper").each(function() {
-    //             $(this).remove();
-    //         });
-    //         $("#mdlKanbanProcesso").modal('hide');
-    //         // O usuário clicou fora do modal, portanto, verifique se o usuário clicou dentro do modal ou na parte de cima ou de baixo do modal
-
-    //         if ($("#mdlKanbanProcesso").is(":visible") && !$(event.target).closest("#mdlKanbanProcesso.modal-content").length && !$(event.target).closest("#mdlKanbanProcesso.modal-header").length) {
-    //             // Remove todos os cards do kanban     
-    //             $(".card-wrapper").each(function() {
-    //                 $(this).remove();
-    //             });
-    //             $("#mdlKanbanProcesso").modal('hide');
-    //             // Aqui você pode adicionar o código para executar as ações que devem ser executadas quando o usuário clicar fora do modal
-
-    //             // Aqui você pode adicionar o código para executar as ações que devem ser executadas quando o usuário clicar fora do modal
-    //         }
+    //         // O usuário clicou fora do modal, portanto, verifique se o modal está aberto antes de simular o clique no botão #btnFecharModalKanban
+    //         if ($("#mdlKanbanProcesso").is(":visible")) {}
     //     }
     // });
 </script>

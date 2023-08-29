@@ -43,8 +43,9 @@ class ProcessosController
         return $response;
     }
 
-    static public function ctrAdicionaCard($rowId){
-        $response = ProcessosModel::mdlAdicionaCard($rowId);
+    static public function ctrLimparTodosCardsKanban($rowId)
+    {
+        $response = ProcessosModel::mdlLimparTodosCardsKanban($rowId);
 
         return $response;
     }
@@ -55,17 +56,13 @@ class ProcessosController
         $response = ProcessosModel::mdlRegistrarTarefasKanban($rowId, $cardData);
 
         return $response;
-
-        echo '<pre>';
-        print_r("parou aqui no else das amdlRegistrarTarefasKanban");
-        echo '</pre>';
     }
 
-    // static public function ctrAtualizarPosicaoTarefa($taskId, $newPosition)
-    // {
+    static public function ctrDeletarUnicoCardKanban($rowId, $column, $index)
+    {
 
-    //     $response = ProcessosModel::mdlAtualizarPosicaoTarefa($taskId, $newPosition);
+        $response = ProcessosModel::mdlDeletarUnicoCardKanban($rowId, $column, $index);
 
-    //     return $response;
-    // }
+        return $response;
+    }
 }

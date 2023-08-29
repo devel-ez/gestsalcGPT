@@ -130,37 +130,9 @@ class ProcessosModel
         }
     }
 
-    static public function mdlAdicionaCard($rowId)
-    {
-
-
-        try {
-            $conn = Connection::connect();
-
-            $stmt = $conn->prepare("INSERT INTO kanban_tasks (id_processo) VALUES (:rowId)");
-
-            $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
-
-            $response = "ok"; // Suponhamos que tudo correu bem
-
-            if (!$stmt->execute()) {
-
-                return "erro no mdlAdicionaCard";
-                return Connection::connect()->errorInfo();
-            }
-
-            return $response;
-        } catch (Exception $e) {
-            return 'Exception capturada:' . $e->getMessage();
-        } finally {
-            $stmt = null;
-            $conn = null;
-        }
-    }
-
     static public function mdlRegistrarTarefasKanban($rowId, $cardData)
     {
-        
+
         try {
             foreach ($cardData as $card) {
                 $title = $card['title'];
@@ -219,4 +191,41 @@ class ProcessosModel
             $conn = null;
         }
     }
+
+    static public function mdlLimparTodosCardsKanban($rowId)
+    {
+        $stmt = Connection::connect()->prepare("DELETE FROM kanban_tasks WHERE id_processo = :$rowId");
+
+        $stmt->bindParam(":" . $rowId,  $rowId,  PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+
+            return "ok";
+        } else {
+
+            return Connection::connect()->errorInfo();
+        }
+    }
+
+    static public function mdlDeletarUnicoCardKanban($rowId, $column, $index)
+    {
+       print_r($rowId." - ".$column." - ".$index."\n");
+
+        $stmt = Connection::connect()->prepare("DELETE FROM kanban_tasks WHERE id_processo = :$rowId AND columnKanban = :$column AND position = :$index");
+
+        $stmt->bindParam(":" . $rowId,  $rowId,  PDO::PARAM_INT);
+        $stmt->bindParam(":" . $column,  $column,  PDO::PARAM_STR);
+        $stmt->bindParam(":" . $index,  $index,  PDO::PARAM_INT);
+
+        print_r($rowId." - ".$column." - ".$index."\n");
+
+        if ($stmt->execute()) {
+
+            return "ok";
+        } else {
+
+            return Connection::connect()->errorInfo();
+        }
+    }
+
 }
