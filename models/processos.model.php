@@ -160,17 +160,14 @@ class ProcessosModel
 
     static public function mdlRegistrarTarefasKanban($rowId, $cardData)
     {
-        // foreach ($cardData as $key => $value) {
-        //     print_r($value);
-        // }
+        
+        try {
+            foreach ($cardData as $card) {
+                $title = $card['title'];
+                $description = $card['description'];
+                $column = $card['column'];
+                $index = $card['index'];
 
-        foreach ($cardData as $card) {
-            $title = $card['title'];
-            $description = $card['description'];
-            $column = $card['column'];
-            $index = $card['index'];
-
-            try {
                 $conn = Connection::connect();
 
                 $stmt = $conn->prepare("SELECT * FROM kanban_tasks WHERE id_processo = :rowId AND columnKanban = :column AND position = :index");
@@ -182,7 +179,6 @@ class ProcessosModel
 
                 if (count($result) > 0) {
 
-                    // print_r("entrou no if");
                     // Atualizar tarefas existentes
                     $stmt = $conn->prepare("UPDATE kanban_tasks SET title = :title, description = :description WHERE id_processo = :rowId AND columnKanban = :column AND position = :index");
                     $response = "ok"; // Suponhamos que tudo correu bem
@@ -214,13 +210,13 @@ class ProcessosModel
                         return Connection::connect()->errorInfo();
                     }
                 }
-                return $response;
-            } catch (Exception $e) {
-                return 'Exception capturada:' . $e->getMessage();
-            } finally {
-                $stmt = null;
-                $conn = null;
             }
+            return $response;
+        } catch (Exception $e) {
+            return 'Exception capturada:' . $e->getMessage();
+        } finally {
+            $stmt = null;
+            $conn = null;
         }
     }
 }
