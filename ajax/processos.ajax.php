@@ -15,12 +15,12 @@ class AjaxProcessos
     public $idDataEntrada;
 
 
-    public function ajaxGetDataProcessos()
-    {
-        $data = ProcessosController::ctrGetDataProcessos();
+    // public function ajaxGetDataProcessos()
+    // {
+    //     $data = ProcessosController::ctrGetDataProcessos();
 
-        echo json_encode($data);
-    }
+    //     echo json_encode($data);
+    // }
 
     public function ajaxListarProcessos()
     {
@@ -87,6 +87,13 @@ class AjaxProcessos
 
         echo json_encode($response);
     }
+
+    public function ajaxGetKanbanTasks()
+    {
+        $data = ProcessosController::ctrGetKanbanTasks();
+
+        echo json_encode($data);
+    }
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
@@ -144,6 +151,10 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
 
     $removerCard = new AjaxProcessos;
     $removerCard->ajaxDeletarUnicoCardKanban($_POST['rowId'], $_POST['column'], $_POST['index']);
+}else if (isset($_POST['action']) && $_POST['action'] == 8) { // Remover card do kanban e no BD
+
+    $removerCard = new AjaxProcessos;
+    $removerCard->ajaxGetKanbanTasks();
 } else {
 
     echo '<pre>';

@@ -5,13 +5,13 @@ require_once "../controllers/processos.controller.php";
 class ProcessosController
 {
 
-    static public function ctrGetDataProcessos()
-    {
+    // static public function ctrGetDataProcessos()
+    // {
 
-        $data = ProcessosModel::mdlGetDataProcessos();
+    //     $data = ProcessosModel::mdlGetDataProcessos();
 
-        return $data;
-    }
+    //     return $data;
+    // }
 
     static public function ctrListarProcessos()
     {
@@ -64,5 +64,13 @@ class ProcessosController
         $response = ProcessosModel::mdlDeletarUnicoCardKanban($rowId, $column, $index);
 
         return $response;
+    }
+
+    static public function ctrGetKanbanTasks()
+    {
+
+        $data = ProcessosModel::mdlGetKanbanTasks();
+
+        return $data;
     }
 }

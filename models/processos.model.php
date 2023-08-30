@@ -5,14 +5,14 @@ require_once "connection.model.php";
 class ProcessosModel
 {
 
-    static public function mdlGetDataProcessos()
-    {
+    // static public function mdlGetDataProcessos()
+    // {
 
-        $stmt = Connection::connect()->prepare("SELECT * FROM processos");
-        $stmt->execute();
+    //     $stmt = Connection::connect()->prepare("SELECT * FROM processos");
+    //     $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
-    }
+    //     return $stmt->fetchAll(PDO::FETCH_OBJ);
+    // }
 
     static public function mdlListarProcessos()
     {
@@ -224,5 +224,14 @@ class ProcessosModel
         } else {
             return Connection::connect()->errorInfo();
         }
+    }
+
+    static public function mdlGetKanbanTasks()
+    {
+
+        $stmt = Connection::connect()->prepare("SELECT * FROM kanban_tasks");
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
 }

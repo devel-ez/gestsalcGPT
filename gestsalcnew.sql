@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 28-Ago-2023 às 22:11
+-- Tempo de geração: 30-Ago-2023 às 04:20
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -92,52 +92,13 @@ CREATE TABLE `kanban_tasks` (
 --
 
 INSERT INTO `kanban_tasks` (`id_task`, `id_processo`, `title`, `description`, `position`, `columnKanban`) VALUES
-(255, 34, 'a', 'a', 0, 'pendentes'),
-(256, 34, 'b', 'b', 1, 'pendentes'),
-(257, 34, 'c', 'c', 0, 'em-progresso'),
-(258, 34, 'd', 'd', 1, 'em-progresso'),
-(259, 34, 'e', 'e', 0, 'concluidas'),
-(260, 34, 'f', 'f', 1, 'concluidas'),
-(261, 34, 'a', 'a', 0, 'pendentes'),
-(262, 34, 'b', 'b', 1, 'pendentes'),
-(263, 34, 'c', 'c', 0, 'em-progresso'),
-(264, 34, 'd', 'd', 1, 'em-progresso'),
-(265, 34, 'e', 'e', 0, 'concluidas'),
-(266, 34, 'f', 'f', 1, 'concluidas'),
-(267, 34, 'q', 'qqq', 0, 'pendentes'),
-(268, 34, 'www', 'www', 0, 'em-progresso'),
-(269, 34, 'qweqwe', 'qweqweqweq', 0, 'pendentes'),
-(270, 34, '', '', 0, 'em-progresso'),
-(271, 34, 'qweqwe', 'qweqweqweq', 0, 'pendentes'),
-(272, 34, 'qqq', 'qqq', 0, 'em-progresso'),
-(273, 34, 'a', 'a', 0, 'pendentes'),
-(274, 34, 'b', 'b', 0, 'em-progresso'),
-(275, 34, 'qq', 'qqq', 0, 'pendentes'),
-(276, 34, 'www', 'www', 0, 'em-progresso'),
-(277, 34, 'q', 'qqwe', 0, 'pendentes'),
-(278, 34, 'ewqweqw', '', 0, 'em-progresso'),
-(279, 34, 'qwe', 'qwe', 0, 'pendentes'),
-(280, 34, 'ww', 'ww', 0, 'pendentes'),
-(281, 34, '123', '123', 0, 'pendentes'),
-(282, 34, 'qwe', 'qeqwe', 0, 'pendentes'),
-(283, 34, 'asdfas', 'asdfasdf', 0, 'em-progresso'),
-(284, 34, '1', '1', 0, 'pendentes'),
-(285, 34, '2', '2', 1, 'pendentes'),
-(286, 34, 'qwe', 'qwe', 0, 'pendentes'),
-(287, 34, 'asdfasf', 'aasdfasfd', 0, 'pendentes'),
-(288, 34, 'QWE', 'QWEQWE', 0, 'pendentes'),
-(289, 34, 'qweqe', 'qweqew', 0, 'pendentes'),
-(290, 34, 'qwe', 'qwe', 0, 'pendentes'),
-(291, 34, 'kkkkkkkkk', 'kkkkkkkkkkkkkk', 0, 'pendentes'),
-(292, 34, 'aaa', 'aaa', 0, 'pendentes'),
-(293, 34, 'bbb', 'bbb', 1, 'pendentes'),
-(294, 34, 'aaa', 'aaa', 0, 'pendentes'),
-(295, 34, 'bbb', 'bbb', 1, 'pendentes'),
-(296, 34, 'aaa', 'aaa', 0, 'pendentes'),
-(297, 34, 'bbb', 'bbb', 1, 'pendentes'),
-(298, 34, 'aaa', 'bbb', 0, 'pendentes'),
-(299, 34, 'aaa', 'bbb', 0, 'pendentes'),
-(300, 34, 'ccc', 'ccc', 1, 'pendentes');
+(328, 34, '444', '', 1, 'concluidas'),
+(334, 34, 'q', 'ww', 1, 'pendentes'),
+(335, 34, 'www', 'ee', 0, 'pendentes'),
+(336, 34, 'qwee', 'eeee', 0, 'em-progresso'),
+(338, 34, '', 'weqew', 0, 'concluidas'),
+(339, 34, 'qwe', 'qeee', 1, 'em-progresso'),
+(340, 35, ' ghf', 'ghfghfgh', 0, 'pendentes');
 
 -- --------------------------------------------------------
 
@@ -232,7 +193,7 @@ ALTER TABLE `historico_data_entrada_saida`
 -- AUTO_INCREMENT de tabela `kanban_tasks`
 --
 ALTER TABLE `kanban_tasks`
-  MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
+  MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=341;
 
 --
 -- AUTO_INCREMENT de tabela `processos`

@@ -743,6 +743,82 @@
 
         });
 
+        $.ajax({
+            url: "ajax/processos.ajax.php",
+            method: "POST",
+            dataType: 'json',
+            data: {
+                'action': 8
+            },
+
+
+            success: function(data) {
+                // Processar as tasks retornadas
+                var filteredData = data.filter(function(row) {
+                    return row[1] == linhaId;
+                });
+
+                console.log(data);
+
+                filteredData.forEach(function(row) {
+                    var rowId = linhaId;
+                    var containerId = row[5];
+                    console.log(containerId);
+
+                    var container = document.getElementById(containerId);
+                    var cardWrapper = document.createElement("div");
+                    cardWrapper.className = "card-wrapper";
+
+                    var card = document.createElement("div");
+                    card.className = "card card-dark card-outline mt-2 col-md-12";
+
+                    var cardHeader = document.createElement("div");
+                    cardHeader.className = "card-header";
+                    cardHeader.style.position = "relative"; // Adicione esta linha
+
+                    var cardDeleteButton = document.createElement("button");
+                    cardDeleteButton.className = "btn btn-link btn-sm text-secondary card-delete-button";
+                    cardDeleteButton.innerHTML = '<i class="fas fa-times"></i>';
+                    cardDeleteButton.style.position = "absolute";
+                    cardDeleteButton.style.top = "0";
+                    cardDeleteButton.style.right = "0";
+
+                    cardHeader.appendChild(cardDeleteButton);
+
+                    var cardTitle = document.createElement("h5");
+                    cardTitle.className = "card-title";
+                    cardHeader.appendChild(cardTitle);
+
+                    var cardTitleTextArea = document.createElement("textarea");
+                    cardTitleTextArea.className = "form-control placeholder card-title-bold card-title-textarea";
+                    cardTitleTextArea.setAttribute("rows", "1");
+                    cardTitleTextArea.setAttribute("placeholder", "Título da Nova Tarefa");
+                    cardHeader.appendChild(cardTitleTextArea);
+
+                    var cardBody = document.createElement("div");
+                    cardBody.className = "card-body";
+
+                    var cardBodyTextArea = document.createElement("textarea");
+                    cardBodyTextArea.className = "form-control placeholder card-description-textarea";
+                    cardBodyTextArea.setAttribute("rows", "3");
+                    cardBodyTextArea.setAttribute("placeholder", "Digite a descrição da tarefa...");
+                    cardBody.appendChild(cardBodyTextArea);
+
+                    card.appendChild(cardHeader);
+                    card.appendChild(cardBody);
+                    cardWrapper.appendChild(card);
+                    container.appendChild(cardWrapper);
+                })
+
+
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+
+
+
         return linhaId;
     });
 
@@ -850,7 +926,6 @@
         $(".card-wrapper").each(function() {
             var cardTitle = $(this).find(".card-title-textarea").val();
             var cardDescription = $(this).find(".card-description-textarea").val();
-            var targetColumn = $(this).parent();
             var columnIndex = $(this).parent().attr("id");
             var indexChildren = $(this).index();
 
@@ -974,7 +1049,7 @@
         var column = $(this).closest(".card-wrapper").parent().attr("id");
         var index = $(this).closest(".card-wrapper").index();
         var carwrapper = $(this).closest(".card-wrapper");
-    
+
         console.log(column);
         console.log(index);
 
@@ -1006,7 +1081,7 @@
                 console.error("Erro ao remover card no servidor:", error);
             },
         });
-        
+
 
     });
 </script>
