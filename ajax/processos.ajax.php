@@ -134,16 +134,16 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
     $deletarProcesso->ajaxDeletarProcesso();
 } else if (isset($_POST['action']) && $_POST['action'] == 5) { // Cadastrar as informações dos cards do kanban por processo
 
-    $registrarTarefasKanban = new AjaxProcessos;
-    $registrarTarefasKanban->ajaxRegistrarTarefasKanban($_POST['rowId'], $_POST['cardData']);
+    $cadastrarInfoTarefasKanban = new AjaxProcessos;
+    $cadastrarInfoTarefasKanban->ajaxRegistrarTarefasKanban($_POST['rowId'], $_POST['cardData']);
 } else if (isset($_POST['action']) && $_POST['action'] == 6) { // Limpar todos cards do kanban no BD
 
-    $registrarTarefasKanban = new AjaxProcessos;
-    $registrarTarefasKanban->ajaxLimparTodosCardsKanban($_POST['rowId']);
+    $limparTodasTarefas = new AjaxProcessos;
+    $limparTodasTarefas->ajaxLimparTodosCardsKanban($_POST['rowId']);
 }else if (isset($_POST['action']) && $_POST['action'] == 7) { // Remover card do kanban e no BD
 
-    $registrarTarefasKanban = new AjaxProcessos;
-    $registrarTarefasKanban->ajaxDeletarUnicoCardKanban($_POST['rowId'], $_POST['column'], $_POST['index']);
+    $removerCard = new AjaxProcessos;
+    $removerCard->ajaxDeletarUnicoCardKanban($_POST['rowId'], $_POST['column'], $_POST['index']);
 } else {
 
     echo '<pre>';

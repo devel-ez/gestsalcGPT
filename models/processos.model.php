@@ -209,23 +209,20 @@ class ProcessosModel
 
     static public function mdlDeletarUnicoCardKanban($rowId, $column, $index)
     {
-       print_r($rowId." - ".$column." - ".$index."\n");
+        // print_r($rowId . " - " . $column . " - " . $index . "\n");
 
-        $stmt = Connection::connect()->prepare("DELETE FROM kanban_tasks WHERE id_processo = :$rowId AND columnKanban = :$column AND position = :$index");
+        $stmt = Connection::connect()->prepare("DELETE FROM kanban_tasks WHERE id_processo = :id_processo AND columnKanban = :columnKanban AND position = :position");
 
-        $stmt->bindParam(":" . $rowId,  $rowId,  PDO::PARAM_INT);
-        $stmt->bindParam(":" . $column,  $column,  PDO::PARAM_STR);
-        $stmt->bindParam(":" . $index,  $index,  PDO::PARAM_INT);
+        $stmt->bindParam(":id_processo", $rowId, PDO::PARAM_INT);
+        $stmt->bindParam(":columnKanban", $column, PDO::PARAM_STR);
+        $stmt->bindParam(":position", $index, PDO::PARAM_INT);
 
-        print_r($rowId." - ".$column." - ".$index."\n");
+        // print_r($rowId . " - " . $column . " - " . $index . "\n");
 
         if ($stmt->execute()) {
-
             return "ok";
         } else {
-
             return Connection::connect()->errorInfo();
         }
     }
-
 }

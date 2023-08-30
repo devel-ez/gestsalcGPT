@@ -291,11 +291,6 @@
 </div>
 <!-- /Tela modal para kanban do processo -->
 
-
-
-
-
-
 <!-- Ajax scripts -->
 <script>
     /* -------------------------------------------------------------------------- */
@@ -315,6 +310,9 @@
     var action;
     var linhaId;
 
+    /* -------------------------------------------------------------------------- */
+    /*                                  DataTable                                 */
+    /* -------------------------------------------------------------------------- */
     $(document).ready(function() {
 
         table = $('#example1').DataTable({
@@ -423,7 +421,7 @@
     });
 
     /* -------------------------------------------------------------------------- */
-    /*                  Sincroniza o progresso com a coluna fase                  */
+    /*                Sincroniza o % progresso com a coluna fase                  */
     /* -------------------------------------------------------------------------- */
     function getPercentualPorFase(fase) {
         // lógica para retornar o percentual baseado na fase selecionada
@@ -454,7 +452,7 @@
     }
 
     /* -------------------------------------------------------------------------- */
-    /*                  Sincroniza o progresso com a coluna fase                  */
+    /*                  Sincroniza a cor progresso com a coluna fase              */
     /* -------------------------------------------------------------------------- */
     function getBadgeClassPorFase(fase) {
         // lógica para retornar a classe da badge baseada na fase selecionada
@@ -518,13 +516,17 @@
         $(".needs-validation").removeClass("was-validated");
     });
 
+
+    /* -------------------------------------------------------------------------- */
+    /*               Ação do botão Salvar para difereciar do Editar               */
+    /* -------------------------------------------------------------------------- */
     $("#btnCadastrarProcesso").on('click', function() {
 
         action = 2;
     });
 
     /* -------------------------------------------------------------------------- */
-    /*       Validar formulário, cadastrar processos e atualizar tabela           */
+    /*      Salvar Validar formulário, cadastrar processos e atualizar tabela     */
     /* -------------------------------------------------------------------------- */
     document.getElementById("salvarButton").addEventListener("click", function() {
 
@@ -534,11 +536,6 @@
 
             if (form.checkValidity() === true) {
                 console.log("Preenchimento válido")
-
-                var text_msgSwal = "";
-                if (action == 2) {
-
-                }
 
                 //Validar entrada nos campos inputs
                 Swal.fire({
@@ -774,10 +771,6 @@
         cardDeleteButton.style.top = "0";
         cardDeleteButton.style.right = "0";
 
-        // cardDeleteButton.addEventListener("click", function() {
-        //     cardWrapper.parentNode.removeChild(cardWrapper); // Remova o cardWrapper do seu pai
-        // });
-
         cardHeader.appendChild(cardDeleteButton);
 
         var cardTitle = document.createElement("h5");
@@ -806,38 +799,6 @@
 
 
     }
-
-    /* -------------------------------------------------------------------------- */
-    /*              Remove os cards das tarefas na coluna do kanban               */
-    /* -------------------------------------------------------------------------- */
-    // $(document).on("click", ".card-delete-button", function() {
-    //     var cardWrapper = $(this).closest(".card-wrapper");
-    //     cardWrapper.remove();
-
-    //     // Enviar os dados dos cards para o servidor
-    //     $.ajax({
-    //         url: "ajax/processos.ajax.php",
-    //         method: "POST",
-    //         data: {
-    //             action: 6,
-    //         },
-
-    //         success: function(response) {
-    //             console.log("response: " + response);
-
-    //             if (response == '"ok"') {
-    //                 console.log("Card removido com sucesso!");
-    //             } else {
-    //                 console.log("Card não removido!");
-    //             }
-    //         },
-    //         error: function(error) {
-    //             console.error("Erro ao salvar informações no servidor:", error);
-    //         },
-
-
-    //     });
-    // });
 
     /* -------------------------------------------------------------------------- */
     /*           Possibilida mover os cards das tarefas entre as colunas          */
@@ -942,8 +903,6 @@
         });
     });
 
-
-
     /* -------------------------------------------------------------------------- */
     /*                      Limpar todas as tarefas do kanban                     */
     /* -------------------------------------------------------------------------- */
@@ -1010,55 +969,44 @@
     /* -------------------------------------------------------------------------- */
     $(document).on("click", ".card-delete-button", function() {
 
-              
 
-        $(".card-wrapper").each(function() {
-            var column = $(this).parent().attr("id");
-            var index = $(this).index();
-            var rowId = linhaId;  
+        var rowId = linhaId;
+        var column = $(this).closest(".card-wrapper").parent().attr("id");
+        var index = $(this).closest(".card-wrapper").index();
+        var carwrapper = $(this).closest(".card-wrapper");
+    
+        console.log(column);
+        console.log(index);
 
-            // Enviar os dados dos cards para o servidor
-            $.ajax({
-                url: "ajax/processos.ajax.php",
-                method: "POST",
-                data: {
-                    rowId: rowId,
-                    column: column,
-                    index: index,
-                    action: 7,
-                }, // Envie o ID da linha e os dados dos cards
+        // Enviar os dados dos cards para o servidor
+        $.ajax({
+            url: "ajax/processos.ajax.php",
+            method: "POST",
+            data: {
+                rowId: rowId,
+                column: column,
+                index: index,
+                action: 7,
+            }, // Envie o ID da linha e os dados dos cards
 
-                success: function(response) {
+            success: function(response) {
 
-                    console.log("response: " + response);
+                console.log("response: " + response);
 
-                    if (response == '"ok"') {
-                        console.log("Card removido com sucesso!");
-                    } else if (rowId || cardData == null) {
-                        return "vazio";
-                    } else {
-                        console.log("Card não removido!");
-                    }
-                },
-                error: function(error) {
-                    console.error("Erro ao remover card no servidor:", error);
-                },
-            });
-
-            
-            $(this).remove();
+                if (response == '"ok"') {
+                    console.log("Card removido com sucesso!");
+                    carwrapper.remove();
+                } else if (rowId || cardData == null) {
+                    return "vazio";
+                } else {
+                    console.log("Card não removido!");
+                }
+            },
+            error: function(error) {
+                console.error("Erro ao remover card no servidor:", error);
+            },
         });
-
+        
 
     });
-
-    /* -------------------------------------------------------------------------- */
-    /*                        Ações ao clicar fora do modal                       */
-    /* -------------------------------------------------------------------------- */
-    // $(document).on("click", function(event) {
-    //     if (!$(event.target).closest("#mdlKanbanProcesso").length) {
-    //         // O usuário clicou fora do modal, portanto, verifique se o modal está aberto antes de simular o clique no botão #btnFecharModalKanban
-    //         if ($("#mdlKanbanProcesso").is(":visible")) {}
-    //     }
-    // });
 </script>
