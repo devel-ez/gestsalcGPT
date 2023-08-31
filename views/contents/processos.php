@@ -348,7 +348,8 @@
                 {
                     targets: 1,
                     orderable: false,
-                    className: 'control'
+                    className: 'control',
+                    visible: false,
                 },
                 {
                     targets: 2,
@@ -758,12 +759,23 @@
                     return row[1] == linhaId;
                 });
 
-                console.log(data);
+                filteredData.sort(function(a, b) {
+                    if (a[4] > b[4]) {
+                        return 1
+                    } else if (a[4] < b[4]) {
+                        return -1
+                    } else {
+                        return 0
+                    }
+                    return filteredData;
+                });
 
-                filteredData.forEach(function(row) {
-                    var rowId = linhaId;
-                    var containerId = row[5];
-                    console.log(containerId);
+                // console.log(filteredData);
+
+                filteredData.forEach(function(obj) {
+
+                    var containerId = obj["columnKanban"];
+                    // console.log(filteredData);
 
                     var container = document.getElementById(containerId);
                     var cardWrapper = document.createElement("div");
@@ -793,7 +805,10 @@
                     cardTitleTextArea.className = "form-control placeholder card-title-bold card-title-textarea";
                     cardTitleTextArea.setAttribute("rows", "1");
                     cardTitleTextArea.setAttribute("placeholder", "Título da Nova Tarefa");
+                    cardTitleTextArea.value = obj["title"];
                     cardHeader.appendChild(cardTitleTextArea);
+
+
 
                     var cardBody = document.createElement("div");
                     cardBody.className = "card-body";
@@ -802,12 +817,14 @@
                     cardBodyTextArea.className = "form-control placeholder card-description-textarea";
                     cardBodyTextArea.setAttribute("rows", "3");
                     cardBodyTextArea.setAttribute("placeholder", "Digite a descrição da tarefa...");
+                    cardBodyTextArea.value = obj["description"];
                     cardBody.appendChild(cardBodyTextArea);
 
                     card.appendChild(cardHeader);
                     card.appendChild(cardBody);
                     cardWrapper.appendChild(card);
                     container.appendChild(cardWrapper);
+
                 })
 
 
@@ -827,7 +844,6 @@
     /* -------------------------------------------------------------------------- */
     function addCard(containerId) {
 
-        var rowId = linhaId;
 
         var container = document.getElementById(containerId);
         var cardWrapper = document.createElement("div");
@@ -859,6 +875,8 @@
         cardTitleTextArea.setAttribute("placeholder", "Título da Nova Tarefa");
         cardHeader.appendChild(cardTitleTextArea);
 
+
+
         var cardBody = document.createElement("div");
         cardBody.className = "card-body";
 
@@ -886,27 +904,27 @@
             handle: ".card-header",
 
             start: function(event, ui) {
+
                 ui.item.data("originalParent", ui.item.parent());
-                // var columnIndex = ui.item.parent().attr("id");
-                // var indexChildren = ui.item.index();
-                // console.log("Coluna: " + columnIndex + " - " + indexChildren);
+
             },
             stop: function(event, ui) {
                 var originalParent = ui.item.data("originalParent");
                 var targetColumn = ui.item.parent();
-                // var columnIndex = ui.item.parent().attr("id");
-                // var indexChildren = ui.item.index();
-                // console.log("Coluna: " + columnIndex + " - " + indexChildren);
 
                 if (!isValidTarget(targetColumn)) {
                     originalParent.append(ui.item);
+                } else {
+
                 }
             }
         }).disableSelection();
 
-        $(".card-delete-button").click(function() {
-            $(this).closest(".card-wrapper").remove();
-        });
+
+
+        // $(".card-delete-button").click(function() {
+        //     $(this).closest(".card-wrapper").remove();
+        // });
 
         function isValidTarget(targetColumn) {
             var validColumns = ["tarefas-pendentes", "tarefas-em-progresso", "tarefas-concluidas"];
@@ -935,10 +953,9 @@
                 column: columnIndex,
                 index: indexChildren,
             });
-            var i = 0;
-            console.log(cardData[i]);
-            i++
+
         });
+
 
 
         // Enviar os dados dos cards para o servidor
@@ -950,10 +967,10 @@
                 cardData: cardData,
                 action: 5,
             }, // Envie o ID da linha e os dados dos cards
-
+            
             success: function(response) {
-
-                console.log("response: " + response);
+                console.log(cardData);
+                // console.log("response: " + response);
 
                 if (response == '"ok"') {
                     Toast.fire({
@@ -1007,7 +1024,7 @@
 
                     success: function(response) {
 
-                        console.log("response: " + response);
+                        // console.log("response: " + response);
 
                         if (response == '"ok"') {
                             Toast.fire({

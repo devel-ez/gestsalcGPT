@@ -9,9 +9,12 @@
     <link rel="shortcut icon" href="views/assets/dist/img/acanto.png" type="image/x-icon">
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="views/assets/plugins/google-fonts/google-fonts.css">
+     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="views/assets/plugins/fontawesome-free/css/all.min.css">
+    <!-- jquery ui css -->
+    <link rel="stylesheet" href="views/assets/plugins/jquery-ui/jquery-ui.css">
+    
     <!-- Theme style -->
     <link rel="stylesheet" href="views/assets/dist/css/adminlte.min.css">
     <!-- Sweetalert2 -->
@@ -52,22 +55,15 @@
     <script src="views/assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="views/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="views/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    
 
-    <!-- Adicione estas linhas ao seu <head> -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Jquery UI js -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="views/assets/plugins/jquery-ui/jquery-ui.js"></script>
 
     <!-- Biblioteca Dragula -->
-    <script src="views/assets/plugins/dragula/dragula.min.js"></script>
-    <!-- Adicione os links para as bibliotecas CSS e JS do jQuery e do Dragula -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script> -->
-    <!-- biblioteca draggable -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/draggable/1.0.0-beta.13/draggable.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/draggable/1.0.0-beta.13/draggable.min.js"></script> -->
-
-
-
+    <!-- <script src="views/assets/plugins/dragula/dragula.min.js"></script> -->
+    
 
 
 </head>

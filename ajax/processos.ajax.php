@@ -151,10 +151,10 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
 
     $removerCard = new AjaxProcessos;
     $removerCard->ajaxDeletarUnicoCardKanban($_POST['rowId'], $_POST['column'], $_POST['index']);
-}else if (isset($_POST['action']) && $_POST['action'] == 8) { // Remover card do kanban e no BD
+}else if (isset($_POST['action']) && $_POST['action'] == 8) { // Get card do kanban e no BD
 
-    $removerCard = new AjaxProcessos;
-    $removerCard->ajaxGetKanbanTasks();
+    $getCardKanbanBd = new AjaxProcessos;
+    $getCardKanbanBd->ajaxGetKanbanTasks();
 } else {
 
     echo '<pre>';
