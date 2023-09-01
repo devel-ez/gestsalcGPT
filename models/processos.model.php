@@ -132,7 +132,7 @@ class ProcessosModel
 
     static public function mdlRegistrarTarefasKanban($rowId, $cardData)
     {
-        echo json_encode($cardData);
+        // echo json_encode($cardData);
 
         $conn = Connection::connect();
 
@@ -141,7 +141,7 @@ class ProcessosModel
         $stmt->execute();
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        echo json_encode($resultado);
+        // echo json_encode($resultado);
 
         $resultado_column = array_column($resultado, 'position','columnKanban');
         $cardData_column = array_column($cardData, 'index','column');

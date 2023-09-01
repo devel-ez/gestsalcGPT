@@ -969,7 +969,7 @@
             }, // Envie o ID da linha e os dados dos cards
             
             success: function(response) {
-                console.log(cardData);
+                // console.log(cardData);
                 // console.log("response: " + response);
 
                 if (response == '"ok"') {
