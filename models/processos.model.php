@@ -141,15 +141,39 @@ class ProcessosModel
         $stmt->execute();
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // echo json_encode($resultado);
+        $iguais = [];
+        $diferentes = [];
 
-        $resultado_column = array_column($resultado, 'position','columnKanban');
-        $cardData_column = array_column($cardData, 'index','column');
+        foreach ($resultado as $key => $item) {
 
-        $diff = array_diff($resultado_column, $cardData_column);
+            foreach ($cardData as $key2 => $item2) {
+                if ($item['position'] === $cardData[$key2]['index'] && $item['columnKanban'] === $cardData[$key2]['column']) {
+                    $iguais[] = $item;
+                } else {
+                    $diferentes[] = $item;
+                }
+            }
+        }
+
+        // foreach ($diferentes as $item) {
+        //     echo "Deletar: ";
+        //     echo json_encode($item);
+        //     echo "<br>";
+        // }
+        print_r("Iguais:   ");
+        echo json_encode($iguais);
+        print_r("Diferentes:   ");
+        echo json_encode($diferentes);
+
+        return;
+        // echo json_encode($cardData_column);
 
 
-        return $diff;
+        // $diff = array_diff($resultado, $cardData);
+
+
+        // return $diff;
+        return;
 
         try {
             foreach ($cardData as $card) {
