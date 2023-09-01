@@ -58,7 +58,6 @@
     
 
     <!-- Jquery UI js -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="views/assets/plugins/jquery-ui/jquery-ui.js"></script>
 
     <!-- Biblioteca Dragula -->
