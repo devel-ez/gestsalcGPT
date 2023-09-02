@@ -77,7 +77,6 @@ class ProcessosModel
         foreach ($data as $key => $value) {
 
             $set .= $key . " = :" . $key . ",";
-            // echo $key . " = :" . $key . "<br>"; // Imprime o resultado atual
         }
 
         $set = substr($set, 0, -1);
@@ -132,8 +131,8 @@ class ProcessosModel
 
     static public function mdlRegistrarTarefasKanban($rowId, $cardData)
     {
-        // echo json_encode($cardData);
 
+        
         $conn = Connection::connect();
 
         $stmt = $conn->prepare("SELECT * FROM kanban_tasks WHERE id_processo = :rowId");
@@ -141,39 +140,31 @@ class ProcessosModel
         $stmt->execute();
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $iguais = [];
-        $diferentes = [];
+        $diferentesDeletar = array();
 
-        foreach ($resultado as $key => $item) {
 
-            foreach ($cardData as $key2 => $item2) {
-                if ($item['position'] === $cardData[$key2]['index'] && $item['columnKanban'] === $cardData[$key2]['column']) {
-                    $iguais[] = $item;
-                } else {
-                    $diferentes[] = $item;
+        foreach ($resultado as $linhaback) {
+
+            $diferentes = false;
+
+            foreach ($cardData as $linhaFront) {
+                if ($linhaback['position'] == $linhaFront['index'] &&  $linhaback['columnKanban'] == $linhaFront['column'] && $linhaback['id_processo'] == $rowId) {
+                    $diferentes = true;
+                    break;
                 }
+            }
+            if (!$diferentes) {
+                $diferentesDeletar[] = $linhaback;
             }
         }
 
-        // foreach ($diferentes as $item) {
-        //     echo "Deletar: ";
-        //     echo json_encode($item);
-        //     echo "<br>";
-        // }
-        print_r("Iguais:   ");
-        echo json_encode($iguais);
-        print_r("Diferentes:   ");
-        echo json_encode($diferentes);
-
-        return;
-        // echo json_encode($cardData_column);
-
-
-        // $diff = array_diff($resultado, $cardData);
-
-
-        // return $diff;
-        return;
+        foreach ($diferentesDeletar as $diferente) {
+            $stmt = $conn->prepare("DELETE FROM kanban_tasks WHERE id_processo = :rowId AND position = :position AND columnKanban = :columnKanban");
+            $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
+            $stmt->bindParam(":position", $diferente['position'], PDO::PARAM_INT);
+            $stmt->bindParam(":columnKanban", $diferente['columnKanban'], PDO::PARAM_STR);
+            $stmt->execute();
+        }
 
         try {
             foreach ($cardData as $card) {
@@ -183,8 +174,6 @@ class ProcessosModel
                 $column = $card['column'];
                 $index = $card['index'];
 
-
-                echo json_encode($title . " - " . $description . " - " . $column . " - " . $index);
                 $conn = Connection::connect();
 
                 $stmt = $conn->prepare("SELECT * FROM kanban_tasks WHERE id_processo = :rowId AND columnKanban = :column AND position != :index");
@@ -194,51 +183,48 @@ class ProcessosModel
                 $stmt->execute();
                 $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                echo json_encode($resultado);
-            }
-            return "testando";
 
-            $stmt = $conn->prepare("SELECT * FROM kanban_tasks WHERE id_processo = :rowId AND columnKanban = :column AND position = :index");
-            $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
-            $stmt->bindParam(":column", $column, PDO::PARAM_STR);
-            $stmt->bindParam(":index", $index, PDO::PARAM_INT);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            if (count($result) > 0) {
-
-                // Atualizar tarefas existentes
-                $stmt = $conn->prepare("UPDATE kanban_tasks SET title = :title, description = :description WHERE id_processo = :rowId AND columnKanban = :column AND position = :index");
-                $response = "ok"; // Suponhamos que tudo correu bem
-
+                $stmt = $conn->prepare("SELECT * FROM kanban_tasks WHERE id_processo = :rowId AND columnKanban = :column AND position = :index");
                 $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
-                $stmt->bindParam(":title", $title, PDO::PARAM_STR);
-                $stmt->bindParam(":description", $description, PDO::PARAM_STR);
                 $stmt->bindParam(":column", $column, PDO::PARAM_STR);
                 $stmt->bindParam(":index", $index, PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                if (!$stmt->execute()) {
-                    return "erro no mdlRegistrarTarefasKanban";
-                    return Connection::connect()->errorInfo();
-                }
-            } else {
+                if (count($result) > 0) {
 
-                // Cadastrar tarefas
-                $stmt = $conn->prepare("INSERT INTO kanban_tasks (id_processo, title, description, columnKanban, position) VALUES (:rowId, :title, :description, :column, :index)");
-                $response = "ok"; // Suponhamos que tudo correu bem
+                    // Atualizar tarefas existentes
+                    $stmt = $conn->prepare("UPDATE kanban_tasks SET title = :title, description = :description WHERE id_processo = :rowId AND columnKanban = :column AND position = :index");
+                    $response = "ok"; // Suponhamos que tudo correu bem
 
-                $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
-                $stmt->bindParam(":title", $title, PDO::PARAM_STR);
-                $stmt->bindParam(":description", $description, PDO::PARAM_STR);
-                $stmt->bindParam(":column", $column, PDO::PARAM_STR);
-                $stmt->bindParam(":index", $index, PDO::PARAM_INT);
+                    $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
+                    $stmt->bindParam(":title", $title, PDO::PARAM_STR);
+                    $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+                    $stmt->bindParam(":column", $column, PDO::PARAM_STR);
+                    $stmt->bindParam(":index", $index, PDO::PARAM_INT);
 
-                if (!$stmt->execute()) {
-                    return "erro no mdlRegistrarTarefasKanban";
-                    return Connection::connect()->errorInfo();
+                    if (!$stmt->execute()) {
+                        return "erro no mdlRegistrarTarefasKanban";
+                        return Connection::connect()->errorInfo();
+                    }
+                } else {
+
+                    // Cadastrar tarefas
+                    $stmt = $conn->prepare("INSERT INTO kanban_tasks (id_processo, title, description, columnKanban, position) VALUES (:rowId, :title, :description, :column, :index)");
+                    $response = "ok"; // Suponhamos que tudo correu bem
+
+                    $stmt->bindParam(":rowId", $rowId, PDO::PARAM_INT);
+                    $stmt->bindParam(":title", $title, PDO::PARAM_STR);
+                    $stmt->bindParam(":description", $description, PDO::PARAM_STR);
+                    $stmt->bindParam(":column", $column, PDO::PARAM_STR);
+                    $stmt->bindParam(":index", $index, PDO::PARAM_INT);
+
+                    if (!$stmt->execute()) {
+                        return "erro no mdlRegistrarTarefasKanban";
+                        return Connection::connect()->errorInfo();
+                    }
                 }
             }
-            // }
             return $response;
         } catch (Exception $e) {
             return 'Exception capturada:' . $e->getMessage();
@@ -265,7 +251,7 @@ class ProcessosModel
 
     static public function mdlDeletarUnicoCardKanban($rowId, $column, $index)
     {
-        // print_r($rowId . " - " . $column . " - " . $index . "\n");
+
 
         $stmt = Connection::connect()->prepare("DELETE FROM kanban_tasks WHERE id_processo = :id_processo AND columnKanban = :columnKanban AND position = :position");
 
@@ -273,7 +259,7 @@ class ProcessosModel
         $stmt->bindParam(":columnKanban", $column, PDO::PARAM_STR);
         $stmt->bindParam(":position", $index, PDO::PARAM_INT);
 
-        // print_r($rowId . " - " . $column . " - " . $index . "\n");
+
 
         if ($stmt->execute()) {
             return "ok";

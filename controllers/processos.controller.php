@@ -52,10 +52,11 @@ class ProcessosController
 
     static public function ctrRegistrarTarefasKanban($rowId, $cardData)
     {
-
+        
         $response = ProcessosModel::mdlRegistrarTarefasKanban($rowId, $cardData);
-
+        
         return $response;
+        
     }
 
     static public function ctrDeletarUnicoCardKanban($rowId, $column, $index)

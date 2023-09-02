@@ -291,6 +291,76 @@
 </div>
 <!-- /Tela modal para kanban do processo -->
 
+<!-- Tela modal para protocolo do processo -->
+<div class="modal fade modal-xl-custom" id="mdlProtocoloProcesso" role=" dialog">
+    <div class="modal-dialog modal-xl-custom">
+        <!-- Conteúdo do modal -->
+        <div class="modal-content bg-dark">
+            <!-- Cabecalho do modal -->
+            <div class="modal-header bg-gray-dark py-1">
+                <h5 class="modal-title">Protocolo do processo</h5>
+                <button type="button" class="btn btn-outline-primary text-white border-0 fs-5 btnFecharModalKanban" id="btnFecharModalKanban" data-dismiss="modal">
+                    <i class="far fa-times-circle"></i>
+                </button>
+            </div>
+            <!-- /Cabecalho do modal -->
+            <!-- Botões Salvar e Limpar -->
+            <div class="col-lg-12 mt-3">
+                <div class="form-group d-flex justify-content-center">
+                    <button type="button" id="salvarButtonKanban" class="btn btn-success btn-sm ml-2">Salvar</button>
+                    <button type="button" id="limparButtonKanban" class="btn btn-danger btn-sm ml-2">Limpar</button>
+                </div>
+            </div>
+            <!-- /Botões Salvar e Limpar -->
+            <!-- Corpo do modal -->
+            <div class="modal-body bg-dark">
+                <div class="container-fluid kanban-container">
+                    <div class="row">
+                        <div class="col-md-4 tarefas-col" id="tarefas-pendentes">
+                            <div class="card">
+                                <div class="card-header bg-warning text-center">
+                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="addCard('pendentes')"><i class="fas fa-plus"></i></button>
+
+                                    Pendentes
+                                </div>
+                                <div class="card-body column-kanban bg-secondary" id="pendentes">
+                                    <!-- Adicione suas tarefas pendentes aqui -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 tarefas-col" id="tarefas-em-progresso">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white text-center">
+                                    Em Progresso
+                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="addCard('em-progresso')"><i class="fas fa-plus"></i></button>
+
+                                </div>
+                                <div class="card-body column-kanban bg-secondary" id="em-progresso">
+                                    <!-- Adicione suas tarefas em progresso aqui -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 tarefas-col" id="tarefas-concluidas">
+                            <div class="card">
+                                <div class="card-header bg-success text-white text-center">
+                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="addCard('concluidas')"><i class="fas fa-plus"></i></button>
+
+                                    Concluídas
+                                </div>
+                                <div class="card-body column-kanban bg-secondary" id="concluidas">
+                                    <!-- Adicione suas tarefas concluídas aqui -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Corpo do modal -->
+        </div>
+    </div>
+</div>
+<!-- /Tela modal para protocolo do processo -->
+
 <!-- Ajax scripts -->
 <script>
     /* -------------------------------------------------------------------------- */
@@ -538,9 +608,17 @@
             if (form.checkValidity() === true) {
                 console.log("Preenchimento válido")
 
+                if (action == 2) {
+                    var title_msg = "Confirma o cadastro do processo?!"
+                }
+
+                if (action == 3) {
+                    var title_msg = "Confirma a edição do processo?"
+                }
+
                 //Validar entrada nos campos inputs
                 Swal.fire({
-                    title: 'Confirma o cadastro do processo?',
+                    title: title_msg,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -688,9 +766,9 @@
 
                 // Exibir os dados no console
                 // console.log("Dados do Formulário:");
-                for (var pair of dados.entries()) {
-                    console.log(pair[0] + ": " + pair[1]);
-                }
+                // for (var pair of dados.entries()) {
+                //     console.log(pair[0] + ": " + pair[1]);
+                // }
 
                 $.ajax({
 
@@ -770,12 +848,9 @@
                     return filteredData;
                 });
 
-                // console.log(filteredData);
-
                 filteredData.forEach(function(obj) {
 
                     var containerId = obj["columnKanban"];
-                    // console.log(filteredData);
 
                     var container = document.getElementById(containerId);
                     var cardWrapper = document.createElement("div");
@@ -898,6 +973,9 @@
     /*           Possibilida mover os cards das tarefas entre as colunas          */
     /* -------------------------------------------------------------------------- */
     $(document).ready(function() {
+
+
+
         $(".column-kanban").sortable({
 
             connectWith: ".column-kanban",
@@ -906,25 +984,26 @@
             start: function(event, ui) {
 
                 ui.item.data("originalParent", ui.item.parent());
+                index = ui.item.index();
+                column = ui.item.parent().attr("id");
+
+
+
 
             },
             stop: function(event, ui) {
                 var originalParent = ui.item.data("originalParent");
                 var targetColumn = ui.item.parent();
+                var rowId = linhaId;
 
                 if (!isValidTarget(targetColumn)) {
                     originalParent.append(ui.item);
                 } else {
-
+                    
                 }
-            }
+            },
+
         }).disableSelection();
-
-
-
-        // $(".card-delete-button").click(function() {
-        //     $(this).closest(".card-wrapper").remove();
-        // });
 
         function isValidTarget(targetColumn) {
             var validColumns = ["tarefas-pendentes", "tarefas-em-progresso", "tarefas-concluidas"];
@@ -938,7 +1017,7 @@
     $('#salvarButtonKanban').on('click', function() {
 
         var rowId = linhaId;
-
+        
         var cardData = []; // Crie um array para armazenar os dados dos cards
 
         $(".card-wrapper").each(function() {
@@ -957,9 +1036,9 @@
         });
 
 
-
         // Enviar os dados dos cards para o servidor
         $.ajax({
+
             url: "ajax/processos.ajax.php",
             method: "POST",
             data: {
@@ -967,10 +1046,8 @@
                 cardData: cardData,
                 action: 5,
             }, // Envie o ID da linha e os dados dos cards
-            
+
             success: function(response) {
-                // console.log(cardData);
-                // console.log("response: " + response);
 
                 if (response == '"ok"') {
                     Toast.fire({
@@ -993,6 +1070,8 @@
 
 
         });
+
+
     });
 
     /* -------------------------------------------------------------------------- */
@@ -1024,14 +1103,12 @@
 
                     success: function(response) {
 
-                        // console.log("response: " + response);
-
                         if (response == '"ok"') {
                             Toast.fire({
                                 icon: 'success',
                                 title: "Kanban limpo com sucesso!"
                             });
-                        } else if (rowId || cardData == null) {
+                        } else if (rowId == null) {
                             return "vazio";
                         } else {
                             Toast.fire({
@@ -1067,9 +1144,6 @@
         var index = $(this).closest(".card-wrapper").index();
         var carwrapper = $(this).closest(".card-wrapper");
 
-        console.log(column);
-        console.log(index);
-
         // Enviar os dados dos cards para o servidor
         $.ajax({
             url: "ajax/processos.ajax.php",
@@ -1083,12 +1157,10 @@
 
             success: function(response) {
 
-                console.log("response: " + response);
-
                 if (response == '"ok"') {
                     console.log("Card removido com sucesso!");
                     carwrapper.remove();
-                } else if (rowId || cardData == null) {
+                } else if (rowId == null) {
                     return "vazio";
                 } else {
                     console.log("Card não removido!");
@@ -1100,5 +1172,15 @@
         });
 
 
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                     Abre o kanban do processo no modal                     */
+    /* -------------------------------------------------------------------------- */
+    $("#example1").on("click", ".btnKanbanProcesso", function() {
+        var data = table.row($(this).parents('tr')).data();
+        linhaId = data[0]; // Assuming the ID is in the first column
+
+        $("#").modal('show');
     });
 </script>

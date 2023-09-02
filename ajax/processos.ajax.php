@@ -74,7 +74,6 @@ class AjaxProcessos
     }
     public function ajaxRegistrarTarefasKanban($rowId, $cardData)
     {
-
         $response = ProcessosController::ctrRegistrarTarefasKanban($rowId, $cardData);
 
         echo json_encode($response);
@@ -131,16 +130,13 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
 
     );
 
-    // foreach ($data as $key => $value) {
-    //     echo "$key: $value\n";
-    // }
     $editarProcesso->ajaxEditarProcesso($data);
 } else if (isset($_POST['action']) && $_POST['action'] == 4) { // Deletar processo
 
     $deletarProcesso = new AjaxProcessos;
     $deletarProcesso->ajaxDeletarProcesso();
 } else if (isset($_POST['action']) && $_POST['action'] == 5) { // Cadastrar as informações dos cards do kanban por processo
-
+    
     $cadastrarInfoTarefasKanban = new AjaxProcessos;
     $cadastrarInfoTarefasKanban->ajaxRegistrarTarefasKanban($_POST['rowId'], $_POST['cardData']);
 } else if (isset($_POST['action']) && $_POST['action'] == 6) { // Limpar todos cards do kanban no BD
