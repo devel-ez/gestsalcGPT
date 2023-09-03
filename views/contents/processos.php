@@ -299,60 +299,127 @@
             <!-- Cabecalho do modal -->
             <div class="modal-header bg-gray-dark py-1">
                 <h5 class="modal-title">Protocolo do processo</h5>
-                <button type="button" class="btn btn-outline-primary text-white border-0 fs-5 btnFecharModalKanban" id="btnFecharModalKanban" data-dismiss="modal">
+                <button type="button" class="btn btn-outline-primary text-white border-0 fs-5 btnFecharModalProtocolo" id="btnFecharModalProtocolo" data-dismiss="modal">
                     <i class="far fa-times-circle"></i>
                 </button>
             </div>
             <!-- /Cabecalho do modal -->
-            <!-- Botões Salvar e Limpar -->
-            <div class="col-lg-12 mt-3">
-                <div class="form-group d-flex justify-content-center">
-                    <button type="button" id="salvarButtonKanban" class="btn btn-success btn-sm ml-2">Salvar</button>
-                    <button type="button" id="limparButtonKanban" class="btn btn-danger btn-sm ml-2">Limpar</button>
-                </div>
-            </div>
-            <!-- /Botões Salvar e Limpar -->
+
+            <!-- /Botões do modal -->
+
             <!-- Corpo do modal -->
             <div class="modal-body bg-dark">
-                <div class="container-fluid kanban-container">
-                    <div class="row">
-                        <div class="col-md-4 tarefas-col" id="tarefas-pendentes">
-                            <div class="card">
-                                <div class="card-header bg-warning text-center">
-                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="addCard('pendentes')"><i class="fas fa-plus"></i></button>
+                <div class="container-fluid Protocolo-container">
+                    <!-- Main content -->
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <!-- formulários -->
+                                <div class="col-md-4">
+                                    <!-- formulário de entrada -->
+                                    <div class="card card-primary">
+                                        <div class="card-header">
 
-                                    Pendentes
+                                            <h3 class="card-title">Entrada<i class="fas fa-arrow-right ml-2"></i></h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <!-- form start -->
+                                        <form>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label class="" for="DataEntrada">
+                                                        <span class="small text-secondary">Data de entrada</span><span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="input-group" id="DataEntradaProtocolo">
+                                                        <input type="date" class="form-control" id="DataEntradaProtocolo" required="">
+                                                        <div class="invalid-feedback"> Selecione uma data</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-2">
+                                                    <label class="" for="MotivoEntradaProtocolo">
+                                                        <span class="small text-secondary">Motivo (máx. 30 caracteres)</span><span class="text-danger">*</span>
+                                                    </label>
+                                                    <textarea type="text" class="form-control form-control-sm" id="idMotivoEntradaProtocolo" placeholder="Escreva o motivo da entrada" maxlength="50" required=""></textarea>
+                                                    <div class="invalid-feedback"> Escreva o motivo da entrada</div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <button type="button" class="btn btn-success" onclick="addProtocolo()">Registrar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- formulário de entrada  -->
+
+                                    <!-- formulário de saída -->
+                                    <div class="card card-primary">
+                                        <div class="card-header">
+                                            <h3 class="card-title"><i class="fas fa-arrow-left mr-2"></i>Saída</h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <!-- form start -->
+                                        <form>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label class="" for="DataSaída">
+                                                        <span class="small text-secondary">Data de saída</span><span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="input-group" id="DataSaídaProtocolo">
+                                                        <input type="date" class="form-control" id="DataSaídaProtocolo" required="">
+                                                        <div class="invalid-feedback"> Selecione uma data</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-2">
+                                                    <label class="" for="quemRecebeu">
+                                                        <span class="small text-secondary">Posto/Graduação e nome de quem recebeu</span><span class="text-danger">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control form-control-sm text-secondary" id="quemRecebeu" name="quemRecebeu" required="">
+                                                    <div class="invalid-feedback"> Escreva o nome de quem recebeu o documento</div>
+                                                </div>
+                                                <div class="form-group mb-2">
+                                                    <label class="" for="MotivoSaídaProtocolo">
+                                                        <span class="small text-secondary">Motivo (máx. 30 caracteres)</span><span class="text-danger">*</span>
+                                                    </label>
+                                                    <textarea type="text" class="form-control form-control-sm" id="MotivoSaídaProtocolo" placeholder="Escreva o motivo da entrada" maxlength="50" required=""></textarea>
+                                                    <div class="invalid-feedback"> Escreva o motivo da saída</div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <button type="button" class="btn btn-danger" onclick="addProtocolo()">Registrar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- formulário de saída  -->
                                 </div>
-                                <div class="card-body column-kanban bg-secondary" id="pendentes">
-                                    <!-- Adicione suas tarefas pendentes aqui -->
+                                <!-- /formulários -->
+                                <!-- The time line -->
+                                <div class="col-md-7 ml-5">
+
+                                    <div class="timeline">
+
+                                        <div class="time-label">
+                                            <span class="bg-red">10 Feb. 2014</span>
+                                        </div>
+                                        <div class="protocolo">
+                                            <i class="fas fa-user bg-green"></i>
+                                            <div class="timeline-item">
+                                                <span class="time" id="primeiraDataEntrada"></span>
+                                                <h3 class="timeline-header no-border"><a href="#">Emanoel</a> Primeira entrada do processo</h3>
+
+                                            </div>
+                                        </div>
+                                        <div class="time-label">
+                                            <span class="bg-green" id="labelPrimeiraDataEntrada"></span>
+                                        </div>
+                                        <div>
+                                            <i class="fas fa-clock bg-gray"></i>
+                                        </div>
+                                    </div>
                                 </div>
+                                <!-- /The time line -->
                             </div>
                         </div>
-                        <div class="col-md-4 tarefas-col" id="tarefas-em-progresso">
-                            <div class="card">
-                                <div class="card-header bg-primary text-white text-center">
-                                    Em Progresso
-                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="addCard('em-progresso')"><i class="fas fa-plus"></i></button>
-
-                                </div>
-                                <div class="card-body column-kanban bg-secondary" id="em-progresso">
-                                    <!-- Adicione suas tarefas em progresso aqui -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 tarefas-col" id="tarefas-concluidas">
-                            <div class="card">
-                                <div class="card-header bg-success text-white text-center">
-                                    <button class="btn btn-secondary btn-sm float-left mb-2" onclick="addCard('concluidas')"><i class="fas fa-plus"></i></button>
-
-                                    Concluídas
-                                </div>
-                                <div class="card-body column-kanban bg-secondary" id="concluidas">
-                                    <!-- Adicione suas tarefas concluídas aqui -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </section>
+                    <!-- /.content -->
                 </div>
             </div>
             <!-- Corpo do modal -->
@@ -999,7 +1066,7 @@
                 if (!isValidTarget(targetColumn)) {
                     originalParent.append(ui.item);
                 } else {
-                    
+
                 }
             },
 
@@ -1017,7 +1084,7 @@
     $('#salvarButtonKanban').on('click', function() {
 
         var rowId = linhaId;
-        
+
         var cardData = []; // Crie um array para armazenar os dados dos cards
 
         $(".card-wrapper").each(function() {
@@ -1177,10 +1244,113 @@
     /* -------------------------------------------------------------------------- */
     /*                     Abre o kanban do processo no modal                     */
     /* -------------------------------------------------------------------------- */
-    $("#example1").on("click", ".btnKanbanProcesso", function() {
+    $("#example1").on("click", ".btnProtocoProcesso", function() {
         var data = table.row($(this).parents('tr')).data();
         linhaId = data[0]; // Assuming the ID is in the first column
+        console.log(linhaId);
 
-        $("#").modal('show');
+        $("#mdlProtocoloProcesso").modal('show');
+
+        var data = table.row($(this).parents('tr')).data();
+
+        console.log(data);
+        console.log(data[9]);
+
+        var meses = {
+            "01": "JAN",
+            "02": "FEV",
+            "03": "MAR",
+            "04": "ABR",
+            "05": "MAI",
+            "06": "JUN",
+            "07": "JUL",
+            "08": "AGO",
+            "09": "SET",
+            "10": "OUT",
+            "11": "NOV",
+            "12": "DEZ"
+        };
+
+        var dataSplit = data[9].split("-");
+        var mes = meses[dataSplit[1]];
+        var ano = dataSplit[0].substring(2);
+        var novaData = dataSplit[2] + " " + mes + " " + ano + " ";
+
+        $("#primeiraDataEntrada").html(novaData + '    <i class="fas fa-clock"></i> ');
+        $("#labelPrimeiraDataEntrada").html(novaData);
     });
+
+    /* -------------------------------------------------------------------------- */
+    /*           Adiciona os protocolos de entrada e saída na timeline            */
+    /* -------------------------------------------------------------------------- */
+    function addProtocolo() {
+        // Obter o valor da data de entrada
+        var dataEntrada = document.getElementById("DataEntradaProtocolo").value;
+
+        // Obter o valor do motivo da entrada
+        var motivoEntrada = document.getElementById("idMotivoEntradaProtocolo").value;
+
+        // Obter o valor da data de saída
+        var dataSaida = document.getElementById("DataSaídaProtocolo").value;
+
+        // Obter o valor do nome do quem recebeu o documento
+        var quemRecebeu = document.getElementById("quemRecebeu").value;
+
+        // Obter o valor do motivo da saída
+        var motivoSaida = document.getElementById("MotivoSaídaProtocolo").value;
+
+        // Criar uma nova div com a classe "protocolo"
+        var novaDiv = document.createElement("div");
+        novaDiv.classList.add("protocolo");
+
+        // Criar uma nova div com a classe "timeline-item"
+        var novaDivTimelineItem = document.createElement("div");
+        novaDivTimelineItem.classList.add("timeline-item");
+
+        // Criar uma nova div com a classe "time"
+        var novaDivTime = document.createElement("div");
+        novaDivTime.classList.add("time");
+
+        // Adicionar a data de entrada à nova div "time"
+        novaDivTime.innerHTML = '<span class="time"><i class="fas fa-clock"></i> '
+        dataEntrada + '</span>';
+
+        // Adicionar a nova div "time" à nova div "timeline-item"
+        novaDivTimelineItem.appendChild(novaDivTime);
+
+        // Criar uma nova div com a classe "timeline-header"
+        var novaDivTimelineHeader = document.createElement("div");
+        novaDivTimelineHeader.classList.add("timeline-header");
+
+        // Criar uma nova div com a classe "timeline-header"
+        var novaDivTimelineHeader2 = document.createElement("div");
+        novaDivTimelineHeader2.classList.add("timeline-header");
+
+        // Criar um novo elemento "h3" para o nome do usuário
+        var novoElementoH3 = document.createElement("h3");
+        novoElementoH3.classList.add("timeline-header");
+        novoElementoH3.innerHTML = '<a href="#">Emanoel</a> Primeira entrada do processo';
+
+        // Adicionar o novo elemento "h3" à nova div "timeline-header"
+        novaDivTimelineHeader2.appendChild(novoElementoH3);
+
+        // Adicionar a nova div "timeline-header" à nova div "timeline-item"
+        novaDivTimelineItem.appendChild(novaDivTimelineHeader2);
+
+        // Adicionar a nova div "timeline-item" à nova div "protocolo"
+        novaDiv.appendChild(novaDivTimelineItem);
+
+        // Adicionar a nova div "protocolo" após a última div com a classe "protocolo"
+        // var ultimaDivProtocolo = document.querySelector(".protocolo:last-of-type");
+        // console.log(ultimaDivProtocolo);
+        // ultimaDivProtocolo.parentNode.insertBefore(novaDiv, ultimaDivProtocolo.nextSibling);
+
+
+        var ultimaDivProtocolo = document.querySelector(".protocolo:last-of-type");
+        console.log(ultimaDivProtocolo);
+
+
+
+
+    }
 </script>
