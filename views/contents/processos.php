@@ -1286,10 +1286,11 @@
     function addProtocolo() {
         // Obter o valor da data de entrada
         var dataEntrada = document.getElementById("DataEntradaProtocolo").value;
+        console.log("dataEntrada: " + dataEntrada);
 
         // Obter o valor do motivo da entrada
         var motivoEntrada = document.getElementById("idMotivoEntradaProtocolo").value;
-
+        console.log("motivoEntrada: " + motivoEntrada);
         // Obter o valor da data de saída
         var dataSaida = document.getElementById("DataSaídaProtocolo").value;
 
@@ -1303,50 +1304,40 @@
         var novaDiv = document.createElement("div");
         novaDiv.classList.add("protocolo");
 
+        // Adiciona um icone para a div protocolo 
+        novaDiv.innerHTML = '<i class="fas fa-user bg-green"></i>';
+
         // Criar uma nova div com a classe "timeline-item"
         var novaDivTimelineItem = document.createElement("div");
         novaDivTimelineItem.classList.add("timeline-item");
 
-        // Criar uma nova div com a classe "time"
-        var novaDivTime = document.createElement("div");
-        novaDivTime.classList.add("time");
-
-        // Adicionar a data de entrada à nova div "time"
-        novaDivTime.innerHTML = '<span class="time"><i class="fas fa-clock"></i> '
-        dataEntrada + '</span>';
+        // Adicionar span com a data de entrad à nova div "timeline-item"
+        novaDivTimelineItem.innerHTML = '<span class="time">' + dataEntrada + '<i class="fas fa-clock"></i> </span>';
 
         // Adicionar a nova div "time" à nova div "timeline-item"
-        novaDivTimelineItem.appendChild(novaDivTime);
+        // novaDivTimelineItem.appendChild(novaDivTime);
 
         // Criar uma nova div com a classe "timeline-header"
-        var novaDivTimelineHeader = document.createElement("div");
-        novaDivTimelineHeader.classList.add("timeline-header");
+        // var novaDivTimelineHeader = document.createElement("div");
+        // novaDivTimelineHeader.classList.add("timeline-header");
 
         // Criar uma nova div com a classe "timeline-header"
-        var novaDivTimelineHeader2 = document.createElement("div");
-        novaDivTimelineHeader2.classList.add("timeline-header");
+        // var novaDivTimelineHeader2 = document.createElement("div");
+        // novaDivTimelineHeader2.classList.add("timeline-header");
 
-        // Criar um novo elemento "h3" para o nome do usuário
-        var novoElementoH3 = document.createElement("h3");
-        novoElementoH3.classList.add("timeline-header");
-        novoElementoH3.innerHTML = '<a href="#">Emanoel</a> Primeira entrada do processo';
+        // Criar um novo elemento "h3" para inserir os dados do formulário exceto a data que será no span
+        // var novoElementoH3 = document.createElement("h3");
+        novaDivTimelineItem.innerHTML = '<h3 class="timeline-header no-border"><a href="#">Emanoel</a> Primeira entrada do processo</h3>';
 
-        // Adicionar o novo elemento "h3" à nova div "timeline-header"
-        novaDivTimelineHeader2.appendChild(novoElementoH3);
-
-        // Adicionar a nova div "timeline-header" à nova div "timeline-item"
-        novaDivTimelineItem.appendChild(novaDivTimelineHeader2);
 
         // Adicionar a nova div "timeline-item" à nova div "protocolo"
         novaDiv.appendChild(novaDivTimelineItem);
 
         // Adicionar a nova div "protocolo" após a última div com a classe "protocolo"
-        // var ultimaDivProtocolo = document.querySelector(".protocolo:last-of-type");
-        // console.log(ultimaDivProtocolo);
-        // ultimaDivProtocolo.parentNode.insertBefore(novaDiv, ultimaDivProtocolo.nextSibling);
+        var divsProtocolo = document.querySelectorAll(".protocolo");
+        var ultimaDivProtocolo = divsProtocolo[divsProtocolo.length - 1];
+        ultimaDivProtocolo.parentNode.insertBefore(novaDiv, ultimaDivProtocolo.nextSibling);
 
-
-        var ultimaDivProtocolo = document.querySelector(".protocolo:last-of-type");
         console.log(ultimaDivProtocolo);
 
 
