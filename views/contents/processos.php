@@ -330,7 +330,7 @@
                                                     <label class="" for="DataEntrada">
                                                         <span class="small text-secondary">Data de entrada</span><span class="text-danger">*</span>
                                                     </label>
-                                                    <div class="input-group" id="DataEntradaProtocolo">
+                                                    <div class="input-group">
                                                         <input type="date" class="form-control" id="DataEntradaProtocolo" required="">
                                                         <div class="invalid-feedback"> Selecione uma data</div>
                                                     </div>
@@ -1286,6 +1286,24 @@
     function addProtocolo() {
         // Obter o valor da data de entrada
         var dataEntrada = document.getElementById("DataEntradaProtocolo").value;
+        var meses = {
+            "01": "JAN",
+            "02": "FEV",
+            "03": "MAR",
+            "04": "ABR",
+            "05": "MAI",
+            "06": "JUN",
+            "07": "JUL",
+            "08": "AGO",
+            "09": "SET",
+            "10": "OUT",
+            "11": "NOV",
+            "12": "DEZ"
+        };
+        var dataSplit = dataEntrada.split("-");
+        var mes = meses[dataSplit[1]];
+        var ano = dataSplit[0].substring(2);
+        dataEntrada = dataSplit[2] + " " + mes + " " + ano + " ";
         console.log("dataEntrada: " + dataEntrada);
 
         // Obter o valor do motivo da entrada
@@ -1311,24 +1329,28 @@
         var novaDivTimelineItem = document.createElement("div");
         novaDivTimelineItem.classList.add("timeline-item");
 
-        // Adicionar span com a data de entrad à nova div "timeline-item"
-        novaDivTimelineItem.innerHTML = '<span class="time">' + dataEntrada + '<i class="fas fa-clock"></i> </span>';
-
-        // Adicionar a nova div "time" à nova div "timeline-item"
-        // novaDivTimelineItem.appendChild(novaDivTime);
-
-        // Criar uma nova div com a classe "timeline-header"
-        // var novaDivTimelineHeader = document.createElement("div");
-        // novaDivTimelineHeader.classList.add("timeline-header");
-
-        // Criar uma nova div com a classe "timeline-header"
-        // var novaDivTimelineHeader2 = document.createElement("div");
-        // novaDivTimelineHeader2.classList.add("timeline-header");
+        // Adicionar span com a data de entrada à nova div "timeline-item"
+        novoSpan = document.createElement("span");
+        novoSpan.classList.add("time");
+        novoSpan.setAttribute("id", "primeiraDataEntrada");
+        novoSpan.innerHTML = dataEntrada + '    <i class="fas fa-clock"></i> ';
+        novaDivTimelineItem.appendChild(novoSpan);
 
         // Criar um novo elemento "h3" para inserir os dados do formulário exceto a data que será no span
-        // var novoElementoH3 = document.createElement("h3");
-        novaDivTimelineItem.innerHTML = '<h3 class="timeline-header no-border"><a href="#">Emanoel</a> Primeira entrada do processo</h3>';
+        var novoElementoH3 = document.createElement("h3");
+        novoElementoH3.classList.add("timeline-header");
+        novoElementoH3.classList.add("no-border");
+        
 
+        // Criar um novo elemento "a" para inserir o nome do usuário
+        var novoElementoA = document.createElement("a");
+        novoElementoA.setAttribute("href", "#");
+        novoElementoA.innerText = "Emanoel";
+        novoElementoH3.innerText = "Primeira entrada do processo";
+        novoElementoH3.appendChild(novoElementoA);
+
+        // Adicionar o H3 à nova div "timeline-item"
+        novaDivTimelineItem.appendChild(novoElementoH3);
 
         // Adicionar a nova div "timeline-item" à nova div "protocolo"
         novaDiv.appendChild(novaDivTimelineItem);
