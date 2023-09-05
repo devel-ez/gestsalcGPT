@@ -315,7 +315,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <!-- formulários -->
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <!-- formulário de entrada -->
                                     <div class="card card-primary">
                                         <div class="card-header">
@@ -344,7 +344,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <button type="button" class="btn btn-success" onclick="addProtocolo()">Registrar</button>
+                                                <button type="button" id="buttonEntrada" class="btn btn-success" onclick="addProtocoloEntrada()">Registrar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -360,11 +360,11 @@
                                         <form>
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <label class="" for="DataSaída">
+                                                    <label class="" for="DataSaida">
                                                         <span class="small text-secondary">Data de saída</span><span class="text-danger">*</span>
                                                     </label>
-                                                    <div class="input-group" id="DataSaídaProtocolo">
-                                                        <input type="date" class="form-control" id="DataSaídaProtocolo" required="">
+                                                    <div class="input-group">
+                                                        <input type="date" class="form-control" id="DataSaidaProtocolo" required="">
                                                         <div class="invalid-feedback"> Selecione uma data</div>
                                                     </div>
                                                 </div>
@@ -384,7 +384,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <button type="button" class="btn btn-danger" onclick="addProtocolo()">Registrar</button>
+                                                <button type="button" id="buttonSaida" class="btn btn-danger" onclick="addProtocoloSaida()">Registrar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -1276,14 +1276,14 @@
         var ano = dataSplit[0].substring(2);
         var novaData = dataSplit[2] + " " + mes + " " + ano + " ";
 
-        $("#primeiraDataEntrada").html(novaData + '    <i class="fas fa-clock"></i> ');
+        $("#primeiraDataEntrada").html(novaData + '    <i class="fas fa-clock"></i> ' + ' <i class="fas fa-arrow-left" style="color: green;"></i> ');
         $("#labelPrimeiraDataEntrada").html(novaData);
     });
 
     /* -------------------------------------------------------------------------- */
-    /*           Adiciona os protocolos de entrada e saída na timeline            */
+    /*           Adiciona os protocolos de entrada  na timeline                   */
     /* -------------------------------------------------------------------------- */
-    function addProtocolo() {
+    function addProtocoloEntrada() {
         // Obter o valor da data de entrada
         var dataEntrada = document.getElementById("DataEntradaProtocolo").value;
         var meses = {
@@ -1310,7 +1310,95 @@
         var motivoEntrada = document.getElementById("idMotivoEntradaProtocolo").value;
         console.log("motivoEntrada: " + motivoEntrada);
         // Obter o valor da data de saída
-        var dataSaida = document.getElementById("DataSaídaProtocolo").value;
+        // var dataSaida = document.getElementById("DataSaídaProtocolo").value;
+
+        // Obter o valor do nome do quem recebeu o documento
+        // var quemRecebeu = document.getElementById("quemRecebeu").value;
+
+        // Obter o valor do motivo da saída
+        // var motivoSaida = document.getElementById("MotivoSaídaProtocolo").value;
+
+        // Criar uma nova div com a classe "protocolo"
+        var novaDiv = document.createElement("div");
+        novaDiv.classList.add("protocolo");
+
+        // Adiciona um icone para a div protocolo 
+        novaDiv.innerHTML = '<i class="fas fa-user bg-green"></i>';
+
+        // Criar uma nova div com a classe "timeline-item"
+        var novaDivTimelineItem = document.createElement("div");
+        novaDivTimelineItem.classList.add("timeline-item");
+
+        // Adicionar span com a data de entrada à nova div "timeline-item"
+        novoSpan = document.createElement("span");
+        novoSpan.classList.add("time");
+        novoSpan.setAttribute("id", "primeiraDataEntrada");
+        novoSpan.innerHTML = dataEntrada + '    <i class="fas fa-clock"></i> ' + ' <i class="fas fa-arrow-left" style="color: green;"></i> ';
+        novaDivTimelineItem.appendChild(novoSpan);
+
+        // Criar um novo elemento "h3" para inserir os dados do formulário exceto a data que será no span
+        var novoElementoH3 = document.createElement("h3");
+        novoElementoH3.classList.add("timeline-header");
+        novoElementoH3.classList.add("no-border");
+
+
+        // Criar um novo elemento "a" para inserir o nome do usuário
+        var novoElementoA = document.createElement("a");
+        novoElementoA.setAttribute("href", "#");
+        novoElementoA.innerText = "Emanoel - ";
+
+        // Inserir o novo elemento "a" antes do texto existente
+        novoElementoH3.insertBefore(novoElementoA, novoElementoH3.firstChild);
+
+        // Adicionar o texto "Primeira entrada do processo" ao novo elemento "h3"
+        novoElementoH3.appendChild(document.createTextNode("Motivo:  " + motivoEntrada));
+
+        // Adicionar o H3 à nova div "timeline-item"
+        novaDivTimelineItem.appendChild(novoElementoH3);
+
+        // Adicionar a nova div "timeline-item" à nova div "protocolo"
+        novaDiv.appendChild(novaDivTimelineItem);
+
+        // Adicionar a nova div "protocolo" após a última div com a classe "protocolo"
+        var divsProtocolo = document.querySelectorAll(".protocolo");
+        var ultimaDivProtocolo = divsProtocolo[divsProtocolo.length - 1];
+        ultimaDivProtocolo.parentNode.insertBefore(novaDiv, divsProtocolo[0]);
+
+
+
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*           Adiciona os protocolos de saída  na timeline                     */
+    /* -------------------------------------------------------------------------- */
+    function addProtocoloSaida() {
+        // Obter o valor da data de entrada
+        var dataSaida = document.getElementById("DataSaidaProtocolo").value;
+        var meses = {
+            "01": "JAN",
+            "02": "FEV",
+            "03": "MAR",
+            "04": "ABR",
+            "05": "MAI",
+            "06": "JUN",
+            "07": "JUL",
+            "08": "AGO",
+            "09": "SET",
+            "10": "OUT",
+            "11": "NOV",
+            "12": "DEZ"
+        };
+        var dataSplit = dataSaida.split("-");
+        var mes = meses[dataSplit[1]];
+        var ano = dataSplit[0].substring(2);
+        dataSaida = dataSplit[2] + " " + mes + " " + ano + " ";
+        console.log("dataSaida: " + dataSaida);
+
+        // Obter o valor do motivo da entrada
+        // var motivoEntrada = document.getElementById("idMotivoEntradaProtocolo").value;
+        // console.log("motivoEntrada: " + motivoEntrada);
+        // Obter o valor da data de saída
+        // var dataSaida = document.getElementById("DataSaídaProtocolo").value;
 
         // Obter o valor do nome do quem recebeu o documento
         var quemRecebeu = document.getElementById("quemRecebeu").value;
@@ -1332,22 +1420,26 @@
         // Adicionar span com a data de entrada à nova div "timeline-item"
         novoSpan = document.createElement("span");
         novoSpan.classList.add("time");
-        novoSpan.setAttribute("id", "primeiraDataEntrada");
-        novoSpan.innerHTML = dataEntrada + '    <i class="fas fa-clock"></i> ';
+        novoSpan.setAttribute("id", "dataSaida");
+        novoSpan.innerHTML = dataSaida + '    <i class="fas fa-clock"></i> ' + '  <i class="fas fa-arrow-right" style="color: red;"></i> ';
         novaDivTimelineItem.appendChild(novoSpan);
 
         // Criar um novo elemento "h3" para inserir os dados do formulário exceto a data que será no span
         var novoElementoH3 = document.createElement("h3");
         novoElementoH3.classList.add("timeline-header");
         novoElementoH3.classList.add("no-border");
-        
+
 
         // Criar um novo elemento "a" para inserir o nome do usuário
         var novoElementoA = document.createElement("a");
         novoElementoA.setAttribute("href", "#");
-        novoElementoA.innerText = "Emanoel";
-        novoElementoH3.innerText = "Primeira entrada do processo";
-        novoElementoH3.appendChild(novoElementoA);
+        novoElementoA.innerText = "Emanoel- ";
+
+        // Inserir o novo elemento "a" antes do texto existente
+        novoElementoH3.insertBefore(novoElementoA, novoElementoH3.firstChild);
+
+        // Adicionar o texto "Primeira entrada do processo" ao novo elemento "h3"
+        novoElementoH3.appendChild(document.createTextNode("Motivo: " + motivoSaida + " - Entregue ao(à): " + quemRecebeu));
 
         // Adicionar o H3 à nova div "timeline-item"
         novaDivTimelineItem.appendChild(novoElementoH3);
@@ -1358,10 +1450,7 @@
         // Adicionar a nova div "protocolo" após a última div com a classe "protocolo"
         var divsProtocolo = document.querySelectorAll(".protocolo");
         var ultimaDivProtocolo = divsProtocolo[divsProtocolo.length - 1];
-        ultimaDivProtocolo.parentNode.insertBefore(novaDiv, ultimaDivProtocolo.nextSibling);
-
-        console.log(ultimaDivProtocolo);
-
+        ultimaDivProtocolo.parentNode.insertBefore(novaDiv, divsProtocolo[0]);
 
 
 
