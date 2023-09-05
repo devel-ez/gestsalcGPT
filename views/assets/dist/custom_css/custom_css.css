@@ -70,7 +70,11 @@ hr {
     font-weight: bold;
 }
 
-.time{
+.time {
     font-size: 15px !important;
 }
 
+.strongTextBlack{
+    font-weight: bold;
+    color: black;
+}

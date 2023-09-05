@@ -392,7 +392,7 @@
                                 </div>
                                 <!-- /formulários -->
                                 <!-- The time line -->
-                                <div class="col-md-7 ml-5">
+                                <div class="col-md-8 ml-5">
 
                                     <div class="timeline">
 
@@ -1429,17 +1429,33 @@
         novoElementoH3.classList.add("timeline-header");
         novoElementoH3.classList.add("no-border");
 
-
         // Criar um novo elemento "a" para inserir o nome do usuário
         var novoElementoA = document.createElement("a");
         novoElementoA.setAttribute("href", "#");
         novoElementoA.innerText = "Emanoel- ";
 
-        // Inserir o novo elemento "a" antes do texto existente
-        novoElementoH3.insertBefore(novoElementoA, novoElementoH3.firstChild);
+        // Inserir o novo elemento "a" no H3
+        novoElementoH3.appendChild(novoElementoA);
 
-        // Adicionar o texto "Primeira entrada do processo" ao novo elemento "h3"
-        novoElementoH3.appendChild(document.createTextNode("Motivo: " + motivoSaida + " - Entregue ao(à): " + quemRecebeu));
+        // Criar um novo elemento "a" para inserir o motivo
+        var novoElementoA2 = document.createElement("a");
+        novoElementoA2.classList.add("strongTextBlack");
+        novoElementoA2.innerText = "Motivo";
+
+        // Inserir o novo elemento "a" no "H3"
+        novoElementoH3.appendChild(novoElementoA2);
+        novoElementoH3.appendChild(document.createTextNode(": " + motivoSaida));
+
+
+        // Criar um novo elemento "a" para inserir o motivo
+        var novoElementoA3 = document.createElement("a");
+        novoElementoA3.classList.add("strongTextBlack");
+        novoElementoA3.innerText = "Entregue ao(à)";
+
+        // Inserir o novo elemento "p" antes do texto existente
+        novoElementoH3.appendChild(novoElementoA3);
+        novoElementoH3.appendChild(document.createTextNode(": " + quemRecebeu));
+
 
         // Adicionar o H3 à nova div "timeline-item"
         novaDivTimelineItem.appendChild(novoElementoH3);
