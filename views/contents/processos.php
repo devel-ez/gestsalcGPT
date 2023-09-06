@@ -403,7 +403,7 @@
                                             <i class="fas fa-user bg-green"></i>
                                             <div class="timeline-item">
                                                 <span class="time" id="primeiraDataEntrada"></span>
-                                                <h3 class="timeline-header no-border"><a href="#">Emanoel</a> Primeira entrada do processo</h3>
+                                                <h3 class="timeline-header no-border"><a href="#">(Emanoel) </a> Primeira entrada do processo</h3>
 
                                             </div>
                                         </div>
@@ -1432,30 +1432,19 @@
         // Criar um novo elemento "a" para inserir o nome do usuário
         var novoElementoA = document.createElement("a");
         novoElementoA.setAttribute("href", "#");
-        novoElementoA.innerText = "Emanoel- ";
+        novoElementoA.innerText = "(Emanoel) ";
 
         // Inserir o novo elemento "a" no H3
         novoElementoH3.appendChild(novoElementoA);
 
-        // Criar um novo elemento "a" para inserir o motivo
-        var novoElementoA2 = document.createElement("a");
-        novoElementoA2.classList.add("strongTextBlack");
-        novoElementoA2.innerText = "Motivo";
+        // Criar um novo elemento "span" para inserir o motivo
+        var novoElementoSpan = document.createElement("span");
+        var textoMotivo = "Motivo: ";
+        var textoEntregueAo = "Entregue ao(à): ";
+    novoElementoSpan.innerHTML= "<br>" + textoMotivo.bold() + motivoSaida + "<br>" +  textoEntregueAo.bold() + quemRecebeu;
 
         // Inserir o novo elemento "a" no "H3"
-        novoElementoH3.appendChild(novoElementoA2);
-        novoElementoH3.appendChild(document.createTextNode(": " + motivoSaida));
-
-
-        // Criar um novo elemento "a" para inserir o motivo
-        var novoElementoA3 = document.createElement("a");
-        novoElementoA3.classList.add("strongTextBlack");
-        novoElementoA3.innerText = "Entregue ao(à)";
-
-        // Inserir o novo elemento "p" antes do texto existente
-        novoElementoH3.appendChild(novoElementoA3);
-        novoElementoH3.appendChild(document.createTextNode(": " + quemRecebeu));
-
+        novoElementoH3.appendChild(novoElementoSpan);
 
         // Adicionar o H3 à nova div "timeline-item"
         novaDivTimelineItem.appendChild(novoElementoH3);
