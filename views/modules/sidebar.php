@@ -20,7 +20,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a style="cursor:pointer;" class="nav-link menu-link active" onclick="loadContents('views/contents/processos.php', 'content-wrapper')">
+                    <a style="cursor:pointer;" class="nav-link menu-link active" onclick="loadContents('views/pages/processos/processos.php', 'content-wrapper')">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
                             Processos Origem
@@ -39,31 +39,31 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/contents/novos_processos.php', 'content-wrapper')">
+                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/pages/novos_processos/novos_processos.php', 'content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Novos processos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/contents/novos_aditivos.php', 'content-wrapper')">
+                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/pages/novos_aditivos/novos_aditivos.php', 'content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Novos aditivos</p>
+                                <p>Novos aditivos</p>pages
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/contents/novos_apostilamentos.php', 'content-wrapper')">
+                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/pages/novos_apostilamentos/novos_apostilamentos.php', 'content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Novos apostilamentos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/contents/execucao_pca.php', 'content-wrapper')">
+                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/pages/execucao_pca/execucao_pca.php', 'content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Execução PCA</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/contents/test.php', 'content-wrapper')">
+                            <a style="cursor:pointer;" href="#" class="nav-link  submenu-link" onclick="loadContents('views/pages/test.php', 'content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>TESTES</p>
                             </a>

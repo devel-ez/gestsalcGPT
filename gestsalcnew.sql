@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 30-Ago-2023 às 04:20
+-- Tempo de geração: 08-Set-2023 às 17:02
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -70,7 +70,10 @@ INSERT INTO `historico_data_entrada_saida` (`id_hist_entrada_saida`, `id_process
 (52, 34, '2023-08-07', '', '0000-00-00', ''),
 (53, 35, '2023-08-22', '', '0000-00-00', ''),
 (55, 37, '2023-08-27', '', '0000-00-00', ''),
-(56, 38, '2023-08-30', '', '0000-00-00', '');
+(56, 38, '2023-08-30', '', '0000-00-00', ''),
+(57, 34, '2023-08-07', '', '0000-00-00', ''),
+(58, 34, '2023-08-07', '', '0000-00-00', ''),
+(59, 39, '2023-09-05', '', '0000-00-00', '');
 
 -- --------------------------------------------------------
 
@@ -92,13 +95,85 @@ CREATE TABLE `kanban_tasks` (
 --
 
 INSERT INTO `kanban_tasks` (`id_task`, `id_processo`, `title`, `description`, `position`, `columnKanban`) VALUES
-(328, 34, '444', '', 1, 'concluidas'),
-(334, 34, 'q', 'ww', 1, 'pendentes'),
-(335, 34, 'www', 'ee', 0, 'pendentes'),
-(336, 34, 'qwee', 'eeee', 0, 'em-progresso'),
-(338, 34, '', 'weqew', 0, 'concluidas'),
-(339, 34, 'qwe', 'qeee', 1, 'em-progresso'),
-(340, 35, ' ghf', 'ghfghfgh', 0, 'pendentes');
+(461, 39, 'ewrfwe', '', 0, 'pendentes'),
+(462, 39, 'qweqwe', 'qweqew', 0, 'em-progresso'),
+(463, 38, 'aa', 'aaa', 0, 'pendentes'),
+(464, 37, 'rr', 'rrr', 0, 'pendentes'),
+(465, 35, 'ttttt', '', 0, 'pendentes'),
+(466, 35, 'tttt', '', 1, 'pendentes'),
+(467, 34, 'f', '', 0, 'concluidas'),
+(468, 34, 'd', '', 0, 'em-progresso'),
+(469, 34, 'e', '', 1, 'em-progresso');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `modulos`
+--
+
+CREATE TABLE `modulos` (
+  `id` int(11) NOT NULL,
+  `modulo` varchar(45) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `view` varchar(45) DEFAULT NULL,
+  `icon_menu` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Extraindo dados da tabela `modulos`
+--
+
+INSERT INTO `modulos` (`id`, `modulo`, `parent_id`, `view`, `icon_menu`) VALUES
+(1, 'Processos Origem', NULL, 'processos.php', 'fas fa-book'),
+(2, 'Reportes', NULL, 'reportes.php', 'fas fa-chart-line'),
+(3, 'Configuración', NULL, 'configuracion.php', 'fas fa-cogs'),
+(4, 'Usuarios', NULL, 'usuarios.php', 'fas fa-users'),
+(5, 'Funções e Perfis', NULL, 'roles_perfiles.php', 'fas fa-tablet-alt');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `perfil_modulo`
+--
+
+CREATE TABLE `perfil_modulo` (
+  `idperfil_modulo` int(11) NOT NULL,
+  `id_perfil` int(11) DEFAULT NULL,
+  `id_modulo` int(11) DEFAULT NULL,
+  `view_inicio` tinyint(4) DEFAULT NULL,
+  `estado` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Extraindo dados da tabela `perfil_modulo`
+--
+
+INSERT INTO `perfil_modulo` (`idperfil_modulo`, `id_perfil`, `id_modulo`, `view_inicio`, `estado`) VALUES
+(1, 1, 1, 1, 1),
+(2, 1, 3, NULL, 1),
+(3, 2, 4, NULL, 1),
+(4, 2, 5, NULL, 1),
+(5, 2, 1, NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `perfis`
+--
+
+CREATE TABLE `perfis` (
+  `id_perfil` int(11) NOT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  `estado` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Extraindo dados da tabela `perfis`
+--
+
+INSERT INTO `perfis` (`id_perfil`, `description`, `estado`) VALUES
+(1, 'Administrador', 1),
+(2, 'Operador', 1);
 
 -- --------------------------------------------------------
 
@@ -133,10 +208,11 @@ CREATE TABLE `processos` (
 --
 
 INSERT INTO `processos` (`id_processos`, `data_entrada`, `motivo_data_entrada`, `data_saída`, `motivo_data_saida`, `dfd`, `NUP`, `tipo_processo_origem`, `numero_processo_origem`, `assunto_objeto`, `descricao_detalhada_objeto`, `requisitante`, `analista`, `previsao_conclusao`, `situacao`, `operador_fase_externa`, `resultado_fase_externa`, `protocolista`, `status`) VALUES
-(34, '2023-08-07', '', '0000-00-00', '', '', '11111.111111/1111-11', 'Pregão SRP', '11111/1111', 'descrição resumida', 'descrição detalhada', '7ºCT', '', '0000-00-00', 'Fase 5 - Saneamento', '', '', '', ''),
+(34, '2023-08-07', '', '0000-00-00', '', '', '11111.111111/1111-11', 'Pregão SRP', '11111/1111', 'descrição resumida', 'descrição detalhada', '7ºCT', '', '0000-00-00', 'Fase 3 - Adequação EPC', '', '', '', ''),
 (35, '2023-08-22', '', '0000-00-00', '', '', '22222.222222/2222-22', 'Pregão SRP', '22222/2222', '2', '2222', 'AC Defesa', '', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
 (37, '2023-08-27', '', '0000-00-00', '', '', '44444.444444/4444-44', 'Dispensa Eletrônica Sem Disputa', '44444/4444', '444444', '44444444444', 'AC Defesa', '', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
-(38, '2023-08-30', '', '0000-00-00', '', '', '55555.555555/5555-55', 'Dispensa Ratificada', '55555/5555', '55555', '555555', 'FA', '', '0000-00-00', 'Fase 6 - Fase Externa', '', '', '', '');
+(38, '2023-08-30', '', '0000-00-00', '', '', '55555.555555/5555-55', 'Dispensa Ratificada', '55555/5555', '55555', '555555', 'FA', '', '0000-00-00', 'Fase 6 - Fase Externa', '', '', '', ''),
+(39, '2023-09-05', '', '0000-00-00', '', '', '64919.191896/1918-99', 'Pregão IRP', '23423/4234', '234234', '234234234', 'AC Defesa', '', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', '');
 
 --
 -- Acionadores `processos`
@@ -156,6 +232,30 @@ END
 $$
 DELIMITER ;
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id_usuario` int(11) NOT NULL,
+  `nome_usuario` varchar(100) DEFAULT NULL,
+  `apelido_usuario` varchar(100) DEFAULT NULL,
+  `usuario` varchar(100) DEFAULT NULL,
+  `chave` text DEFAULT NULL,
+  `id_perfil_usuario` int(11) DEFAULT NULL,
+  `estado` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Extraindo dados da tabela `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `nome_usuario`, `apelido_usuario`, `usuario`, `chave`, `id_perfil_usuario`, `estado`) VALUES
+(1, 'Tutoriales', 'PHPeru', 'tperu', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 1, 1),
+(2, 'Paolo', 'Guerrero', 'pguerrero', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1);
+
 --
 -- Índices para tabelas despejadas
 --
@@ -174,10 +274,37 @@ ALTER TABLE `kanban_tasks`
   ADD PRIMARY KEY (`id_task`);
 
 --
+-- Índices para tabela `modulos`
+--
+ALTER TABLE `modulos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `perfil_modulo`
+--
+ALTER TABLE `perfil_modulo`
+  ADD PRIMARY KEY (`idperfil_modulo`),
+  ADD KEY `id_perfil` (`id_perfil`),
+  ADD KEY `id_modulo` (`id_modulo`);
+
+--
+-- Índices para tabela `perfis`
+--
+ALTER TABLE `perfis`
+  ADD PRIMARY KEY (`id_perfil`);
+
+--
 -- Índices para tabela `processos`
 --
 ALTER TABLE `processos`
   ADD PRIMARY KEY (`id_processos`);
+
+--
+-- Índices para tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD KEY `id_perfil_usuario` (`id_perfil_usuario`);
 
 --
 -- AUTO_INCREMENT de tabelas despejadas
@@ -187,19 +314,43 @@ ALTER TABLE `processos`
 -- AUTO_INCREMENT de tabela `historico_data_entrada_saida`
 --
 ALTER TABLE `historico_data_entrada_saida`
-  MODIFY `id_hist_entrada_saida` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id_hist_entrada_saida` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT de tabela `kanban_tasks`
 --
 ALTER TABLE `kanban_tasks`
-  MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=341;
+  MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=470;
+
+--
+-- AUTO_INCREMENT de tabela `modulos`
+--
+ALTER TABLE `modulos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de tabela `perfil_modulo`
+--
+ALTER TABLE `perfil_modulo`
+  MODIFY `idperfil_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT de tabela `perfis`
+--
+ALTER TABLE `perfis`
+  MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `processos`
 --
 ALTER TABLE `processos`
-  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restrições para despejos de tabelas
@@ -210,6 +361,19 @@ ALTER TABLE `processos`
 --
 ALTER TABLE `historico_data_entrada_saida`
   ADD CONSTRAINT `fk_id_processos` FOREIGN KEY (`id_processos`) REFERENCES `processos` (`id_processos`);
+
+--
+-- Limitadores para a tabela `perfil_modulo`
+--
+ALTER TABLE `perfil_modulo`
+  ADD CONSTRAINT `id_modulo` FOREIGN KEY (`id_modulo`) REFERENCES `modulos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `id_perfil` FOREIGN KEY (`id_perfil`) REFERENCES `perfis` (`id_perfil`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_perfil_usuario`) REFERENCES `perfis` (`id_perfil`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

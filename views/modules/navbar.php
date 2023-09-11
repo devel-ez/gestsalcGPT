@@ -14,7 +14,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/logout" role="button">
+            <a class="nav-link" href="http://localhost/gestsalcnew?logout=1" role="button">
             <i class="fas fa-sign-out-alt" style="color: #2c2d30;"></i>
             </a>
         </li>

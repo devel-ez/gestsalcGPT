@@ -1,3 +1,20 @@
+<?php
+
+session_start();
+
+if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+    session_destroy();
+
+    echo '
+        <script>
+        window.location="http://localhost/gestsalcnew/"
+        </script>';
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt_br">
 
@@ -10,17 +27,19 @@
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="views/assets/plugins/google-fonts/google-fonts.css">
-     <!-- Font Awesome Icons -->
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="views/assets/plugins/fontawesome-free/css/all.min.css">
     <!-- jquery ui css -->
     <link rel="stylesheet" href="views/assets/plugins/jquery-ui/jquery-ui.css">
-    
+
     <!-- Theme style -->
     <link rel="stylesheet" href="views/assets/dist/css/adminlte.min.css">
     <!-- Sweetalert2 -->
     <link rel="stylesheet" href="views/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-    <!-- My custom Css -->
-    <link rel="stylesheet" href="views/assets/dist/custom_css/custom_css.css">
+    <!-- Custom processos Css -->
+    <link rel="stylesheet" href="views/pages/processos/custom_css.css">
+    <!-- Custom login css -->
+    <link rel="stylesheet" href="views/pages/login/custom.css">
 
 
     <!--CSS PARA USO DO DATATABLES JS-->
@@ -39,8 +58,8 @@
     <!-- Sweetalert2 -->
     <script src="views/assets/plugins/sweetalert2/sweetalert2.min.js"></script>
     <!-- My custom Js -->
-    <script src="views/assets/dist/custom_js/masked_input.js"></script>
-    <script src="views/assets/dist/custom_js/custom_js.js"></script>
+    <script src="views/pages/processos/custom_js.js"></script>
+    <script src="views/pages/processos/masked_input.js"></script>
 
     <!--BIBLIOTECAS PARA USO DE DATATABLES JS-->
     <script src="views/assets/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -55,58 +74,53 @@
     <script src="views/assets/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="views/assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="views/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    
+
 
     <!-- Jquery UI js -->
     <script src="views/assets/plugins/jquery-ui/jquery-ui.js"></script>
 
-    <!-- Biblioteca Dragula -->
-    <!-- <script src="views/assets/plugins/dragula/dragula.min.js"></script> -->
-    
+    <!-- sweet alert personalizado -->
+    <script src="views/assets/dist/js/template.js"></script>
+
 
 
 </head>
 
-<body class="hold-transition sidebar-mini">
-    <!-- wrapper -->
-    <div class="wrapper">
+<?php if (isset($_SESSION['usuario'])) : ?>
 
-        <!-- Navbar -->
-        <?php
-        include 'modules/navbar.php';
-        ?>
-        <!-- /.navbar -->
-
-        <!-- Main Sidebar Container -->
-        <?php
-        include 'modules/sidebar.php';
-        ?>
-        <!-- /Main Sidebar Container -->
-
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+    <body class="hold-transition sidebar-mini">
+        <!-- Wrapper -->
+        <div class="wrapper">
 
             <?php
-            include 'contents/processos.php';
+            include "modules/navbar.php";
+            include "modules/sidebar.php";
             ?>
 
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+
+                <?php include "views/pages/" . $_SESSION['usuario']->view ?>
+
+            </div>
+            <!-- /Content Wrapper -->
         </div>
-        <!-- /.Content Wrapper. Contains page content  -->
+        <!-- / Wrapper -->
 
-        <!-- Main Footer -->
-        <?php
-        include 'modules/footer.php';
-        ?>
-        <!-- /Main Footer -->
-    </div>
-    <!-- ./wrapper -->
+        <script>
+            function CarregarConteudo(pagina_php, conteudo, id_perfil, id_modulo) {
+                $("." + conteudo).load(pagina_php);
+            }
+        </script>
 
-    <script>
-        function loadContents(page_content_php, content_wrapper_template) {
+    </body>
 
-            $("." + content_wrapper_template).load(page_content_php);
-        };
-    </script>
-</body>
+<?php else : ?>
+
+    <body>
+        <?php include "views/pages/login/login.php" ?>
+
+    </body>
+<?php endif; ?>
 
 </html>
