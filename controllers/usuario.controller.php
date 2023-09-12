@@ -10,11 +10,11 @@ class UsuarioController
     {
         if (isset($_POST['loginUsuario']) && isset($_POST['loginSenha'])) {
 
-            
+
 
             $usuario = $_POST['loginUsuario'];
-            // $senha = crypt($_POST['loginSenha'], '$2a$07$usesomesillystringforsalt$');
-            $senha = $_POST['loginSenha'];
+            $senha = crypt($_POST['loginSenha'], '$2a$07$azybxcags23425sdg23sdfhsd$');
+            // $senha = $_POST['loginSenha'];
 
             $result = UsuarioModel::mdlIniciarSessao($usuario, $senha);
 

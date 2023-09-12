@@ -40,6 +40,8 @@ if (isset($_GET['logout']) && $_GET['logout'] == 1) {
     <link rel="stylesheet" href="views/pages/processos/custom_css.css">
     <!-- Custom login css -->
     <link rel="stylesheet" href="views/pages/login/custom.css">
+    <!-- Custom modules css -->
+    <link rel="stylesheet" href="views/modules/custom.css">
 
 
     <!--CSS PARA USO DO DATATABLES JS-->
