@@ -1,8 +1,9 @@
-.login-page, .login-register{
+.login-page,
+.login-register {
     background-image: url('../../assets/dist/img/backgroundLogin.png');
     background-color: rgba(255, 193, 7);
     background-blend-mode: multiply;
-    background-size:cover;
+    background-size: cover;
     background-position: center center;
     background-attachment: fixed;
 }
@@ -14,6 +15,25 @@
     text-shadow: 2px 2px 5px rgba(247, 243, 243, 0.918);
 } */
 
-.login-logo{
+.login-logo {
     color: rgb(54, 54, 54);
+}
+
+.cardBackground {
+    /* background-image: url('../../assets/dist/img/redeCamuflada.jpg'); */
+
+    background-image: url('../../assets/dist/img/redeCamuflada.jpg');
+    /* Substitua pelo URL da sua imagem de camuflagem */
+    background-size: cover;
+    animation: camoAnimation 20s linear infinite;
+}
+
+@keyframes camoAnimation {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 100% 100%;
+    }
 }
