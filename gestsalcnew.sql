@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Set-2023 às 11:58
+-- Tempo de geração: 14-Set-2023 às 00:55
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -176,7 +176,8 @@ INSERT INTO `perfis` (`id_perfil`, `description`, `estado`) VALUES
 (2, 'Analista', 1),
 (3, 'Pregoeiro', 1),
 (4, 'ch_salc', 1),
-(5, 'Protocolista', 1);
+(5, 'Protocolista', 1),
+(6, 'Empenho', 1);
 
 -- --------------------------------------------------------
 
@@ -207,12 +208,13 @@ CREATE TABLE `processos` (
 --
 
 INSERT INTO `processos` (`id_processos`, `primeira_data_entrada`, `foto_perfil`, `NUP`, `tipo_processo_origem`, `numero_processo_origem`, `assunto_objeto`, `descricao_detalhada_objeto`, `requisitante`, `analista`, `previsao_conclusao`, `situacao`, `operador_fase_externa`, `resultado_fase_externa`, `status`) VALUES
-(34, '2023-08-07', '0000-00-00', '11111.111111/1111-11', 'Pregão SRP', '11111/1111', 'descrição resumida', 'descrição detalhada', '7ºCT', '3ºSgt  - Deyan', '0000-00-00', 'Fase 5 - Saneamento', '', '', ''),
-(35, '2023-08-22', '0000-00-00', '22222.222222/2222-22', 'Pregão SRP', '22222/2222', '2', '2222', 'AC Defesa', '1ºTen  - Andreza', '0000-00-00', 'Fase 2 - Análise SALC', '', '', ''),
-(37, '2023-08-27', '0000-00-00', '44444.444444/4444-44', 'Dispensa Eletrônica Sem Disputa', '44444/4444', '444444', '44444444444', 'AC Defesa', 'Ainda não definido', '0000-00-00', 'Fase 2 - Análise SALC', '', '', ''),
-(38, '2023-08-30', '0000-00-00', '55555.555555/5555-55', 'Dispensa Ratificada', '55555/5555', '55555', '555555', 'FA', '2ºSgt  - Velêz', '0000-00-00', 'Fase 6 - Fase Externa', '', '', ''),
+(34, '2023-08-07', '0000-00-00', '11111.111111/1111-11', 'Pregão SRP', '11111/1111', 'descrição resumida', 'descrição detalhada', '7ºCT', '1ºTen PTTC  - Roque', '0000-00-00', 'Fase 5 - Saneamento', '', '', ''),
+(35, '2023-08-22', '0000-00-00', '22222.222222/2222-22', 'Pregão SRP', '22222/2222', '2', '2222', 'AC Defesa', '1ºTen PTTC  - Roque', '0000-00-00', 'Fase 2 - Análise SALC', '', '', ''),
+(37, '2023-08-27', '0000-00-00', '44444.444444/4444-44', 'Dispensa Eletrônica Sem Disputa', '44444/4444', '444444', '44444444444', 'AC Defesa', '1ºTen  - Fátima Mesquita', '0000-00-00', 'Fase 2 - Análise SALC', '', '', ''),
+(38, '2023-08-30', '0000-00-00', '55555.555555/5555-55', 'Dispensa Ratificada', '55555/5555', '55555', '555555', 'FA', 'ST  - Romell', '0000-00-00', 'Fase 6 - Fase Externa', '', '', ''),
 (39, '2023-09-05', '0000-00-00', '64919.191896/1918-99', 'Aguardando definição', '00011/0000', 'Descrição balbalbal', 'skaslkfsaadfa', 'PAC', '1ºTen  - Fátima Mesquita', '0000-00-00', 'Fase 7 - Em contratação', '', '', ''),
-(48, '2023-09-08', '', '88888.888888/8888-88', 'Inexigibilidade', '88888/8888', '888888', '88888', 'DPI', '3ºSgt  - Deyan', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '');
+(48, '2023-09-08', '', '88888.888888/8888-88', 'Inexigibilidade', '88888/8888', '888888', '88888', 'DPI', '1ºTen  - Andreza', '0000-00-00', 'Fase 2 - Análise SALC', '', '', ''),
+(49, '2023-09-03', '', '01010.101010/1010-10', 'Pregão Tradicional', '10101/0111', '101010', '101010', 'DPI', 'ST  - Romell', '0000-00-00', 'Na fila', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -236,10 +238,13 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id_usuario`, `posto_grad`, `nome_guerra`, `usuario`, `chave`, `id_perfil_usuario`, `estado`) VALUES
 (1, '2ºSgt', 'Velêz', 'velez', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 1, 1),
-(2, 'Paolo', 'Guerrero', 'pguerrero', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1),
-(3, '3ºSgt', 'Deyan', 'deyan', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1),
+(2, '1ºTen PTTC', 'Roque', 'roque', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1),
+(3, '3ºSgt', 'Irsrael', 'israel', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 6, 1),
 (4, '1ºTen', 'Fátima Mesquita', 'fatima', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1),
-(5, '1ºTen', 'Andreza', 'andreza', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1);
+(5, '1ºTen', 'Andreza', 'andreza', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1),
+(6, 'Sd', 'Emanoel', 'emanoel', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 5, 1),
+(7, 'Sd', 'Fernando', 'fernando', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 5, 1),
+(8, 'ST', 'Romell', 'romell', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1);
 
 --
 -- Índices para tabelas despejadas
@@ -317,7 +322,7 @@ ALTER TABLE `modulos`
 -- AUTO_INCREMENT de tabela `processos`
 --
 ALTER TABLE `processos`
-  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Restrições para despejos de tabelas
