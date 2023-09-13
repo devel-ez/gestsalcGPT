@@ -23,21 +23,23 @@ class ProcessosModel
         return $stmt->fetchAll();
     }
 
-    static public function mdlRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada)
+    static public function mdlRegistrarProcessos($idNup, $analista, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada)
     {
         try {
             $stmt = Connection::connect()->prepare("INSERT INTO PROCESSOS(
                 NUP, 
+                analista,
                 tipo_processo_origem, 
                 numero_processo_origem, 
                 requisitante, 
                 situacao, 
                 assunto_objeto, 
                 descricao_detalhada_objeto,
-                data_entrada)
+                primeira_data_entrada)
 
             VALUES(
                 :idNup, 
+                :selAnalista, 
                 :selProcesso, 
                 :idNrProcesso,
                 :selRequisitante, 
@@ -48,6 +50,7 @@ class ProcessosModel
 
 
             $stmt->bindParam(":idNup", $idNup, PDO::PARAM_STR);
+            $stmt->bindParam(":selAnalista", $analista, PDO::PARAM_STR);
             $stmt->bindParam(":selProcesso", $selProcesso, PDO::PARAM_STR);
             $stmt->bindParam(":idNrProcesso", $idNrProcesso, PDO::PARAM_STR);
             $stmt->bindParam(":selRequisitante", $selRequisitante, PDO::PARAM_STR);
@@ -275,5 +278,12 @@ class ProcessosModel
         $stmt->execute();
 
         return $stmt->fetchAll();
+    }
+
+    static public function mdlListarUsuarios(){
+        $stmt = Connection::connect()->prepare("SELECT * FROM usuarios");
+        $stmt->execute();
+        return $stmt->fetchAll();
+
     }
 }

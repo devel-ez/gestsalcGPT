@@ -21,9 +21,9 @@ class ProcessosController
         return $processos;
     }
 
-    static public function ctrRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada)
+    static public function ctrRegistrarProcessos($idNup, $analista, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada)
     {
-        $registroProcessos = ProcessosModel::mdlRegistrarProcessos($idNup, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada);
+        $registroProcessos = ProcessosModel::mdlRegistrarProcessos($idNup, $analista, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada);
         return $registroProcessos;
     }
 
@@ -73,5 +73,13 @@ class ProcessosController
         $data = ProcessosModel::mdlGetKanbanTasks();
 
         return $data;
+    }
+
+    static public function ctrListarUsuarios(){
+
+        $usuarios = ProcessosModel::mdlListarUsuarios();
+
+        return $usuarios;
+
     }
 }

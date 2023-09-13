@@ -27,6 +27,7 @@
 
                                     <th>id</th>
                                     <th>control</th>
+                                    <th>Analista</th>
                                     <th>%</th>
                                     <th>Tipo processo Origem</th>
                                     <th>Número do processo</th>
@@ -167,6 +168,21 @@
                             </div>
                         </div>
                         <!-- /Coluna para registro da Fase-->
+
+                        <!-- Coluna para analista -->
+                        <div class="col-lg-4 mt-3 ">
+                            <div class="form-group mb-2">
+                                <label class="" for="selAnalista">
+                                    <span class="small">Analista</span><span class="text-danger">*</span>
+                                </label> <br>
+                                <select class="custom-select custom-select-sm w-100" aria label="from-select-sm example" id="selAnalista" required>
+                                    <option value="" disabled selected>Selecione...</option>
+                                    <option value="Ainda não definido">Ainda não definido</option>
+                                </select>
+                                <div class="invalid-feedback"> Selecione uma opção</div>
+                            </div>
+                        </div>
+                        <!-- /Coluna para para analista-->
                         <hr />
                         <!-- Coluna para Descrição resumida do processo -->
                         <div class="col-lg-6 mt-4">
@@ -467,6 +483,8 @@
                 }, //1: Listar Processos na tabela
             },
 
+            
+
             pageLength: [20, 50, 100],
             pageLength: 20,
 
@@ -489,10 +507,10 @@
                     visible: false,
                 },
                 {
-                    targets: 2,
+                    targets: 3,
                     orderable: false,
                     render: function(data, type, full, meta) {
-                        var fase = full[11]; // Valor da coluna "fase"
+                        var fase = full[12]; // Valor da coluna "fase"
                         var percentual = getPercentualPorFase(fase);
                         var badgeClass = getBadgeClassPorFase(fase);
 
@@ -503,24 +521,24 @@
                     }
                 },
                 {
-                    targets: 03,
-                    visible: false,
-                },
-                {
                     targets: 04,
                     visible: false,
                 },
                 {
-                    targets: 08,
+                    targets: 05,
                     visible: false,
                 },
                 {
                     targets: 09,
                     visible: false,
                 },
+                {
+                    targets: 10,
+                    visible: false,
+                },
 
                 {
-                    targets: 12,
+                    targets: 13,
                     orderable: false,
                     render: function(data, type, full, meta) {
                         return "<center>" +
@@ -631,11 +649,45 @@
     }
 
     /* -------------------------------------------------------------------------- */
+    /*   Criar options de analistas no select do modal cadastrar processos        */
+    /* -------------------------------------------------------------------------- */
+
+    $(document).ready(function() {
+        $.ajax({
+            url: "ajax/processos.ajax.php",
+            method: "POST",
+            data: {
+                action: 9
+            },
+            dataType: "json",
+            success: function(data) {
+
+
+                // Preencher o select com os usuários
+                var selectUsuario = $('#selAnalista');
+                // selectUsuario.empty();
+                data.forEach(function(data) {
+                    // console.log(data);
+                    selectUsuario.append($('<option>', {
+                        value: data[1] + "  - " + data[2],
+                        text: data[1] + " - " + data[2]
+                    }));
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+
+
+    /* -------------------------------------------------------------------------- */
     /*             Limpar inputs do modal ao cancelar ou fechar modal             */
     /* -------------------------------------------------------------------------- */
     $("#cancelarButton, #btnFecharModal").on('click', function() {
 
         $("#idNup").val("");
+        $("#selAnalista").val(0);
         $("#selProcesso").val(0);
         $("#idNrProcesso").val("");
         $("#selRequisitante").val(0);
@@ -700,6 +752,7 @@
 
                         dados.append("action", action);
                         dados.append("idId", $("#idId").val());
+                        dados.append("selAnalista", $("#selAnalista").val());
                         dados.append("idNup", $("#idNup").val());
                         dados.append("selProcesso", $("#selProcesso").val());
                         dados.append("idNrProcesso", $("#idNrProcesso").val());
@@ -708,6 +761,8 @@
                         dados.append("idDescricaoResumida", $("#idDescricaoResumida").val());
                         dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
                         dados.append("idDataEntrada", $("#idDataEntrada").val());
+
+                        
 
 
                         // Exibir os dados no console
@@ -747,6 +802,7 @@
 
                                     $("#mdlCadastrarProcesso").modal('hide');
                                     $("#idNup").val("");
+                                    $("#selAnalista").val(0);
                                     $("#selProcesso").val(0);
                                     $("#idNrProcesso").val("");
                                     $("#selRequisitante").val(0);
@@ -791,14 +847,15 @@
         var data = table.row($(this).parents('tr')).data();
 
         $("#idId").val(data[0]);
-        $("#idNup").val(data[5]);
-        $("#selProcesso").val(data[3]);
-        $("#idNrProcesso").val(data[4]);
-        $("#selRequisitante").val(data[10]);
-        $("#selFase").val(data[11]);
-        $("#idDescricaoResumida").val(data[7]);
-        $("#idDescricaoDetalhada").val(data[8]);
-        $("#idDataEntrada").val(data[9]);
+        $("#selAnalista").val(data[2]);
+        $("#idNup").val(data[6]);
+        $("#selProcesso").val(data[4]);
+        $("#idNrProcesso").val(data[5]);
+        $("#selRequisitante").val(data[11]);
+        $("#selFase").val(data[12]);
+        $("#idDescricaoResumida").val(data[8]);
+        $("#idDescricaoDetalhada").val(data[9]);
+        $("#idDataEntrada").val(data[10]);
     });
 
 
@@ -1441,7 +1498,7 @@
         var novoElementoSpan = document.createElement("span");
         var textoMotivo = "Motivo: ";
         var textoEntregueAo = "Entregue ao(à): ";
-    novoElementoSpan.innerHTML= "<br>" + textoMotivo.bold() + motivoSaida + "<br>" +  textoEntregueAo.bold() + quemRecebeu;
+        novoElementoSpan.innerHTML = "<br>" + textoMotivo.bold() + motivoSaida + "<br>" + textoEntregueAo.bold() + quemRecebeu;
 
         // Inserir o novo elemento "a" no "H3"
         novoElementoH3.appendChild(novoElementoSpan);

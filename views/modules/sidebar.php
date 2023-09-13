@@ -10,10 +10,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="views/assets/dist/img/<?php echo $_SESSION['usuario']->usuario; ?>.jpg" class="img-circle elevation-3" alt="User Image">
+                <img src="views/assets/dist/img/<?php echo $_SESSION['usuario']->usuario ?>.jpg" class="img-circle elevation-3" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">2ºSgt velêz</a>
+                <a href="#" class="d-block mt-2"><?php echo $_SESSION['usuario']->posto_grad . " " . $_SESSION['usuario']->nome_guerra ?></a>
             </div>
         </div>
         <!-- Sidebar Menu -->

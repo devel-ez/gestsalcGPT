@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 12-Set-2023 às 21:03
+-- Tempo de geração: 13-Set-2023 às 07:39
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -239,8 +239,8 @@ DELIMITER ;
 
 CREATE TABLE `usuarios` (
   `id_usuario` int(11) NOT NULL,
-  `nome_usuario` varchar(100) DEFAULT NULL,
-  `sobrenome_usuario` varchar(100) DEFAULT NULL,
+  `posto_grad` varchar(100) DEFAULT NULL,
+  `nome_guerra` varchar(100) DEFAULT NULL,
   `usuario` varchar(100) DEFAULT NULL,
   `chave` text DEFAULT NULL,
   `id_perfil_usuario` int(11) DEFAULT NULL,
@@ -252,7 +252,7 @@ CREATE TABLE `usuarios` (
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nome_usuario`, `sobrenome_usuario`, `usuario`, `chave`, `id_perfil_usuario`, `estado`, `foto_perfil`) VALUES
+INSERT INTO `usuarios` (`id_usuario`, `posto_grad`, `nome_guerra`, `usuario`, `chave`, `id_perfil_usuario`, `estado`, `foto_perfil`) VALUES
 (1, 'Sargento', 'Velêz', 'velez', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 1, 1, ''),
 (2, 'Paolo', 'Guerrero', 'pguerrero', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1, '');
 
