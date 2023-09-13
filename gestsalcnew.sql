@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Set-2023 às 07:39
+-- Tempo de geração: 13-Set-2023 às 11:58
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -28,7 +28,8 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_listarProcessosFaseInterna` ()   BEGIN
   select 
     p.id_processos,
-    '' as detalhes, 
+    '' as detalhes,
+    p.analista,
     '' as progresso,
     p.tipo_processo_origem,
     p.numero_processo_origem,
@@ -36,7 +37,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_listarProcessosFaseInterna` () 
     CONCAT(p.tipo_processo_origem, ' ', p.numero_processo_origem) as tipo_num_processo,
     p.assunto_objeto,
     p.descricao_detalhada_objeto,
-    p.data_entrada,    
+    p.primeira_data_entrada,    
     p.requisitante,
     p.situacao,
     '' as opcoes
@@ -172,7 +173,10 @@ CREATE TABLE `perfis` (
 
 INSERT INTO `perfis` (`id_perfil`, `description`, `estado`) VALUES
 (1, 'Administrador', 1),
-(2, 'Vendedor', 1);
+(2, 'Analista', 1),
+(3, 'Pregoeiro', 1),
+(4, 'ch_salc', 1),
+(5, 'Protocolista', 1);
 
 -- --------------------------------------------------------
 
@@ -182,11 +186,8 @@ INSERT INTO `perfis` (`id_perfil`, `description`, `estado`) VALUES
 
 CREATE TABLE `processos` (
   `id_processos` int(20) NOT NULL,
-  `data_entrada` date NOT NULL,
-  `motivo_data_entrada` varchar(100) NOT NULL,
-  `data_saída` date NOT NULL,
-  `motivo_data_saida` varchar(100) NOT NULL,
-  `dfd` varchar(100) NOT NULL,
+  `primeira_data_entrada` date NOT NULL,
+  `foto_perfil` varchar(100) NOT NULL,
   `NUP` varchar(30) NOT NULL,
   `tipo_processo_origem` varchar(100) NOT NULL,
   `numero_processo_origem` varchar(100) NOT NULL,
@@ -198,7 +199,6 @@ CREATE TABLE `processos` (
   `situacao` varchar(100) NOT NULL,
   `operador_fase_externa` varchar(100) NOT NULL,
   `resultado_fase_externa` varchar(100) NOT NULL,
-  `protocolista` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -206,30 +206,13 @@ CREATE TABLE `processos` (
 -- Extraindo dados da tabela `processos`
 --
 
-INSERT INTO `processos` (`id_processos`, `data_entrada`, `motivo_data_entrada`, `data_saída`, `motivo_data_saida`, `dfd`, `NUP`, `tipo_processo_origem`, `numero_processo_origem`, `assunto_objeto`, `descricao_detalhada_objeto`, `requisitante`, `analista`, `previsao_conclusao`, `situacao`, `operador_fase_externa`, `resultado_fase_externa`, `protocolista`, `status`) VALUES
-(34, '2023-08-07', '', '0000-00-00', '', '', '11111.111111/1111-11', 'Pregão SRP', '11111/1111', 'descrição resumida', 'descrição detalhada', '7ºCT', '', '0000-00-00', 'Fase 5 - Saneamento', '', '', '', ''),
-(35, '2023-08-22', '', '0000-00-00', '', '', '22222.222222/2222-22', 'Pregão SRP', '22222/2222', '2', '2222', 'AC Defesa', '', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
-(37, '2023-08-27', '', '0000-00-00', '', '', '44444.444444/4444-44', 'Dispensa Eletrônica Sem Disputa', '44444/4444', '444444', '44444444444', 'AC Defesa', '', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
-(38, '2023-08-30', '', '0000-00-00', '', '', '55555.555555/5555-55', 'Dispensa Ratificada', '55555/5555', '55555', '555555', 'FA', '', '0000-00-00', 'Fase 6 - Fase Externa', '', '', '', ''),
-(39, '2023-09-05', '', '0000-00-00', '', '', '64919.191896/1918-99', 'Aguardando definição', '00011/0000', 'Descrição balbalbal', 'skaslkfsaadfa', 'PAC', '', '0000-00-00', 'Fase 7 - Em contratação', '', '', '', '');
-
---
--- Acionadores `processos`
---
-DELIMITER $$
-CREATE TRIGGER `processos_after_insert` AFTER INSERT ON `processos` FOR EACH ROW BEGIN
-    INSERT INTO historico_data_entrada_saida (id_processos, hist_data_entrada, hist_motivo_data_entrada, hist_data_saida, hist_motivo_data_saida)
-    VALUES (NEW.id_processos, NEW.data_entrada, NEW.motivo_data_entrada, NEW.data_saída, NEW.motivo_data_saida);
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `processos_after_update` AFTER UPDATE ON `processos` FOR EACH ROW BEGIN
-    INSERT INTO historico_data_entrada_saida (id_processos, hist_data_entrada, hist_motivo_data_entrada, hist_data_saida, hist_motivo_data_saida)
-    VALUES (NEW.id_processos, NEW.data_entrada, NEW.motivo_data_entrada, NEW.data_saída, NEW.motivo_data_saida);
-END
-$$
-DELIMITER ;
+INSERT INTO `processos` (`id_processos`, `primeira_data_entrada`, `foto_perfil`, `NUP`, `tipo_processo_origem`, `numero_processo_origem`, `assunto_objeto`, `descricao_detalhada_objeto`, `requisitante`, `analista`, `previsao_conclusao`, `situacao`, `operador_fase_externa`, `resultado_fase_externa`, `status`) VALUES
+(34, '2023-08-07', '0000-00-00', '11111.111111/1111-11', 'Pregão SRP', '11111/1111', 'descrição resumida', 'descrição detalhada', '7ºCT', '3ºSgt  - Deyan', '0000-00-00', 'Fase 5 - Saneamento', '', '', ''),
+(35, '2023-08-22', '0000-00-00', '22222.222222/2222-22', 'Pregão SRP', '22222/2222', '2', '2222', 'AC Defesa', '1ºTen  - Andreza', '0000-00-00', 'Fase 2 - Análise SALC', '', '', ''),
+(37, '2023-08-27', '0000-00-00', '44444.444444/4444-44', 'Dispensa Eletrônica Sem Disputa', '44444/4444', '444444', '44444444444', 'AC Defesa', 'Ainda não definido', '0000-00-00', 'Fase 2 - Análise SALC', '', '', ''),
+(38, '2023-08-30', '0000-00-00', '55555.555555/5555-55', 'Dispensa Ratificada', '55555/5555', '55555', '555555', 'FA', '2ºSgt  - Velêz', '0000-00-00', 'Fase 6 - Fase Externa', '', '', ''),
+(39, '2023-09-05', '0000-00-00', '64919.191896/1918-99', 'Aguardando definição', '00011/0000', 'Descrição balbalbal', 'skaslkfsaadfa', 'PAC', '1ºTen  - Fátima Mesquita', '0000-00-00', 'Fase 7 - Em contratação', '', '', ''),
+(48, '2023-09-08', '', '88888.888888/8888-88', 'Inexigibilidade', '88888/8888', '888888', '88888', 'DPI', '3ºSgt  - Deyan', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -244,17 +227,19 @@ CREATE TABLE `usuarios` (
   `usuario` varchar(100) DEFAULT NULL,
   `chave` text DEFAULT NULL,
   `id_perfil_usuario` int(11) DEFAULT NULL,
-  `estado` tinyint(4) DEFAULT NULL,
-  `foto_perfil` varchar(100) DEFAULT NULL
+  `estado` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `posto_grad`, `nome_guerra`, `usuario`, `chave`, `id_perfil_usuario`, `estado`, `foto_perfil`) VALUES
-(1, 'Sargento', 'Velêz', 'velez', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 1, 1, ''),
-(2, 'Paolo', 'Guerrero', 'pguerrero', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1, '');
+INSERT INTO `usuarios` (`id_usuario`, `posto_grad`, `nome_guerra`, `usuario`, `chave`, `id_perfil_usuario`, `estado`) VALUES
+(1, '2ºSgt', 'Velêz', 'velez', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 1, 1),
+(2, 'Paolo', 'Guerrero', 'pguerrero', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1),
+(3, '3ºSgt', 'Deyan', 'deyan', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1),
+(4, '1ºTen', 'Fátima Mesquita', 'fatima', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1),
+(5, '1ºTen', 'Andreza', 'andreza', '$2a$07$azybxcags23425sdg23sdeanQZqjaf6Birm2NvcYTNtJw24CsO5uq', 2, 1);
 
 --
 -- Índices para tabelas despejadas
@@ -332,7 +317,7 @@ ALTER TABLE `modulos`
 -- AUTO_INCREMENT de tabela `processos`
 --
 ALTER TABLE `processos`
-  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- Restrições para despejos de tabelas
