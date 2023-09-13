@@ -483,7 +483,7 @@
                 }, //1: Listar Processos na tabela
             },
 
-            
+
 
             pageLength: [20, 50, 100],
             pageLength: 20,
@@ -505,6 +505,18 @@
                     orderable: false,
                     className: 'control',
                     visible: false,
+                },
+                {
+                    targets: 2,
+                    render: function(data, type, row) {
+                        if (type === 'display') {
+                            var imgName = data.split(' - ');
+                            var primeroNome = imgName[1].split(' ')[0]
+                            console.log(primeroNome);
+                        return '<img src="views/assets/dist/img/' + primeroNome + ".jpg"  + '" alt="' + data + '" width="100" height="100" class="imagemAnalista">';
+                        }
+                        return data;
+                    }
                 },
                 {
                     targets: 3,
@@ -575,6 +587,32 @@
         })
 
     });
+
+    /* -------------------------------------------------------------------------- */
+    /*                         Carrega imagem do analista                         */
+    /* -------------------------------------------------------------------------- */
+    // function carregarImagem(nomeDaLinha) {
+    //     // Mapeie nomes das linhas para nomes de imagens
+    //     var mapeamento = {
+    //         "Sgt - Felipe": "Felipe.jpg",
+    //         "Ten - Rodrigo": "Rodrigo.jpg",
+    //         // Adicione mais mapeamentos conforme necessário
+    //     };
+
+    //     // Verifique se o nome da linha existe no mapeamento
+    //     if (mapeamento[nomeDaLinha]) {
+    //         var nomeDaImagem = mapeamento[nomeDaLinha];
+    //         var imagem = new Image();
+    //         imagem.src = nomeDaImagem;
+
+    //         // Adicione a imagem ao local desejado na página
+    //         document.getElementById(nomeDaLinha).appendChild(imagem);
+    //     }
+    // }
+
+    // Chame a função para carregar as imagens quando necessário
+    // carregarImagem("Sgt - Felipe");
+    // carregarImagem("Ten - Rodrigo");
 
     /* -------------------------------------------------------------------------- */
     /*                Sincroniza o % progresso com a coluna fase                  */
@@ -662,16 +700,18 @@
             dataType: "json",
             success: function(data) {
 
-
+                console.log(data);
                 // Preencher o select com os usuários
                 var selectUsuario = $('#selAnalista');
                 // selectUsuario.empty();
                 data.forEach(function(data) {
                     // console.log(data);
-                    selectUsuario.append($('<option>', {
-                        value: data[1] + "  - " + data[2],
-                        text: data[1] + " - " + data[2]
-                    }));
+                    if (data[5] == 2) {
+                        selectUsuario.append($('<option>', {
+                            value: data[1] + "  - " + data[2],
+                            text: data[1] + " - " + data[2]
+                        }));
+                    }
                 });
             },
             error: function(xhr, status, error) {
@@ -762,7 +802,7 @@
                         dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
                         dados.append("idDataEntrada", $("#idDataEntrada").val());
 
-                        
+
 
 
                         // Exibir os dados no console
