@@ -135,7 +135,7 @@ class ProcessosModel
     static public function mdlRegistrarTarefasKanban($rowId, $cardData)
     {
 
-        
+
         $conn = Connection::connect();
 
         $stmt = $conn->prepare("SELECT * FROM kanban_tasks WHERE id_processo = :rowId");
@@ -280,10 +280,46 @@ class ProcessosModel
         return $stmt->fetchAll();
     }
 
-    static public function mdlListarUsuarios(){
+    static public function mdlListarUsuarios()
+    {
         $stmt = Connection::connect()->prepare("SELECT * FROM usuarios");
         $stmt->execute();
         return $stmt->fetchAll();
+    }
 
+    static public function mdlSalvarProtocoloEntrada($id_processo, $data_entrada, $motivo_entrada, $foto, $nome)
+    {
+
+        try {
+            $stmt = Connection::connect()->prepare("INSERT INTO entrada_protocolo_timeline (
+                    id_processo, 
+                    data_entrada, 
+                    motivo_entrada, 
+                    foto, 
+                    nome) 
+
+                VALUES (
+                    :id_processo,
+                    :data_entrada,
+                    :motivo_entrada,
+                    :foto,
+                    :nome)");
+
+            $stmt->bindParam(":id_processo", $id_processo, PDO::PARAM_INT);
+            $stmt->bindParam(":data_entrada", $data_entrada, PDO::PARAM_STR);
+            $stmt->bindParam(":motivo_entrada", $motivo_entrada, PDO::PARAM_STR);
+            $stmt->bindParam(":foto", $foto, PDO::PARAM_STR);
+            $stmt->bindParam(":nome", $nome, PDO::PARAM_STR);
+
+            if ($stmt->execute()) {
+                $response = "ok";
+            } else {
+                $response = "error";
+            }
+        } catch (Exception $e) {
+            $response = 'Exception capturada:' . $e->getMessage();
+        }
+        return $response;
+        $stmt = null;
     }
 }

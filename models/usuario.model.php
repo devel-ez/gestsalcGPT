@@ -20,8 +20,8 @@ class UsuarioModel
                                                 INNER JOIN modulos m
                                                 ON m.id = pm.id_modulo
                                                 WHERE u.usuario = :usuario
-                                                AND u.chave = :senha
-                                                AND view_inicio = 1");
+                                                AND view_inicio = 1
+                                                AND u.chave = :senha ");
 
         $stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
         $stmt->bindParam(':senha', $senha, PDO::PARAM_STR);

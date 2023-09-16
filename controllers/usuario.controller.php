@@ -17,6 +17,7 @@ class UsuarioController
             // $senha = $_POST['loginSenha'];
 
             $result = UsuarioModel::mdlIniciarSessao($usuario, $senha);
+            echo '<script>console.log(' . json_encode($result) . ');</script>';
 
             if (count($result) > 0) {
                 $_SESSION['usuario'] = $result[0];

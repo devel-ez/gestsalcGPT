@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14-Set-2023 às 00:55
+-- Tempo de geração: 16-Set-2023 às 20:29
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -45,6 +45,30 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_listarProcessosFaseInterna` () 
 END$$
 
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `entrada_protocolo_timeline`
+--
+
+CREATE TABLE `entrada_protocolo_timeline` (
+  `id_protocolo` int(20) NOT NULL,
+  `id_processo` int(20) NOT NULL,
+  `data_entrada` date NOT NULL,
+  `motivo_entrada` varchar(100) NOT NULL,
+  `foto` varchar(30) NOT NULL,
+  `nome` varchar(30) NOT NULL,
+  `time_data` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `entrada_protocolo_timeline`
+--
+
+INSERT INTO `entrada_protocolo_timeline` (`id_protocolo`, `id_processo`, `data_entrada`, `motivo_entrada`, `foto`, `nome`, `time_data`) VALUES
+(1, 34, '2023-09-14', 'qwe', 'Velêz', '2ºSgt Velêz', '2023-09-16 18:20:15'),
+(2, 34, '2023-08-29', 'ddddddd', 'Velêz', '2ºSgt Velêz', '2023-09-16 18:21:15');
 
 -- --------------------------------------------------------
 
@@ -219,6 +243,23 @@ INSERT INTO `processos` (`id_processos`, `primeira_data_entrada`, `foto_perfil`,
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `saida_protocolo_timeline`
+--
+
+CREATE TABLE `saida_protocolo_timeline` (
+  `id_protocolo` int(20) NOT NULL,
+  `id_processo` int(20) NOT NULL,
+  `data_saida` date NOT NULL,
+  `quem_recebeu` varchar(50) NOT NULL,
+  `motivo_saida` int(11) NOT NULL,
+  `foto` varchar(30) NOT NULL,
+  `nome` varchar(30) NOT NULL,
+  `time_data` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `usuarios`
 --
 
@@ -249,6 +290,12 @@ INSERT INTO `usuarios` (`id_usuario`, `posto_grad`, `nome_guerra`, `usuario`, `c
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices para tabela `entrada_protocolo_timeline`
+--
+ALTER TABLE `entrada_protocolo_timeline`
+  ADD PRIMARY KEY (`id_protocolo`);
 
 --
 -- Índices para tabela `historico_data_entrada_saida`
@@ -299,6 +346,12 @@ ALTER TABLE `usuarios`
 --
 -- AUTO_INCREMENT de tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `entrada_protocolo_timeline`
+--
+ALTER TABLE `entrada_protocolo_timeline`
+  MODIFY `id_protocolo` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `historico_data_entrada_saida`

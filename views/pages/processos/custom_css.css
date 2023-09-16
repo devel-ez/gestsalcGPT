@@ -73,9 +73,16 @@ hr {
     font-size: 15px !important;
 }
 
-.imagemAnalista{
+.imagemAnalista {
     border-radius: 50%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     height: 50px;
     width: 50px;
+}
+
+.imagemModalProtocolo {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-bottom: -60px;
 }

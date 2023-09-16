@@ -5,6 +5,9 @@ require_once "../models/processos.model.php";
 
 class AjaxProcessos
 {
+    /* -------------------------------------------------------------------------- */
+    /*                           variaveis dos processos                          */
+    /* -------------------------------------------------------------------------- */
     public $idNup;
     public $analista;
     public $selProcesso;
@@ -14,6 +17,15 @@ class AjaxProcessos
     public $idDescricaoResumida;
     public $idDescricaoDetalhada;
     public $idDataEntrada;
+
+    /* -------------------------------------------------------------------------- */
+    /*                          variaveis dos protocolos                          */
+    /* -------------------------------------------------------------------------- */
+    public $id_processo;
+    public $data_entrada;
+    public $motivo_entrada;
+    public $foto;
+    public $nome;
 
 
     // public function ajaxGetDataProcessos()
@@ -102,6 +114,18 @@ class AjaxProcessos
 
         echo json_encode($usuarios);
     }
+
+    public function ajaxSalvarProtocoloEntrada(){
+
+        $protocoloEntrada = ProcessosController::ctrSalvarProtocoloEntrada(
+        $this->id_processo,
+        $this->data_entrada,
+        $this->motivo_entrada,
+        $this->foto,
+        $this->nome
+    );
+        echo json_encode($protocoloEntrada);
+    }
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
@@ -167,6 +191,17 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
 
     $usuarios = new AjaxProcessos();
     $usuarios->ajaxListarUsuarios();
+} else if (isset($_POST['action']) && $_POST['action'] == 10) { // Salvar infromações de entrada de protocolo no BD
+
+    $protocoloEntrada = new AjaxProcessos();
+    
+    $protocoloEntrada->id_processo = $_POST['rowId'];
+    $protocoloEntrada->data_entrada = $_POST['dataEntrada'];
+    $protocoloEntrada->motivo_entrada = $_POST['motivoEntrada'];
+    $protocoloEntrada->foto = $_POST['foto'];
+    $protocoloEntrada->nome = $_POST['nome'];
+
+    $protocoloEntrada->ajaxSalvarProtocoloEntrada();
 } else {
 
     echo '<pre>';

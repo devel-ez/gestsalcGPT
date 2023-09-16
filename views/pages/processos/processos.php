@@ -347,7 +347,7 @@
                                                         <span class="small text-secondary">Data de entrada</span><span class="text-danger">*</span>
                                                     </label>
                                                     <div class="input-group">
-                                                        <input type="date" class="form-control" id="DataEntradaProtocolo" required="">
+                                                        <input type="date" class="form-control" id="DataEntradaProtocolo" required>
                                                         <div class="invalid-feedback"> Selecione uma data</div>
                                                     </div>
                                                 </div>
@@ -388,7 +388,7 @@
                                                     <label class="" for="quemRecebeu">
                                                         <span class="small text-secondary">Posto/Graduação e nome de quem recebeu</span><span class="text-danger">*</span>
                                                     </label>
-                                                    <input type="text" class="form-control form-control-sm text-secondary" id="quemRecebeu" name="quemRecebeu" required="">
+                                                    <input type="text" class="form-control form-control-sm text-secondary" id="quemRecebeu" name="quemRecebeu" required>
                                                     <div class="invalid-feedback"> Escreva o nome de quem recebeu o documento</div>
                                                 </div>
                                                 <div class="form-group mb-2">
@@ -512,15 +512,13 @@
                         if (type === 'display') {
                             var imgName = data.split(' - ');
                             var primeroNome = imgName[1].split(' ')[0]
-                            console.log(primeroNome);
-                        return '<img src="views/assets/dist/img/' + primeroNome + ".jpg"  + '" alt="' + data + '" width="100" height="100" class="imagemAnalista">';
+                            return '<img src="views/assets/dist/img/' + primeroNome + ".jpg" + '" alt="' + data + '" width="100" height="100" class="imagemAnalista">';
                         }
                         return data;
                     }
                 },
                 {
                     targets: 3,
-                    orderable: false,
                     render: function(data, type, full, meta) {
                         var fase = full[12]; // Valor da coluna "fase"
                         var percentual = getPercentualPorFase(fase);
@@ -587,32 +585,6 @@
         })
 
     });
-
-    /* -------------------------------------------------------------------------- */
-    /*                         Carrega imagem do analista                         */
-    /* -------------------------------------------------------------------------- */
-    // function carregarImagem(nomeDaLinha) {
-    //     // Mapeie nomes das linhas para nomes de imagens
-    //     var mapeamento = {
-    //         "Sgt - Felipe": "Felipe.jpg",
-    //         "Ten - Rodrigo": "Rodrigo.jpg",
-    //         // Adicione mais mapeamentos conforme necessário
-    //     };
-
-    //     // Verifique se o nome da linha existe no mapeamento
-    //     if (mapeamento[nomeDaLinha]) {
-    //         var nomeDaImagem = mapeamento[nomeDaLinha];
-    //         var imagem = new Image();
-    //         imagem.src = nomeDaImagem;
-
-    //         // Adicione a imagem ao local desejado na página
-    //         document.getElementById(nomeDaLinha).appendChild(imagem);
-    //     }
-    // }
-
-    // Chame a função para carregar as imagens quando necessário
-    // carregarImagem("Sgt - Felipe");
-    // carregarImagem("Ten - Rodrigo");
 
     /* -------------------------------------------------------------------------- */
     /*                Sincroniza o % progresso com a coluna fase                  */
@@ -700,7 +672,7 @@
             dataType: "json",
             success: function(data) {
 
-                console.log(data);
+                // console.log(data);
                 // Preencher o select com os usuários
                 var selectUsuario = $('#selAnalista');
                 // selectUsuario.empty();
@@ -1339,19 +1311,15 @@
     });
 
     /* -------------------------------------------------------------------------- */
-    /*                     Abre o kanban do processo no modal                     */
+    /*                    Abre o modal do protocolo                               */
     /* -------------------------------------------------------------------------- */
     $("#example1").on("click", ".btnProtocoProcesso", function() {
         var data = table.row($(this).parents('tr')).data();
-        linhaId = data[0]; // Assuming the ID is in the first column
-        console.log(linhaId);
+        linhaId = data[0];
 
         $("#mdlProtocoloProcesso").modal('show');
 
         var data = table.row($(this).parents('tr')).data();
-
-        console.log(data);
-        console.log(data[9]);
 
         var meses = {
             "01": "JAN",
@@ -1368,7 +1336,7 @@
             "12": "DEZ"
         };
 
-        var dataSplit = data[9].split("-");
+        var dataSplit = data[10].split("-");
         var mes = meses[dataSplit[1]];
         var ano = dataSplit[0].substring(2);
         var novaData = dataSplit[2] + " " + mes + " " + ano + " ";
@@ -1378,10 +1346,17 @@
     });
 
     /* -------------------------------------------------------------------------- */
-    /*           Adiciona os protocolos de entrada  na timeline                   */
+    /*      Adiciona os protocolos de entrada na timeline e salva no BD           */
     /* -------------------------------------------------------------------------- */
     function addProtocoloEntrada() {
+
+        var rowId = linhaId;
+        var foto = '<?php echo $_SESSION['usuario']->nome_guerra ?>'
+        var nome = '<?php echo $_SESSION['usuario']->posto_grad . " " . $_SESSION['usuario']->nome_guerra ?>';
+        // console.log("nome: " + nome);
+
         // Obter o valor da data de entrada
+        var dataEntradaBD = document.getElementById("DataEntradaProtocolo").value;
         var dataEntrada = document.getElementById("DataEntradaProtocolo").value;
         var meses = {
             "01": "JAN",
@@ -1401,26 +1376,20 @@
         var mes = meses[dataSplit[1]];
         var ano = dataSplit[0].substring(2);
         dataEntrada = dataSplit[2] + " " + mes + " " + ano + " ";
-        console.log("dataEntrada: " + dataEntrada);
+        // console.log("dataEntrada: " + dataEntrada);
 
         // Obter o valor do motivo da entrada
         var motivoEntrada = document.getElementById("idMotivoEntradaProtocolo").value;
-        console.log("motivoEntrada: " + motivoEntrada);
-        // Obter o valor da data de saída
-        // var dataSaida = document.getElementById("DataSaídaProtocolo").value;
-
-        // Obter o valor do nome do quem recebeu o documento
-        // var quemRecebeu = document.getElementById("quemRecebeu").value;
-
-        // Obter o valor do motivo da saída
-        // var motivoSaida = document.getElementById("MotivoSaídaProtocolo").value;
+        // console.log("motivoEntrada: " + motivoEntrada);
 
         // Criar uma nova div com a classe "protocolo"
         var novaDiv = document.createElement("div");
         novaDiv.classList.add("protocolo");
 
         // Adiciona um icone para a div protocolo 
-        novaDiv.innerHTML = '<i class="fas fa-user bg-green"></i>';
+        novaDiv.innerHTML = '<img src="views/assets/dist/img/' + foto + '.jpg" class="img-circle elevation-3 imagemModalProtocolo ml-3">'
+        
+
 
         // Criar uma nova div com a classe "timeline-item"
         var novaDivTimelineItem = document.createElement("div");
@@ -1442,13 +1411,18 @@
         // Criar um novo elemento "a" para inserir o nome do usuário
         var novoElementoA = document.createElement("a");
         novoElementoA.setAttribute("href", "#");
-        novoElementoA.innerText = "Emanoel - ";
+        novoElementoA.innerText = "( " + nome + ") ";
 
-        // Inserir o novo elemento "a" antes do texto existente
-        novoElementoH3.insertBefore(novoElementoA, novoElementoH3.firstChild);
+        // Inserir o novo elemento "a" no H3
+        novoElementoH3.appendChild(novoElementoA);
 
-        // Adicionar o texto "Primeira entrada do processo" ao novo elemento "h3"
-        novoElementoH3.appendChild(document.createTextNode("Motivo:  " + motivoEntrada));
+        // Criar um novo elemento "span" para inserir o motivo
+        var novoElementoSpan = document.createElement("span");
+        var textoMotivo = "Motivo: ";
+        novoElementoSpan.innerHTML = "<br>" + textoMotivo.bold() + motivoEntrada + "<br>";
+
+        // Inserir o novo elemento "a" no "H3"
+        novoElementoH3.appendChild(novoElementoSpan);
 
         // Adicionar o H3 à nova div "timeline-item"
         novaDivTimelineItem.appendChild(novoElementoH3);
@@ -1461,12 +1435,36 @@
         var ultimaDivProtocolo = divsProtocolo[divsProtocolo.length - 1];
         ultimaDivProtocolo.parentNode.insertBefore(novaDiv, divsProtocolo[0]);
 
+        $.ajax({
+            url: "ajax/processos.ajax.php",
+            method: "POST",
+            data: {
+                foto: foto,
+                nome: nome,
+                rowId: rowId,
+                dataEntrada: dataEntradaBD,
+                motivoEntrada: motivoEntrada,
+                action: 10,
+            }, // Envie o ID da linha e os dados dos cards editados
+            success: function(response) {
+                if(response == '"ok"'){
+                    console.log("Protocolo adicionado com sucesso!");
+                } else {
+                    console.log("Erro ao adicionar protocolo: " + response);
+
+                }
+            },
+            error: function(error) {
+                concole.error("Erro ao salvar as informações do protocolo no servidor:", error);
+            }
+
+        })
 
 
     }
 
     /* -------------------------------------------------------------------------- */
-    /*           Adiciona os protocolos de saída  na timeline                     */
+    /*      Adiciona os protocolos de saída  na timeline e salva no BD            */
     /* -------------------------------------------------------------------------- */
     function addProtocoloSaida() {
         // Obter o valor da data de entrada
@@ -1489,7 +1487,7 @@
         var mes = meses[dataSplit[1]];
         var ano = dataSplit[0].substring(2);
         dataSaida = dataSplit[2] + " " + mes + " " + ano + " ";
-        console.log("dataSaida: " + dataSaida);
+        // console.log("dataSaida: " + dataSaida);
 
         // Obter o valor do motivo da entrada
         // var motivoEntrada = document.getElementById("idMotivoEntradaProtocolo").value;
@@ -1508,7 +1506,7 @@
         novaDiv.classList.add("protocolo");
 
         // Adiciona um icone para a div protocolo 
-        novaDiv.innerHTML = '<i class="fas fa-user bg-green"></i>';
+        novaDiv.innerHTML = '<img src="views/assets/dist/img/<?php echo $_SESSION['usuario']->nome_guerra ?>.jpg" class="img-circle elevation-3 imagemModalProtocolo ml-3">';
 
         // Criar uma nova div com a classe "timeline-item"
         var novaDivTimelineItem = document.createElement("div");
@@ -1518,7 +1516,7 @@
         novoSpan = document.createElement("span");
         novoSpan.classList.add("time");
         novoSpan.setAttribute("id", "dataSaida");
-        novoSpan.innerHTML = dataSaida + '    <i class="fas fa-clock"></i> ' + '  <i class="fas fa-arrow-right" style="color: red;"></i> ';
+        novoSpan.innerHTML = dataSaida + '<i class="fas fa-clock"></i> ' + '  <i class="fas fa-arrow-right" style="color: red;"></i> ';
         novaDivTimelineItem.appendChild(novoSpan);
 
         // Criar um novo elemento "h3" para inserir os dados do formulário exceto a data que será no span
@@ -1529,7 +1527,7 @@
         // Criar um novo elemento "a" para inserir o nome do usuário
         var novoElementoA = document.createElement("a");
         novoElementoA.setAttribute("href", "#");
-        novoElementoA.innerText = "(Emanoel) ";
+        novoElementoA.innerText = "( <?php echo $_SESSION['usuario']->posto_grad . " " . $_SESSION['usuario']->nome_guerra ?> ) ";
 
         // Inserir o novo elemento "a" no H3
         novoElementoH3.appendChild(novoElementoA);
