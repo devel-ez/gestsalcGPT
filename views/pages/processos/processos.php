@@ -1388,7 +1388,7 @@
 
         // Adiciona um icone para a div protocolo 
         novaDiv.innerHTML = '<img src="views/assets/dist/img/' + foto + '.jpg" class="img-circle elevation-3 imagemModalProtocolo ml-3">'
-        
+
 
 
         // Criar uma nova div com a classe "timeline-item"
@@ -1447,7 +1447,7 @@
                 action: 10,
             }, // Envie o ID da linha e os dados dos cards editados
             success: function(response) {
-                if(response == '"ok"'){
+                if (response == '"ok"') {
                     console.log("Protocolo adicionado com sucesso!");
                 } else {
                     console.log("Erro ao adicionar protocolo: " + response);
@@ -1467,7 +1467,14 @@
     /*      Adiciona os protocolos de saída  na timeline e salva no BD            */
     /* -------------------------------------------------------------------------- */
     function addProtocoloSaida() {
+
+        var rowId = linhaId;
+        var foto = '<?php echo $_SESSION['usuario']->nome_guerra ?>'
+        var nome = '<?php echo $_SESSION['usuario']->posto_grad . " " . $_SESSION['usuario']->nome_guerra ?>';
+
+
         // Obter o valor da data de entrada
+        var dataSaidaBD = document.getElementById("DataSaidaProtocolo").value;
         var dataSaida = document.getElementById("DataSaidaProtocolo").value;
         var meses = {
             "01": "JAN",
@@ -1552,6 +1559,31 @@
         var ultimaDivProtocolo = divsProtocolo[divsProtocolo.length - 1];
         ultimaDivProtocolo.parentNode.insertBefore(novaDiv, divsProtocolo[0]);
 
+        $.ajax({
+            url: "ajax/processos.ajax.php",
+            method: "POST",
+            data: {
+                rowId: rowId,
+                dataSaida: dataSaidaBD,
+                quemRecebeu: quemRecebeu,
+                motivoSaida: motivoSaida,
+                foto: foto,
+                nome: nome,
+                action: 11,
+            }, // Envie o ID da linha e os dados dos cards editados
+            success: function(response) {
+                if (response == '"ok"') {
+                    console.log("Protocolo adicionado com sucesso!");
+                } else {
+                    console.log("Erro ao adicionar protocolo: " + response);
+
+                }
+            },
+            error: function(error) {
+                concole.error("Erro ao salvar as informações do protocolo no servidor:", error);
+            }
+
+        })
 
 
     }

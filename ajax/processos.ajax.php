@@ -26,6 +26,9 @@ class AjaxProcessos
     public $motivo_entrada;
     public $foto;
     public $nome;
+    public $data_saida;
+    public $motivo_saida;
+    public $quem_recebeu;
 
 
     // public function ajaxGetDataProcessos()
@@ -115,15 +118,16 @@ class AjaxProcessos
         echo json_encode($usuarios);
     }
 
-    public function ajaxSalvarProtocoloEntrada(){
+    public function ajaxSalvarProtocoloEntrada()
+    {
 
         $protocoloEntrada = ProcessosController::ctrSalvarProtocoloEntrada(
-        $this->id_processo,
-        $this->data_entrada,
-        $this->motivo_entrada,
-        $this->foto,
-        $this->nome
-    );
+            $this->id_processo,
+            $this->data_entrada,
+            $this->motivo_entrada,
+            $this->foto,
+            $this->nome
+        );
         echo json_encode($protocoloEntrada);
     }
 }
@@ -194,10 +198,22 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
 } else if (isset($_POST['action']) && $_POST['action'] == 10) { // Salvar infromações de entrada de protocolo no BD
 
     $protocoloEntrada = new AjaxProcessos();
-    
+
     $protocoloEntrada->id_processo = $_POST['rowId'];
     $protocoloEntrada->data_entrada = $_POST['dataEntrada'];
     $protocoloEntrada->motivo_entrada = $_POST['motivoEntrada'];
+    $protocoloEntrada->foto = $_POST['foto'];
+    $protocoloEntrada->nome = $_POST['nome'];
+
+    $protocoloEntrada->ajaxSalvarProtocoloEntrada();
+} else if (isset($_POST['action']) && $_POST['action'] == 11) { // Salvar infromações de saída de protocolo no BD
+
+    $protocoloEntrada = new AjaxProcessos();
+
+    $protocoloEntrada->id_processo = $_POST['rowId'];
+    $protocoloEntrada->data_saida = $_POST['dataSaida'];
+    $protocoloEntrada->quem_recebeu = $_POST['quemRecebeu'];
+    $protocoloEntrada->motivo_saida = $_POST['motivoSaida'];
     $protocoloEntrada->foto = $_POST['foto'];
     $protocoloEntrada->nome = $_POST['nome'];
 
