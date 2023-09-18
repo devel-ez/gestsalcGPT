@@ -91,4 +91,13 @@ class ProcessosController
         return $protocoloEntrada;
 
     }
+
+    static public function ctrSalvarProtocoloSaida($id_processo, $data_saida, $quem_recebeu, $motivo_saida, $foto, $nome){
+        
+        $protocoloSaida = ProcessosModel::mdlSalvarProtocoloSaida($id_processo, $data_saida, $quem_recebeu, $motivo_saida, $foto, $nome);
+
+        return $protocoloSaida;
+
+    }
+
 }

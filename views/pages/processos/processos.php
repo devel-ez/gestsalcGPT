@@ -419,8 +419,6 @@
                                             <i class="fas fa-user bg-green"></i>
                                             <div class="timeline-item">
                                                 <span class="time" id="primeiraDataEntrada"></span>
-                                                <h3 class="timeline-header no-border"><a href="#">(Emanoel) </a> Primeira entrada do processo</h3>
-
                                             </div>
                                         </div>
                                         <div class="time-label">
@@ -1343,6 +1341,29 @@
 
         $("#primeiraDataEntrada").html(novaData + '    <i class="fas fa-clock"></i> ' + ' <i class="fas fa-arrow-left" style="color: green;"></i> ');
         $("#labelPrimeiraDataEntrada").html(novaData);
+
+        // Selecionar o elemento <span> com a id "primeiraDataEntrada"
+        const spanElement = document.getElementById("primeiraDataEntrada");
+
+        // Criar um novo elemento <h3>
+        const novoH3 = document.createElement("h3");
+        novoH3.className = "timeline-header no-border";
+
+        // Criar um elemento <a> dentro do <h3>
+        const novoA = document.createElement("a");
+        novoA.href = "#";
+        novoA.textContent = "(Emanoel2)";
+
+        // Adicionar o <a> dentro do <h3>
+        novoH3.appendChild(novoA);
+
+        // Adicionar o texto "Primeira entrada do processo" após o <a>
+        novoH3.appendChild(document.createTextNode(" Primeira entrada do processo"));
+
+
+
+        // Inserir o novo <h3> após o <span>
+        spanElement.parentNode.insertBefore(novoH3, spanElement.nextSibling);
     });
 
     /* -------------------------------------------------------------------------- */
@@ -1398,7 +1419,7 @@
         // Adicionar span com a data de entrada à nova div "timeline-item"
         novoSpan = document.createElement("span");
         novoSpan.classList.add("time");
-        novoSpan.setAttribute("id", "primeiraDataEntrada");
+        novoSpan.setAttribute("id", "DataEntrada");
         novoSpan.innerHTML = dataEntrada + '    <i class="fas fa-clock"></i> ' + ' <i class="fas fa-arrow-left" style="color: green;"></i> ';
         novaDivTimelineItem.appendChild(novoSpan);
 

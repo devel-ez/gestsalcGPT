@@ -322,4 +322,45 @@ class ProcessosModel
         return $response;
         $stmt = null;
     }
+    
+    static public function mdlSalvarProtocoloSaida($id_processo, $data_saida, $quem_recebeu, $motivo_saida, $foto, $nome)
+    {
+        
+        try {
+            $stmt = Connection::connect()->prepare("INSERT INTO saida_protocolo_timeline (
+                    id_processo, 
+                    data_saida, 
+                    quem_recebeu, 
+                    motivo_saida, 
+                    foto, 
+                    nome) 
+
+                VALUES (
+                    :id_processo,
+                    :data_saida,
+                    :quem_recebeu,
+                    :motivo_saida,
+                    :foto,
+                    :nome)");
+
+            $stmt->bindParam(":id_processo", $id_processo, PDO::PARAM_INT);
+            $stmt->bindParam(":data_saida", $data_saida, PDO::PARAM_STR);
+            $stmt->bindParam(":quem_recebeu", $quem_recebeu, PDO::PARAM_STR);
+            $stmt->bindParam(":motivo_saida", $motivo_saida, PDO::PARAM_STR);
+            $stmt->bindParam(":foto", $foto, PDO::PARAM_STR);
+            $stmt->bindParam(":nome", $nome, PDO::PARAM_STR);
+                    
+            
+            if ($stmt->execute()) {
+                $response = "ok";
+            } else {
+                $response = "error";
+            }
+        } catch (Exception $e) {
+            $response = 'Exception capturada:' . $e->getMessage();
+        }
+
+        return $response;
+            $stmt = null;
+        }
 }
