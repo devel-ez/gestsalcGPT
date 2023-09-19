@@ -771,15 +771,9 @@
                         dados.append("idDescricaoResumida", $("#idDescricaoResumida").val());
                         dados.append("idDescricaoDetalhada", $("#idDescricaoDetalhada").val());
                         dados.append("idDataEntrada", $("#idDataEntrada").val());
+                        dados.append("protocolista", '<?php echo $_SESSION['usuario']->nome_guerra ?>');
 
-
-
-
-                        // Exibir os dados no console
-                        // console.log("Dados do Formulário:");
-                        // for (var pair of dados.entries()) {
-                        //     console.log(pair[0] + ": " + pair[1]);
-                        // }
+                        console.log(dados);
 
                         if (action == 2) {
                             var title_msg = "Processo cadastrado com sucesso!"
@@ -1352,7 +1346,7 @@
         // Criar um elemento <a> dentro do <h3>
         const novoA = document.createElement("a");
         novoA.href = "#";
-        novoA.textContent = "(Emanoel2)";
+        novoA.textContent = "<?php echo $_SESSION['usuario']->posto_grad . " " . $_SESSION['usuario']->nome_guerra ?>";
 
         // Adicionar o <a> dentro do <h3>
         novoH3.appendChild(novoA);

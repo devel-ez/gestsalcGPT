@@ -21,9 +21,9 @@ class ProcessosController
         return $processos;
     }
 
-    static public function ctrRegistrarProcessos($idNup, $analista, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada)
+    static public function ctrRegistrarProcessos($idNup, $analista, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada, $protocolista)
     {
-        $registroProcessos = ProcessosModel::mdlRegistrarProcessos($idNup, $analista, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada);
+        $registroProcessos = ProcessosModel::mdlRegistrarProcessos($idNup, $analista, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada, $protocolista);
         return $registroProcessos;
     }
 

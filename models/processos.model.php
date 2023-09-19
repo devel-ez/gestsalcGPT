@@ -23,7 +23,7 @@ class ProcessosModel
         return $stmt->fetchAll();
     }
 
-    static public function mdlRegistrarProcessos($idNup, $analista, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada)
+    static public function mdlRegistrarProcessos($idNup, $analista, $selProcesso, $idNrProcesso, $selRequisitante, $selFase, $idDescricaoResumida, $idDescricaoDetalhada, $idDataEntrada, $protocolista)
     {
         try {
             $stmt = Connection::connect()->prepare("INSERT INTO PROCESSOS(
@@ -35,7 +35,8 @@ class ProcessosModel
                 situacao, 
                 assunto_objeto, 
                 descricao_detalhada_objeto,
-                primeira_data_entrada)
+                primeira_data_entrada,
+                protocolista)
 
             VALUES(
                 :idNup, 
@@ -46,7 +47,8 @@ class ProcessosModel
                 :selFase, 
                 :idDescricaoResumida, 
                 :idDescricaoDetalhada,
-                :idDataEntrada)");
+                :idDataEntrada,
+                :protocolista)");
 
 
             $stmt->bindParam(":idNup", $idNup, PDO::PARAM_STR);
@@ -58,6 +60,7 @@ class ProcessosModel
             $stmt->bindParam(":idDescricaoResumida", $idDescricaoResumida, PDO::PARAM_STR);
             $stmt->bindParam(":idDescricaoDetalhada", $idDescricaoDetalhada, PDO::PARAM_STR);
             $stmt->bindParam(":idDataEntrada", $idDataEntrada, PDO::PARAM_STR);
+            $stmt->bindParam(":protocolista", $$protocolista, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
                 $response = "ok";

@@ -17,6 +17,7 @@ class AjaxProcessos
     public $idDescricaoResumida;
     public $idDescricaoDetalhada;
     public $idDataEntrada;
+    public $protocolista;
 
     /* -------------------------------------------------------------------------- */
     /*                          variaveis dos protocolos                          */
@@ -56,7 +57,8 @@ class AjaxProcessos
             $this->selFase,
             $this->idDescricaoResumida,
             $this->idDescricaoDetalhada,
-            $this->idDataEntrada
+            $this->idDataEntrada,
+            $this->protocolista
         );
 
         echo json_encode($processos);
@@ -130,20 +132,9 @@ class AjaxProcessos
         );
         echo json_encode($protocoloEntrada);
     }
-    public function ajaxSalvarProtocoloSaida()
-    {
-        
 
-        $protocoloSaida = ProcessosController::ctrSalvarProtocoloSaida(
-            $this->id_processo,
-            $this->data_saida,
-            $this->quem_recebeu,
-            $this->motivo_saida,
-            $this->foto,
-            $this->nome
-        );
-       
-        echo json_encode($protocoloSaida);
+    public function ajaxSalvarProtocoloSaida(){
+        
     }
 }
 
@@ -165,6 +156,7 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
     $processos->idDescricaoResumida = $_POST['idDescricaoResumida'];
     $processos->idDescricaoDetalhada = $_POST['idDescricaoDetalhada'];
     $processos->idDataEntrada = $_POST['idDataEntrada'];
+    $processos->protocolista = $_POST['protocolista'];
 
     $processos->ajaxRegistrarProcessos();
 } else if (isset($_POST['action']) && $_POST['action'] == 3) { // Editar processos 
@@ -223,17 +215,16 @@ if (isset($_POST['action']) && $_POST['action'] == 1) { // Listar processos
     $protocoloEntrada->ajaxSalvarProtocoloEntrada();
 } else if (isset($_POST['action']) && $_POST['action'] == 11) { // Salvar infromações de saída de protocolo no BD
 
-    $protocoloSaida = new AjaxProcessos();
+    $protocoloEntrada = new AjaxProcessos();
 
-    $protocoloSaida->id_processo = $_POST['rowId'];
-    $protocoloSaida->data_saida = $_POST['dataSaida'];
-    $protocoloSaida->quem_recebeu = $_POST['quemRecebeu'];
-    $protocoloSaida->motivo_saida = $_POST['motivoSaida'];
-    $protocoloSaida->foto = $_POST['foto'];
-    $protocoloSaida->nome = $_POST['nome'];
-    
-    $protocoloSaida->ajaxSalvarProtocoloSaida();
-    
+    $protocoloEntrada->id_processo = $_POST['rowId'];
+    $protocoloEntrada->data_saida = $_POST['dataSaida'];
+    $protocoloEntrada->quem_recebeu = $_POST['quemRecebeu'];
+    $protocoloEntrada->motivo_saida = $_POST['motivoSaida'];
+    $protocoloEntrada->foto = $_POST['foto'];
+    $protocoloEntrada->nome = $_POST['nome'];
+
+    $protocoloEntrada->ajaxSalvarProtocoloSaida();
 } else {
 
     echo '<pre>';
