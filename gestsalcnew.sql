@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16-Set-2023 às 20:29
+-- Tempo de geração: 19-Set-2023 às 22:01
 -- Versão do servidor: 10.4.28-MariaDB
 -- versão do PHP: 8.0.28
 
@@ -68,7 +68,11 @@ CREATE TABLE `entrada_protocolo_timeline` (
 
 INSERT INTO `entrada_protocolo_timeline` (`id_protocolo`, `id_processo`, `data_entrada`, `motivo_entrada`, `foto`, `nome`, `time_data`) VALUES
 (1, 34, '2023-09-14', 'qwe', 'Velêz', '2ºSgt Velêz', '2023-09-16 18:20:15'),
-(2, 34, '2023-08-29', 'ddddddd', 'Velêz', '2ºSgt Velêz', '2023-09-16 18:21:15');
+(2, 34, '2023-08-29', 'ddddddd', 'Velêz', '2ºSgt Velêz', '2023-09-16 18:21:15'),
+(3, 34, '2023-08-31', 'as', 'Velêz', '2ºSgt Velêz', '2023-09-18 18:23:29'),
+(4, 50, '2023-09-22', 'Correção do processo', 'Velêz', '2ºSgt Velêz', '2023-09-18 19:47:05'),
+(5, 34, '2023-09-22', 'sss', 'Velêz', '2ºSgt Velêz', '2023-09-19 19:09:42'),
+(6, 34, '2023-09-20', 'erro na capa do proe cjaskjdfsa', 'Velêz', '2ºSgt Velêz', '2023-09-19 19:59:09');
 
 -- --------------------------------------------------------
 
@@ -127,7 +131,10 @@ INSERT INTO `kanban_tasks` (`id_task`, `id_processo`, `title`, `description`, `p
 (330, 39, 'Capa', 'Elabora capa com tt', 0, 'concluidas'),
 (331, 39, 'Renumerar', 'a página 05 está errada', 1, 'concluidas'),
 (332, 39, 'Conjur', '*Corrigir pesquisa de preços', 2, 'concluidas'),
-(333, 39, 'asdfoihasdfas', 'sdfasf', 0, 'pendentes');
+(333, 39, 'asdfoihasdfas', 'sdfasf', 0, 'pendentes'),
+(335, 50, 'ETO', 'corrigindo item 5 pesquisa de merdaco oohahfddaf', 0, 'em-progresso'),
+(337, 49, 'dasadsf', 'assdfaf', 0, 'em-progresso'),
+(339, 35, 'fff', 'ffff', 0, 'em-progresso');
 
 -- --------------------------------------------------------
 
@@ -224,21 +231,22 @@ CREATE TABLE `processos` (
   `situacao` varchar(100) NOT NULL,
   `operador_fase_externa` varchar(100) NOT NULL,
   `resultado_fase_externa` varchar(100) NOT NULL,
-  `status` varchar(100) NOT NULL
+  `status` varchar(100) NOT NULL,
+  `protocolista` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `processos`
 --
 
-INSERT INTO `processos` (`id_processos`, `primeira_data_entrada`, `foto_perfil`, `NUP`, `tipo_processo_origem`, `numero_processo_origem`, `assunto_objeto`, `descricao_detalhada_objeto`, `requisitante`, `analista`, `previsao_conclusao`, `situacao`, `operador_fase_externa`, `resultado_fase_externa`, `status`) VALUES
-(34, '2023-08-07', '0000-00-00', '11111.111111/1111-11', 'Pregão SRP', '11111/1111', 'descrição resumida', 'descrição detalhada', '7ºCT', '1ºTen PTTC  - Roque', '0000-00-00', 'Fase 5 - Saneamento', '', '', ''),
-(35, '2023-08-22', '0000-00-00', '22222.222222/2222-22', 'Pregão SRP', '22222/2222', '2', '2222', 'AC Defesa', '1ºTen PTTC  - Roque', '0000-00-00', 'Fase 2 - Análise SALC', '', '', ''),
-(37, '2023-08-27', '0000-00-00', '44444.444444/4444-44', 'Dispensa Eletrônica Sem Disputa', '44444/4444', '444444', '44444444444', 'AC Defesa', '1ºTen  - Fátima Mesquita', '0000-00-00', 'Fase 2 - Análise SALC', '', '', ''),
-(38, '2023-08-30', '0000-00-00', '55555.555555/5555-55', 'Dispensa Ratificada', '55555/5555', '55555', '555555', 'FA', 'ST  - Romell', '0000-00-00', 'Fase 6 - Fase Externa', '', '', ''),
-(39, '2023-09-05', '0000-00-00', '64919.191896/1918-99', 'Aguardando definição', '00011/0000', 'Descrição balbalbal', 'skaslkfsaadfa', 'PAC', '1ºTen  - Fátima Mesquita', '0000-00-00', 'Fase 7 - Em contratação', '', '', ''),
-(48, '2023-09-08', '', '88888.888888/8888-88', 'Inexigibilidade', '88888/8888', '888888', '88888', 'DPI', '1ºTen  - Andreza', '0000-00-00', 'Fase 2 - Análise SALC', '', '', ''),
-(49, '2023-09-03', '', '01010.101010/1010-10', 'Pregão Tradicional', '10101/0111', '101010', '101010', 'DPI', 'ST  - Romell', '0000-00-00', 'Na fila', '', '', '');
+INSERT INTO `processos` (`id_processos`, `primeira_data_entrada`, `foto_perfil`, `NUP`, `tipo_processo_origem`, `numero_processo_origem`, `assunto_objeto`, `descricao_detalhada_objeto`, `requisitante`, `analista`, `previsao_conclusao`, `situacao`, `operador_fase_externa`, `resultado_fase_externa`, `status`, `protocolista`) VALUES
+(34, '2023-08-07', '0000-00-00', '11111.111111/1111-11', 'Pregão SRP', '11111/1111', 'descrição resumida', 'descrição detalhada', '7ºCT', '1ºTen PTTC  - Roque', '0000-00-00', 'Fase 5 - Saneamento', '', '', '', ''),
+(35, '2023-08-22', '0000-00-00', '22222.222222/2222-22', 'Pregão SRP', '22222/2222', '2', '2222', 'AC Defesa', '1ºTen PTTC  - Roque', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
+(37, '2023-08-27', '0000-00-00', '44444.444444/4444-44', 'Dispensa Eletrônica Sem Disputa', '44444/4444', '444444', '44444444444', 'AC Defesa', '1ºTen  - Fátima Mesquita', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
+(38, '2023-08-30', '0000-00-00', '55555.555555/5555-55', 'Dispensa Ratificada', '55555/5555', '55555', '555555', 'FA', 'ST  - Romell', '0000-00-00', 'Fase 6 - Fase Externa', '', '', '', ''),
+(39, '2023-09-05', '0000-00-00', '64919.191896/1918-99', 'Aguardando definição', '00011/0000', 'Descrição balbalbal', 'skaslkfsaadfa', 'PAC', '1ºTen  - Fátima Mesquita', '0000-00-00', 'Fase 7 - Em contratação', '', '', '', ''),
+(48, '2023-09-08', '', '88888.888888/8888-88', 'Inexigibilidade', '88888/8888', '888888', '88888', 'DPI', '1ºTen  - Andreza', '0000-00-00', 'Fase 2 - Análise SALC', '', '', '', ''),
+(49, '2023-09-03', '', '01010.101010/1010-10', 'Pregão Tradicional', '10101/0111', '101010', '101010', 'DPI', 'ST  - Romell', '0000-00-00', 'Na fila', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -351,7 +359,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `entrada_protocolo_timeline`
 --
 ALTER TABLE `entrada_protocolo_timeline`
-  MODIFY `id_protocolo` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_protocolo` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `historico_data_entrada_saida`
@@ -363,7 +371,7 @@ ALTER TABLE `historico_data_entrada_saida`
 -- AUTO_INCREMENT de tabela `kanban_tasks`
 --
 ALTER TABLE `kanban_tasks`
-  MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
+  MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=340;
 
 --
 -- AUTO_INCREMENT de tabela `modulos`
@@ -375,7 +383,7 @@ ALTER TABLE `modulos`
 -- AUTO_INCREMENT de tabela `processos`
 --
 ALTER TABLE `processos`
-  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id_processos` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Restrições para despejos de tabelas
